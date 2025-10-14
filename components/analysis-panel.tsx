@@ -6,9 +6,11 @@ import { VolumeAnalysis } from "@/components/analysis/volume-analysis";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import exercises from "@/data/exercises.json";
+// 1. Import your hook and useCallback
+import { usePersistedState } from "@/hooks/use-persisted-state";
 import type { PriorityTier, Routine } from "@/lib/types";
 import { calculateMuscleVolumes } from "@/lib/volume-calculator";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 interface AnalysisPanelProps {
 	routine: Routine;
@@ -18,6 +20,9 @@ interface AnalysisPanelProps {
 	) => void;
 }
 
+// 2. Define a key for localStorage
+const TAB_STORAGE_KEY = "analysisPanelTab";
+
 export function AnalysisPanel({
 	routine,
 	priorities,
@@ -26,6 +31,33 @@ export function AnalysisPanel({
 	const muscleVolumes = useMemo(() => {
 		return calculateMuscleVolumes(routine, exercises);
 	}, [routine]);
+
+	// 3. Define helper functions for saving and loading the active tab
+	const saveTab = useCallback((value: string) => {
+		try {
+			window.localStorage.setItem(TAB_STORAGE_KEY, JSON.stringify(value));
+		} catch (error) {
+			console.error("Error saving to localStorage", error);
+		}
+	}, []);
+
+	const loadTab = useCallback((): string | null => {
+		try {
+			const item = window.localStorage.getItem(TAB_STORAGE_KEY);
+			return item ? JSON.parse(item) : null;
+		} catch (error) {
+			console.error("Error loading from localStorage", error);
+			return null;
+		}
+	}, []);
+
+	// 4. Use the hook to manage the tab state
+	const [activeTab, setActiveTab] = usePersistedState<string>(
+		TAB_STORAGE_KEY,
+		"volume",
+		saveTab,
+		loadTab
+	);
 
 	const hasExercises = routine.days.some((day) => day.exercises.length > 0);
 
@@ -38,7 +70,12 @@ export function AnalysisPanel({
 				</p>
 			</div>
 
-			<Tabs defaultValue="volume" className="w-full space-y-4">
+			{/* 5. Control the Tabs component with the persisted state */}
+			<Tabs
+				value={activeTab}
+				onValueChange={setActiveTab}
+				className="w-full space-y-4"
+			>
 				<TabsList className="w-full">
 					<TabsTrigger value="volume" className="flex-1">
 						Volume

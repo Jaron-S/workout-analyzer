@@ -13,6 +13,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import volumeLandmarks from "@/data/volume-landmarks.json";
+// 1. Import your hook and useCallback
+import { usePersistedState } from "@/hooks/use-persisted-state";
 import type { MuscleVolume, PriorityTier } from "@/lib/types";
 import { getVolumeZone } from "@/lib/volume-calculator";
 import {
@@ -23,7 +25,8 @@ import {
 	Target,
 	TrendingUp,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+// 2. Add useCallback to the imports
+import { useCallback, useMemo, useState } from "react";
 
 // --- PROPS ---
 interface PriorityAnalysisProps {
@@ -79,6 +82,8 @@ const TIER_COLORS: Record<PriorityTier, string> = {
 
 type AnalysisStatus = "optimal" | "good" | "warning" | "critical";
 type SortOption = "priority" | "volume-high" | "volume-low" | "status";
+// 3. Define a key for localStorage
+const SORT_STORAGE_KEY = "priorityAnalysisSortOption";
 
 // --- COMPONENT ---
 export function PriorityAnalysis({
@@ -86,13 +91,40 @@ export function PriorityAnalysis({
 	priorities,
 	onPrioritiesChange,
 }: PriorityAnalysisProps) {
-	const [sortBy, setSortBy] = useState<SortOption>("status");
+	// 4. Define helper functions for saving and loading
+	const saveSortOption = useCallback((value: SortOption) => {
+		try {
+			window.localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(value));
+		} catch (error) {
+			console.error("Error saving to localStorage", error);
+		}
+	}, []);
+
+	const loadSortOption = useCallback((): SortOption | null => {
+		try {
+			const item = window.localStorage.getItem(SORT_STORAGE_KEY);
+			return item ? (JSON.parse(item) as SortOption) : null;
+		} catch (error) {
+			console.error("Error loading from localStorage", error);
+			return null;
+		}
+	}, []);
+
+	// 5. Use the persisted state hook instead of useState
+	const [sortBy, setSortBy] = usePersistedState<SortOption>(
+		SORT_STORAGE_KEY,
+		"status",
+		saveSortOption,
+		loadSortOption
+	);
+
 	const [showSettings, setShowSettings] = useState(false);
 	const hasPriorities = useMemo(
 		() => Object.values(priorities).some((arr) => arr.length > 0),
 		[priorities]
 	);
 
+	// ... (The rest of your component logic remains unchanged)
 	const analysis = useMemo(() => {
 		if (!hasPriorities) return [];
 

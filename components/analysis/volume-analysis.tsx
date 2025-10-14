@@ -16,6 +16,8 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import volumeLandmarks from "@/data/volume-landmarks.json";
+// 1. Import your existing hook
+import { usePersistedState } from "@/hooks/use-persisted-state";
 import type { MuscleVolume, PriorityTier } from "@/lib/types";
 import { getVolumeZone } from "@/lib/volume-calculator";
 import {
@@ -28,7 +30,7 @@ import {
 	TrendingDown,
 	TrendingUp,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 // --- PROPS ---
 interface VolumeAnalysisProps {
@@ -86,13 +88,39 @@ const TIER_COLORS: Record<PriorityTier, string> = {
 };
 
 type SortOption = "volume-high" | "volume-low" | "alphabetical" | "priority";
+const SORT_STORAGE_KEY = "volumeSortOption";
 
 // --- COMPONENT ---
 export function VolumeAnalysis({
 	muscleVolumes,
 	priorities,
 }: VolumeAnalysisProps) {
-	const [sortBy, setSortBy] = useState<SortOption>("volume-high");
+	// 2. Define helper functions for saving and loading
+	const saveSortOption = useCallback((value: SortOption) => {
+		try {
+			window.localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(value));
+		} catch (error) {
+			console.error("Error saving to localStorage", error);
+		}
+	}, []);
+
+	const loadSortOption = useCallback((): SortOption | null => {
+		try {
+			const item = window.localStorage.getItem(SORT_STORAGE_KEY);
+			return item ? (JSON.parse(item) as SortOption) : null;
+		} catch (error) {
+			console.error("Error loading from localStorage", error);
+			return null;
+		}
+	}, []);
+
+	// 3. Use the persisted state hook
+	const [sortBy, setSortBy] = usePersistedState<SortOption>(
+		SORT_STORAGE_KEY,
+		"volume-high",
+		saveSortOption,
+		loadSortOption
+	);
 
 	const priorityMap = useMemo(() => {
 		const map = new Map<string, PriorityTier>();
