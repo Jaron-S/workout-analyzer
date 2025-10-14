@@ -1,6 +1,5 @@
 "use client";
 
-// 1. Import your existing Firebase functions
 import { useAuth } from "@/lib/auth-context";
 import {
 	getPrioritiesFromFirebase,
@@ -27,7 +26,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import priorityPresets from "@/data/priority-presets.json";
-import { useToast } from "@/hooks/use-toast";
 import { ALL_MUSCLES, PRIORITY_TIERS } from "@/lib/constants";
 import type { PriorityTier } from "@/lib/types";
 import {
@@ -48,11 +46,10 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Sparkles } from "lucide-react";
+import { toast } from "sonner";
 
 // --- Unchanged parts from your original file ---
 // (Props, TIER_INFO, SortableMuscle component)
-// --- ... ---
-
 interface PrioritySettingsProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
@@ -150,8 +147,7 @@ export function PrioritySettings({
 	priorities,
 	onPrioritiesChange,
 }: PrioritySettingsProps) {
-	const { toast } = useToast();
-	const { user } = useAuth(); // NOTE: Still using the mock useAuth hook
+	const { user } = useAuth();
 	const [localPriorities, setLocalPriorities] = useState(priorities);
 	const [isSaving, setIsSaving] = useState(false);
 
@@ -162,23 +158,20 @@ export function PrioritySettings({
 		})
 	);
 
-	// 2. Update the useEffect to use getPrioritiesFromFirebase
 	useEffect(() => {
 		if (open && user) {
 			getPrioritiesFromFirebase(user.uid).then((firebasePriorities) => {
-				// Your function returns {} if nothing is found, so we check for keys
 				if (Object.keys(firebasePriorities).length > 0) {
 					setLocalPriorities(firebasePriorities);
 				} else {
-					setLocalPriorities(priorities); // Fallback to local state
+					setLocalPriorities(priorities);
 				}
 			});
 		} else if (open) {
-			setLocalPriorities(priorities); // User not logged in
+			setLocalPriorities(priorities);
 		}
 	}, [open, user, priorities]);
 
-	// ... (unchanged helper functions like addMuscleToTier, handleDragEnd, etc.)
 	const assignedMuscles = new Set(Object.values(localPriorities).flat());
 	const unassignedMuscles = ALL_MUSCLES.filter(
 		(muscle) => !assignedMuscles.has(muscle)
@@ -218,28 +211,26 @@ export function PrioritySettings({
 		if (preset) setLocalPriorities(preset.tiers);
 	};
 
-	// 3. Update handleSave to use savePrioritiesToFirebase
 	const handleSave = async () => {
 		setIsSaving(true);
-		onPrioritiesChange(localPriorities); // Still update local state immediately
+		onPrioritiesChange(localPriorities);
 
 		if (user) {
 			try {
 				await savePrioritiesToFirebase(user.uid, localPriorities);
-				toast({
-					title: "Priorities saved",
+				// MODIFIED: Changed to sonner's success syntax
+				toast.success("Priorities saved", {
 					description: "Your settings are synced to your account.",
 				});
 			} catch (error) {
-				toast({
-					variant: "destructive",
-					title: "Sync failed",
+				// MODIFIED: Changed to sonner's error syntax
+				toast.error("Sync failed", {
 					description: "Changes are saved on this device only.",
 				});
 			}
 		} else {
-			toast({
-				title: "Priorities saved",
+			// MODIFIED: Changed to sonner's success syntax
+			toast.success("Priorities saved", {
 				description: "Your settings have been updated on this device.",
 			});
 		}

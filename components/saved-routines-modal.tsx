@@ -21,17 +21,15 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/lib/auth-context";
-import { useEffect, useState } from "react";
-// Import the delete function from your firebase utility file
-import { useToast } from "@/hooks/use-toast";
 import {
 	deleteRoutineFromFirebase,
 	getPrioritiesFromFirebase,
 	getRoutinesFromFirebase,
 } from "@/lib/firebase-storage";
 import type { PriorityTier, Routine } from "@/lib/types";
-// Add Trash2 icon for the delete button
 import { Calendar, Dumbbell, Loader2, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface SavedRoutinesModalProps {
 	open: boolean;
@@ -49,7 +47,6 @@ export function SavedRoutinesModal({
 	onLoadPriorities,
 }: SavedRoutinesModalProps) {
 	const { user } = useAuth();
-	const { toast } = useToast();
 	const [routines, setRoutines] = useState<Routine[]>([]);
 	const [loading, setLoading] = useState(false);
 
@@ -71,13 +68,12 @@ export function SavedRoutinesModal({
 			const fetchedRoutines = await getRoutinesFromFirebase(user.uid);
 			setRoutines(fetchedRoutines);
 		} catch (error) {
-			toast({
-				title: "Failed to load routines",
+			// MODIFIED: Changed to sonner's error syntax
+			toast.error("Failed to load routines", {
 				description:
 					error instanceof Error
 						? error.message
 						: "Could not fetch your saved routines",
-				variant: "destructive",
 			});
 		} finally {
 			setLoading(false);
@@ -92,16 +88,15 @@ export function SavedRoutinesModal({
 			onLoadRoutine(routine);
 			onLoadPriorities(priorities);
 			onOpenChange(false);
-			toast({
-				title: "Routine loaded",
+			// MODIFIED: Changed to sonner's success syntax
+			toast.success("Routine loaded", {
 				description: `"${routine.name}" has been loaded successfully`,
 			});
 		} catch (error) {
-			toast({
-				title: "Failed to load routine",
+			// MODIFIED: Changed to sonner's error syntax
+			toast.error("Failed to load routine", {
 				description:
 					error instanceof Error ? error.message : "Could not load the routine",
-				variant: "destructive",
 			});
 		}
 	};
@@ -119,26 +114,23 @@ export function SavedRoutinesModal({
 		if (!user || !routineToDelete) return;
 
 		try {
-			// Assumes deleteRoutineFromFirebase takes userId and routineId
 			await deleteRoutineFromFirebase(user.uid, routineToDelete.id);
 
-			// Update the UI optimistically by removing the routine from state
 			setRoutines((prevRoutines) =>
 				prevRoutines.filter((r) => r.id !== routineToDelete.id)
 			);
 
-			toast({
-				title: "Routine deleted",
+			// MODIFIED: Changed to sonner's success syntax
+			toast.success("Routine deleted", {
 				description: `"${routineToDelete.name}" has been successfully deleted.`,
 			});
 		} catch (error) {
-			toast({
-				title: "Deletion failed",
+			// MODIFIED: Changed to sonner's error syntax
+			toast.error("Deletion failed", {
 				description:
 					error instanceof Error
 						? error.message
 						: "Could not delete the routine.",
-				variant: "destructive",
 			});
 		} finally {
 			// Close the dialog and reset the state

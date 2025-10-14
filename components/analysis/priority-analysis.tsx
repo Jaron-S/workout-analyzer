@@ -13,7 +13,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import volumeLandmarks from "@/data/volume-landmarks.json";
-// 1. Import your hook and useCallback
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import type { MuscleVolume, PriorityTier } from "@/lib/types";
 import { getVolumeZone } from "@/lib/volume-calculator";
@@ -25,7 +24,6 @@ import {
 	Target,
 	TrendingUp,
 } from "lucide-react";
-// 2. Add useCallback to the imports
 import { useCallback, useMemo, useState } from "react";
 
 // --- PROPS ---

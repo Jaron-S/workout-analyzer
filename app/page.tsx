@@ -7,7 +7,6 @@ import { SavedRoutinesModal } from "@/components/saved-routines-modal";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePersistedState } from "@/hooks/use-persisted-state";
-import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
 import {
 	savePrioritiesToFirebase,
@@ -29,6 +28,7 @@ import {
 	User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const DEFAULT_ROUTINE: Routine = {
 	id: "default",
@@ -41,7 +41,6 @@ const DEFAULT_ROUTINE: Routine = {
 };
 
 export default function Home() {
-	const { toast } = useToast();
 	const { user, signOut, isConfigured } = useAuth();
 	const [showAuth, setShowAuth] = useState(false);
 	const [showSavedRoutines, setShowSavedRoutines] = useState(false);
@@ -61,20 +60,19 @@ export default function Home() {
 	useEffect(() => {
 		const hasStoredData = loadRoutine() !== null || loadPriorities() !== null;
 		if (hasStoredData) {
-			toast({
-				title: "Welcome Back!",
+			// MODIFIED: Changed to sonner's syntax
+			toast("Welcome Back!", {
 				description:
 					"Your routine and settings have been restored from your last session.",
 			});
 		}
-	}, [toast]);
+	}, []); // Removed toast from dependency array as it's a stable import
 
 	const handleSaveToFirebase = async () => {
 		if (!user) {
-			toast({
-				title: "Login Required",
+			// MODIFIED: Changed to sonner's error syntax
+			toast.error("Login Required", {
 				description: "Please log in or create an account to save your routine.",
-				variant: "destructive",
 			});
 			return;
 		}
@@ -82,19 +80,17 @@ export default function Home() {
 		try {
 			await saveRoutineToFirebase(user.uid, routine);
 			await savePrioritiesToFirebase(user.uid, priorities);
-			toast({
-				title: "Routine Saved!",
+			// MODIFIED: Changed to sonner's success syntax
+			toast.success("Routine Saved!", {
 				description:
 					"Your routine has been successfully saved to your account.",
-				variant: "default", // Using a custom variant for styling
 			});
 		} catch (error) {
-			console.error("Failed to save routine:", error); // Keep console log for debugging
-			toast({
-				title: "Save Failed",
+			console.error("Failed to save routine:", error);
+			// MODIFIED: Changed to sonner's error syntax
+			toast.error("Save Failed", {
 				description:
 					"We couldn't save your routine. Please check your connection and try again.",
-				variant: "destructive",
 			});
 		}
 	};
@@ -102,17 +98,15 @@ export default function Home() {
 	const handleSignOut = async () => {
 		try {
 			await signOut();
-			toast({
-				title: "Signed Out",
+			// MODIFIED: Changed to sonner's success syntax
+			toast.success("Signed Out", {
 				description: "You have been signed out successfully.",
-				variant: "default",
 			});
 		} catch (error) {
-			console.error("Failed to sign out:", error); // Keep console log for debugging
-			toast({
-				title: "Sign Out Failed",
+			console.error("Failed to sign out:", error);
+			// MODIFIED: Changed to sonner's error syntax
+			toast.error("Sign Out Failed", {
 				description: "There was an issue signing you out. Please try again.",
-				variant: "destructive",
 			});
 		}
 	};

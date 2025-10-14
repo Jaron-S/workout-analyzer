@@ -16,7 +16,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import volumeLandmarks from "@/data/volume-landmarks.json";
-// 1. Import your existing hook
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import type { MuscleVolume, PriorityTier } from "@/lib/types";
 import { getVolumeZone } from "@/lib/volume-calculator";

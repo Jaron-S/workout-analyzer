@@ -6,7 +6,6 @@ import { VolumeAnalysis } from "@/components/analysis/volume-analysis";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import exercises from "@/data/exercises.json";
-// 1. Import your hook and useCallback
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import type { PriorityTier, Routine } from "@/lib/types";
 import { calculateMuscleVolumes } from "@/lib/volume-calculator";
