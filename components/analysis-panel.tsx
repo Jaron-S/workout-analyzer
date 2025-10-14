@@ -118,7 +118,7 @@ export function AnalysisPanel({
 							<div className="text-center py-12 text-muted-foreground">
 								<p>Priority analysis will appear here</p>
 								<p className="text-sm mt-2">
-									Set your muscle priorities in settings
+									Add exercises to see your priority breakdown
 								</p>
 							</div>
 						</Card>
