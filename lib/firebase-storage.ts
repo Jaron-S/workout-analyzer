@@ -1,41 +1,70 @@
-import { collection, doc, setDoc, getDoc, getDocs } from "firebase/firestore"
-import { db } from "./firebase-config"
-import type { Routine, PriorityTier } from "./types"
+import {
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	getDocs,
+	setDoc,
+} from "firebase/firestore";
+import { db } from "./firebase-config";
+import type { PriorityTier, Routine } from "./types";
 
 export async function saveRoutineToFirebase(userId: string, routine: Routine) {
-  if (!db) throw new Error("Firebase not configured")
+	if (!db) throw new Error("Firebase not configured");
 
-  const routineRef = doc(db, "users", userId, "routines", routine.id)
-  await setDoc(routineRef, {
-    ...routine,
-    updatedAt: new Date().toISOString(),
-  })
+	const routineRef = doc(db, "users", userId, "routines", routine.id);
+	await setDoc(routineRef, {
+		...routine,
+		updatedAt: new Date().toISOString(),
+	});
 }
 
-export async function getRoutinesFromFirebase(userId: string): Promise<Routine[]> {
-  if (!db) throw new Error("Firebase not configured")
+export async function getRoutinesFromFirebase(
+	userId: string
+): Promise<Routine[]> {
+	if (!db) throw new Error("Firebase not configured");
 
-  const routinesRef = collection(db, "users", userId, "routines")
-  const snapshot = await getDocs(routinesRef)
+	const routinesRef = collection(db, "users", userId, "routines");
+	const snapshot = await getDocs(routinesRef);
 
-  return snapshot.docs.map((doc) => doc.data() as Routine)
+	return snapshot.docs.map((doc) => doc.data() as Routine);
 }
 
-export async function savePrioritiesToFirebase(userId: string, priorities: Partial<Record<PriorityTier, string[]>>) {
-  if (!db) throw new Error("Firebase not configured")
+export async function deleteRoutineFromFirebase(
+	userId: string,
+	routineId: string
+): Promise<void> {
+	if (!db) throw new Error("Firebase not configured");
 
-  const prioritiesRef = doc(db, "users", userId, "settings", "priorities")
-  await setDoc(prioritiesRef, {
-    priorities,
-    updatedAt: new Date().toISOString(),
-  })
+	// Create a reference to the specific routine document you want to delete
+	const routineRef = doc(db, "users", userId, "routines", routineId);
+
+	// Delete the document
+	await deleteDoc(routineRef);
 }
 
-export async function getPrioritiesFromFirebase(userId: string): Promise<Partial<Record<PriorityTier, string[]>>> {
-  if (!db) throw new Error("Firebase not configured")
+export async function savePrioritiesToFirebase(
+	userId: string,
+	priorities: Partial<Record<PriorityTier, string[]>>
+) {
+	if (!db) throw new Error("Firebase not configured");
 
-  const prioritiesRef = doc(db, "users", userId, "settings", "priorities")
-  const snapshot = await getDoc(prioritiesRef)
+	const prioritiesRef = doc(db, "users", userId, "settings", "priorities");
+	await setDoc(prioritiesRef, {
+		priorities,
+		updatedAt: new Date().toISOString(),
+	});
+}
 
-  return snapshot.exists() ? (snapshot.data().priorities as Partial<Record<PriorityTier, string[]>>) : {}
+export async function getPrioritiesFromFirebase(
+	userId: string
+): Promise<Partial<Record<PriorityTier, string[]>>> {
+	if (!db) throw new Error("Firebase not configured");
+
+	const prioritiesRef = doc(db, "users", userId, "settings", "priorities");
+	const snapshot = await getDoc(prioritiesRef);
+
+	return snapshot.exists()
+		? (snapshot.data().priorities as Partial<Record<PriorityTier, string[]>>)
+		: {};
 }
