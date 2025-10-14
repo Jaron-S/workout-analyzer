@@ -1,0 +1,1316 @@
+[
+	{
+		"id": "ex1",
+		"name": "Bench Press",
+		"muscle_weightings": [
+			{ "muscle": "Chest", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.4 },
+			{ "muscle": "Triceps", "weighting": 0.3 }
+		],
+		"movement_pattern": "HorizontalPress",
+		"compound": true
+	},
+	{
+		"id": "ex2",
+		"name": "Close-Grip Bench Press",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Chest", "weighting": 0.4 },
+			{ "muscle": "Front Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "HorizontalPress",
+		"compound": true
+	},
+	{
+		"id": "ex3",
+		"name": "Incline Bench Press",
+		"muscle_weightings": [
+			{ "muscle": "Chest", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.7 },
+			{ "muscle": "Triceps", "weighting": 0.3 }
+		],
+		"movement_pattern": "InclinePress",
+		"compound": true
+	},
+	{
+		"id": "ex4",
+		"name": "Decline Bench Press",
+		"muscle_weightings": [
+			{ "muscle": "Chest", "weighting": 1 },
+			{ "muscle": "Triceps", "weighting": 0.3 },
+			{ "muscle": "Front Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "DeclinePress",
+		"compound": true
+	},
+	{
+		"id": "ex5",
+		"name": "Dumbbell Bench Press",
+		"muscle_weightings": [
+			{ "muscle": "Chest", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.4 },
+			{ "muscle": "Triceps", "weighting": 0.3 }
+		],
+		"movement_pattern": "HorizontalPress",
+		"compound": true
+	},
+	{
+		"id": "ex6",
+		"name": "Pull-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Lats", "weighting": 1 },
+			{ "muscle": "Biceps", "weighting": 0.3 },
+			{ "muscle": "Middle Back", "weighting": 0.3 },
+			{ "muscle": "Rear Delts", "weighting": 0.1 },
+			{ "muscle": "Traps", "weighting": 0.1 }
+		],
+		"movement_pattern": "VerticalPull",
+		"compound": true
+	},
+	{
+		"id": "ex7",
+		"name": "Chin-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Lats", "weighting": 1 },
+			{ "muscle": "Biceps", "weighting": 0.5 },
+			{ "muscle": "Middle Back", "weighting": 0.2 },
+			{ "muscle": "Rear Delts", "weighting": 0.1 },
+			{ "muscle": "Traps", "weighting": 0.1 }
+		],
+		"movement_pattern": "VerticalPull",
+		"compound": true
+	},
+	{
+		"id": "ex8",
+		"name": "Lat Pulldown",
+		"muscle_weightings": [
+			{ "muscle": "Lats", "weighting": 1 },
+			{ "muscle": "Biceps", "weighting": 0.2 },
+			{ "muscle": "Middle Back", "weighting": 0.1 },
+			{ "muscle": "Traps", "weighting": 0.1 }
+		],
+		"movement_pattern": "VerticalPull",
+		"compound": true
+	},
+	{
+		"id": "ex9",
+		"name": "T-Bar Rows",
+		"muscle_weightings": [
+			{ "muscle": "Middle Back", "weighting": 1 },
+			{ "muscle": "Lats", "weighting": 0.4 },
+			{ "muscle": "Rear Delts", "weighting": 0.3 },
+			{ "muscle": "Biceps", "weighting": 0.2 },
+			{ "muscle": "Traps", "weighting": 0.1 }
+		],
+		"movement_pattern": "HorizontalRow",
+		"compound": true
+	},
+	{
+		"id": "ex10",
+		"name": "Bent-over Rows",
+		"muscle_weightings": [
+			{ "muscle": "Middle Back", "weighting": 1 },
+			{ "muscle": "Lats", "weighting": 0.3 },
+			{ "muscle": "Rear Delts", "weighting": 0.3 },
+			{ "muscle": "Biceps", "weighting": 0.2 },
+			{ "muscle": "Traps", "weighting": 0.1 }
+		],
+		"movement_pattern": "HorizontalRow",
+		"compound": true
+	},
+	{
+		"id": "ex11",
+		"name": "Pendlay Rows",
+		"muscle_weightings": [
+			{ "muscle": "Middle Back", "weighting": 1 },
+			{ "muscle": "Lats", "weighting": 0.3 },
+			{ "muscle": "Rear Delts", "weighting": 0.3 },
+			{ "muscle": "Biceps", "weighting": 0.2 },
+			{ "muscle": "Traps", "weighting": 0.1 }
+		],
+		"movement_pattern": "HorizontalRow",
+		"compound": true
+	},
+	{
+		"id": "ex12",
+		"name": "Shoulder Press",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Side Delts", "weighting": 0.6 },
+			{ "muscle": "Triceps", "weighting": 0.3 },
+			{ "muscle": "Traps", "weighting": 0.2 }
+		],
+		"movement_pattern": "VerticalPress",
+		"compound": true
+	},
+	{
+		"id": "ex13",
+		"name": "Military Press",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Side Delts", "weighting": 0.6 },
+			{ "muscle": "Triceps", "weighting": 0.3 },
+			{ "muscle": "Traps", "weighting": 0.2 }
+		],
+		"movement_pattern": "VerticalPress",
+		"compound": true
+	},
+	{
+		"id": "ex14",
+		"name": "Arnold Press",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Side Delts", "weighting": 0.7 },
+			{ "muscle": "Triceps", "weighting": 0.2 },
+			{ "muscle": "Traps", "weighting": 0.2 }
+		],
+		"movement_pattern": "VerticalPress",
+		"compound": true
+	},
+	{
+		"id": "ex15",
+		"name": "Dumbbell Shoulder Press",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Side Delts", "weighting": 0.6 },
+			{ "muscle": "Triceps", "weighting": 0.3 },
+			{ "muscle": "Traps", "weighting": 0.2 }
+		],
+		"movement_pattern": "VerticalPress",
+		"compound": true
+	},
+	{
+		"id": "ex16",
+		"name": "Lateral Raises",
+		"muscle_weightings": [{ "muscle": "Side Delts", "weighting": 1 }],
+		"movement_pattern": "LateralRaise",
+		"compound": false
+	},
+	{
+		"id": "ex17",
+		"name": "Front Raises",
+		"muscle_weightings": [{ "muscle": "Front Delts", "weighting": 1 }],
+		"movement_pattern": "FrontRaise",
+		"compound": false
+	},
+	{
+		"id": "ex18",
+		"name": "Face Pulls",
+		"muscle_weightings": [
+			{ "muscle": "Rear Delts", "weighting": 1 },
+			{ "muscle": "Traps", "weighting": 0.3 },
+			{ "muscle": "Middle Back", "weighting": 0.2 }
+		],
+		"movement_pattern": "HorizontalRow",
+		"compound": false
+	},
+	{
+		"id": "ex19",
+		"name": "Rear Delt Flyes",
+		"muscle_weightings": [
+			{ "muscle": "Rear Delts", "weighting": 1 },
+			{ "muscle": "Traps", "weighting": 0.2 },
+			{ "muscle": "Middle Back", "weighting": 0.2 }
+		],
+		"movement_pattern": "ReverseFly",
+		"compound": false
+	},
+	{
+		"id": "ex20",
+		"name": "Tricep Dips",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Chest", "weighting": 0.4 },
+			{ "muscle": "Front Delts", "weighting": 0.3 }
+		],
+		"movement_pattern": "VerticalPress",
+		"compound": true
+	},
+	{
+		"id": "ex21",
+		"name": "Tricep Pushdown",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.1 }
+		],
+		"movement_pattern": "TricepExtension",
+		"compound": false
+	},
+	{
+		"id": "ex22",
+		"name": "Skull Crushers",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.1 }
+		],
+		"movement_pattern": "TricepExtension",
+		"compound": false
+	},
+	{
+		"id": "ex23",
+		"name": "Close-Grip Push-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Chest", "weighting": 0.4 },
+			{ "muscle": "Front Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "HorizontalPress",
+		"compound": true
+	},
+	{
+		"id": "ex24",
+		"name": "Overhead Tricep Extension",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.1 }
+		],
+		"movement_pattern": "TricepExtension",
+		"compound": false
+	},
+	{
+		"id": "ex25",
+		"name": "Bicep Curls",
+		"muscle_weightings": [
+			{ "muscle": "Biceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.2 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex26",
+		"name": "Hammer Curls",
+		"muscle_weightings": [
+			{ "muscle": "Biceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.3 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex27",
+		"name": "Preacher Curls",
+		"muscle_weightings": [
+			{ "muscle": "Biceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.2 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex28",
+		"name": "Concentration Curls",
+		"muscle_weightings": [{ "muscle": "Biceps", "weighting": 1 }],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex29",
+		"name": "EZ Bar Curls",
+		"muscle_weightings": [
+			{ "muscle": "Biceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.2 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex30",
+		"name": "Zottman Curls",
+		"muscle_weightings": [
+			{ "muscle": "Biceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.4 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex31",
+		"name": "Push-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Chest", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.4 },
+			{ "muscle": "Triceps", "weighting": 0.3 }
+		],
+		"movement_pattern": "HorizontalPress",
+		"compound": true
+	},
+	{
+		"id": "ex32",
+		"name": "Diamond Push-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Triceps", "weighting": 1 },
+			{ "muscle": "Chest", "weighting": 0.3 },
+			{ "muscle": "Front Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "HorizontalPress",
+		"compound": true
+	},
+	{
+		"id": "ex33",
+		"name": "Pec Deck Flyes",
+		"muscle_weightings": [{ "muscle": "Chest", "weighting": 1 }],
+		"movement_pattern": "Fly",
+		"compound": false
+	},
+	{
+		"id": "ex34",
+		"name": "Dumbbell Flyes",
+		"muscle_weightings": [{ "muscle": "Chest", "weighting": 1 }],
+		"movement_pattern": "Fly",
+		"compound": false
+	},
+	{
+		"id": "ex35",
+		"name": "Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.8 },
+			{ "muscle": "Adductors", "weighting": 0.6 },
+			{ "muscle": "Hamstrings", "weighting": 0.5 },
+			{ "muscle": "Lower Back", "weighting": 0.3 },
+			{ "muscle": "Calves", "weighting": 0.2 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex36",
+		"name": "Front Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Adductors", "weighting": 0.4 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 },
+			{ "muscle": "Abs", "weighting": 0.3 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex37",
+		"name": "Hack Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Adductors", "weighting": 0.3 },
+			{ "muscle": "Calves", "weighting": 0.2 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex38",
+		"name": "Overhead Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.4 },
+			{ "muscle": "Glutes", "weighting": 0.3 },
+			{ "muscle": "Abs", "weighting": 0.2 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex39",
+		"name": "Goblet Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Abs", "weighting": 0.3 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex40",
+		"name": "Box Squats",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Quads", "weighting": 0.5 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 },
+			{ "muscle": "Lower Back", "weighting": 0.2 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex41",
+		"name": "Pistol Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Calves", "weighting": 0.3 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex42",
+		"name": "Deadlifts",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Hamstrings", "weighting": 0.8 },
+			{ "muscle": "Lower Back", "weighting": 0.8 },
+			{ "muscle": "Middle Back", "weighting": 0.7 },
+			{ "muscle": "Traps", "weighting": 0.7 },
+			{ "muscle": "Quads", "weighting": 0.5 },
+			{ "muscle": "Forearms", "weighting": 0.4 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex43",
+		"name": "Sumo Deadlifts",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Adductors", "weighting": 0.8 },
+			{ "muscle": "Lower Back", "weighting": 0.6 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 },
+			{ "muscle": "Quads", "weighting": 0.2 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex44",
+		"name": "Romanian Deadlifts",
+		"muscle_weightings": [
+			{ "muscle": "Hamstrings", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.9 },
+			{ "muscle": "Lower Back", "weighting": 0.7 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex45",
+		"name": "Stiff-Legged Deadlifts",
+		"muscle_weightings": [
+			{ "muscle": "Hamstrings", "weighting": 1 },
+			{ "muscle": "Lower Back", "weighting": 0.5 },
+			{ "muscle": "Glutes", "weighting": 0.3 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex46",
+		"name": "Trap Bar Deadlifts",
+		"muscle_weightings": [
+			{ "muscle": "Lower Back", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.7 },
+			{ "muscle": "Quads", "weighting": 0.4 },
+			{ "muscle": "Hamstrings", "weighting": 0.3 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex47",
+		"name": "Lunges",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Adductors", "weighting": 0.5 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex48",
+		"name": "Reverse Lunges",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Quads", "weighting": 0.7 },
+			{ "muscle": "Adductors", "weighting": 0.5 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex49",
+		"name": "Side Lunges",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Adductors", "weighting": 0.8 },
+			{ "muscle": "Glutes", "weighting": 0.5 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex50",
+		"name": "Curtsy Lunges",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Adductors", "weighting": 0.6 },
+			{ "muscle": "Quads", "weighting": 0.6 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex51",
+		"name": "Walking Lunges",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.7 },
+			{ "muscle": "Adductors", "weighting": 0.5 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex52",
+		"name": "Bulgarian Split Squats",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.9 },
+			{ "muscle": "Hamstrings", "weighting": 0.7 },
+			{ "muscle": "Adductors", "weighting": 0.6 },
+			{ "muscle": "Calves", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex53",
+		"name": "Step-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Lunge",
+		"compound": true
+	},
+	{
+		"id": "ex54",
+		"name": "Leg Press",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.5 },
+			{ "muscle": "Adductors", "weighting": 0.4 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex55",
+		"name": "Calf Raises",
+		"muscle_weightings": [{ "muscle": "Calves", "weighting": 1 }],
+		"movement_pattern": "CalfRaise",
+		"compound": false
+	},
+	{
+		"id": "ex56",
+		"name": "Seated Calf Raises",
+		"muscle_weightings": [{ "muscle": "Calves", "weighting": 1 }],
+		"movement_pattern": "CalfRaise",
+		"compound": false
+	},
+	{
+		"id": "ex57",
+		"name": "Donkey Calf Raises",
+		"muscle_weightings": [{ "muscle": "Calves", "weighting": 1 }],
+		"movement_pattern": "CalfRaise",
+		"compound": false
+	},
+	{
+		"id": "ex58",
+		"name": "Leg Extensions",
+		"muscle_weightings": [{ "muscle": "Quads", "weighting": 1 }],
+		"movement_pattern": "LegExtension",
+		"compound": false
+	},
+	{
+		"id": "ex59",
+		"name": "Leg Curls",
+		"muscle_weightings": [
+			{ "muscle": "Hamstrings", "weighting": 1 },
+			{ "muscle": "Calves", "weighting": 0.2 }
+		],
+		"movement_pattern": "LegCurl",
+		"compound": false
+	},
+	{
+		"id": "ex60",
+		"name": "Glute-Ham Raises",
+		"muscle_weightings": [
+			{ "muscle": "Hamstrings", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.7 },
+			{ "muscle": "Lower Back", "weighting": 0.4 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex61",
+		"name": "Hip Thrusts",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 },
+			{ "muscle": "Quads", "weighting": 0.2 }
+		],
+		"movement_pattern": "HipThrust",
+		"compound": true
+	},
+	{
+		"id": "ex62",
+		"name": "Glute Bridges",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 }
+		],
+		"movement_pattern": "HipThrust",
+		"compound": true
+	},
+	{
+		"id": "ex63",
+		"name": "Good Mornings",
+		"muscle_weightings": [
+			{ "muscle": "Lower Back", "weighting": 1 },
+			{ "muscle": "Hamstrings", "weighting": 0.7 },
+			{ "muscle": "Glutes", "weighting": 0.5 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex64",
+		"name": "Planks",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.3 }
+		],
+		"movement_pattern": "Core",
+		"compound": true
+	},
+	{
+		"id": "ex65",
+		"name": "Side Planks",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "Core",
+		"compound": true
+	},
+	{
+		"id": "ex66",
+		"name": "Extended Planks",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.4 }
+		],
+		"movement_pattern": "Core",
+		"compound": true
+	},
+	{
+		"id": "ex67",
+		"name": "Russian Twists",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Lower Back", "weighting": 0.3 }
+		],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex68",
+		"name": "Bicycle Crunches",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex69",
+		"name": "Reverse Crunches",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex70",
+		"name": "Mountain Climbers",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.3 },
+			{ "muscle": "Quads", "weighting": 0.2 }
+		],
+		"movement_pattern": "Core",
+		"compound": true
+	},
+	{
+		"id": "ex71",
+		"name": "Flutter Kicks",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex72",
+		"name": "Hanging Leg Raises",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.4 }
+		],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex73",
+		"name": "Windshield Wipers",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex74",
+		"name": "Ab Rollouts",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.3 },
+			{ "muscle": "Triceps", "weighting": 0.2 }
+		],
+		"movement_pattern": "Core",
+		"compound": true
+	},
+	{
+		"id": "ex75",
+		"name": "Toe Touches",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex76",
+		"name": "Sit-Ups",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex77",
+		"name": "V-Ups",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex78",
+		"name": "Superman",
+		"muscle_weightings": [
+			{ "muscle": "Lower Back", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 }
+		],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex79",
+		"name": "Oblique Crunches",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex80",
+		"name": "Hollow Hold",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": true
+	},
+	{
+		"id": "ex81",
+		"name": "Cable Woodchoppers",
+		"muscle_weightings": [{ "muscle": "Abs", "weighting": 1 }],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex82",
+		"name": "Clean and Jerk",
+		"muscle_weightings": [
+			{ "muscle": "Traps", "weighting": 1 },
+			{ "muscle": "Quads", "weighting": 0.8 },
+			{ "muscle": "Front Delts", "weighting": 0.8 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Hamstrings", "weighting": 0.5 }
+		],
+		"movement_pattern": "Olympic",
+		"compound": true
+	},
+	{
+		"id": "ex83",
+		"name": "Power Clean",
+		"muscle_weightings": [
+			{ "muscle": "Traps", "weighting": 1 },
+			{ "muscle": "Lower Back", "weighting": 0.7 },
+			{ "muscle": "Quads", "weighting": 0.5 }
+		],
+		"movement_pattern": "Olympic",
+		"compound": true
+	},
+	{
+		"id": "ex84",
+		"name": "Snatch",
+		"muscle_weightings": [
+			{ "muscle": "Traps", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.8 },
+			{ "muscle": "Quads", "weighting": 0.5 }
+		],
+		"movement_pattern": "Olympic",
+		"compound": true
+	},
+	{
+		"id": "ex85",
+		"name": "Thrusters",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.8 },
+			{ "muscle": "Triceps", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex86",
+		"name": "Burpees",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Chest", "weighting": 0.5 },
+			{ "muscle": "Front Delts", "weighting": 0.4 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex87",
+		"name": "Kettlebell Swings",
+		"muscle_weightings": [
+			{ "muscle": "Hamstrings", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.7 },
+			{ "muscle": "Lower Back", "weighting": 0.5 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex88",
+		"name": "Turkish Get-Ups",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Abs", "weighting": 0.6 },
+			{ "muscle": "Glutes", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex89",
+		"name": "Medicine Ball Slams",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex90",
+		"name": "Wall Balls",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.6 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex91",
+		"name": "Deadlift to Overhead Press",
+		"muscle_weightings": [
+			{ "muscle": "Lower Back", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.8 },
+			{ "muscle": "Hamstrings", "weighting": 0.7 },
+			{ "muscle": "Quads", "weighting": 0.7 },
+			{ "muscle": "Triceps", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex92",
+		"name": "Renegade Rows",
+		"muscle_weightings": [
+			{ "muscle": "Middle Back", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.6 },
+			{ "muscle": "Abs", "weighting": 0.5 },
+			{ "muscle": "Rear Delts", "weighting": 0.3 }
+		],
+		"movement_pattern": "HorizontalRow",
+		"compound": true
+	},
+	{
+		"id": "ex93",
+		"name": "Farmer's Walk",
+		"muscle_weightings": [
+			{ "muscle": "Traps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.8 }
+		],
+		"movement_pattern": "Carry",
+		"compound": true
+	},
+	{
+		"id": "ex94",
+		"name": "Man Makers",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Chest", "weighting": 0.7 },
+			{ "muscle": "Quads", "weighting": 0.6 },
+			{ "muscle": "Abs", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex95",
+		"name": "Bear Crawls",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.7 },
+			{ "muscle": "Abs", "weighting": 0.6 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex96",
+		"name": "Sled Push",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.7 },
+			{ "muscle": "Calves", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex97",
+		"name": "Sled Pull",
+		"muscle_weightings": [
+			{ "muscle": "Hamstrings", "weighting": 1 },
+			{ "muscle": "Middle Back", "weighting": 0.6 },
+			{ "muscle": "Glutes", "weighting": 0.5 },
+			{ "muscle": "Rear Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex98",
+		"name": "Rowing Machine",
+		"muscle_weightings": [
+			{ "muscle": "Middle Back", "weighting": 1 },
+			{ "muscle": "Quads", "weighting": 0.7 },
+			{ "muscle": "Biceps", "weighting": 0.5 },
+			{ "muscle": "Rear Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex99",
+		"name": "Battle Ropes",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.7 },
+			{ "muscle": "Abs", "weighting": 0.5 }
+		],
+		"movement_pattern": "FullBody",
+		"compound": true
+	},
+	{
+		"id": "ex100",
+		"name": "Barbell Kayaking Rotations",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Front Delts", "weighting": 0.5 },
+			{ "muscle": "Middle Back", "weighting": 0.5 },
+			{ "muscle": "Forearms", "weighting": 0.4 }
+		],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex101",
+		"name": "Reverse Barbell Curl",
+		"muscle_weightings": [
+			{ "muscle": "Forearms", "weighting": 1 },
+			{ "muscle": "Biceps", "weighting": 0.6 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex102",
+		"name": "Chest Supported Reverse Fly",
+		"muscle_weightings": [
+			{ "muscle": "Rear Delts", "weighting": 1 },
+			{ "muscle": "Middle Back", "weighting": 0.7 },
+			{ "muscle": "Traps", "weighting": 0.5 }
+		],
+		"movement_pattern": "ReverseFly",
+		"compound": false
+	},
+	{
+		"id": "ex103",
+		"name": "Neck Curls",
+		"muscle_weightings": [{ "muscle": "Traps", "weighting": 1 }],
+		"movement_pattern": "Neck",
+		"compound": false
+	},
+	{
+		"id": "ex104",
+		"name": "Neck Extensions",
+		"muscle_weightings": [{ "muscle": "Traps", "weighting": 1 }],
+		"movement_pattern": "Neck",
+		"compound": false
+	},
+	{
+		"id": "ex105",
+		"name": "Dumbbell Rows",
+		"muscle_weightings": [
+			{ "muscle": "Lats", "weighting": 1 },
+			{ "muscle": "Middle Back", "weighting": 0.7 },
+			{ "muscle": "Biceps", "weighting": 0.5 },
+			{ "muscle": "Rear Delts", "weighting": 0.4 },
+			{ "muscle": "Traps", "weighting": 0.4 }
+		],
+		"movement_pattern": "HorizontalRow",
+		"compound": true
+	},
+	{
+		"id": "ex106",
+		"name": "Seated Overhead Barbell Press",
+		"muscle_weightings": [
+			{ "muscle": "Front Delts", "weighting": 1 },
+			{ "muscle": "Side Delts", "weighting": 0.6 },
+			{ "muscle": "Triceps", "weighting": 0.5 },
+			{ "muscle": "Traps", "weighting": 0.4 }
+		],
+		"movement_pattern": "VerticalPress",
+		"compound": true
+	},
+	{
+		"id": "ex107",
+		"name": "Barbell Shrugs",
+		"muscle_weightings": [{ "muscle": "Traps", "weighting": 1 }],
+		"movement_pattern": "Shrug",
+		"compound": false
+	},
+	{
+		"id": "ex108",
+		"name": "Dumbbell Shrugs",
+		"muscle_weightings": [{ "muscle": "Traps", "weighting": 1 }],
+		"movement_pattern": "Shrug",
+		"compound": false
+	},
+	{
+		"id": "ex109",
+		"name": "Barbell Hip Thrusts",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Hamstrings", "weighting": 0.4 },
+			{ "muscle": "Quads", "weighting": 0.2 },
+			{ "muscle": "Lower Back", "weighting": 0.2 }
+		],
+		"movement_pattern": "HipThrust",
+		"compound": true
+	},
+	{
+		"id": "ex110",
+		"name": "Cycling",
+		"muscle_weightings": [],
+		"movement_pattern": "Cardio",
+		"compound": false
+	},
+	{
+		"id": "ex111",
+		"name": "Running",
+		"muscle_weightings": [],
+		"movement_pattern": "Cardio",
+		"compound": false
+	},
+	{
+		"id": "ex112",
+		"name": "Dumbbell Pullover",
+		"muscle_weightings": [
+			{ "muscle": "Lats", "weighting": 0.7 },
+			{ "muscle": "Chest", "weighting": 0.6 },
+			{ "muscle": "Triceps", "weighting": 0.3 }
+		],
+		"movement_pattern": "Pullover",
+		"compound": true
+	},
+	{
+		"id": "ex113",
+		"name": "Seated Incline Curl",
+		"muscle_weightings": [
+			{ "muscle": "Biceps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.2 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex114",
+		"name": "Seated Lateral Raise",
+		"muscle_weightings": [{ "muscle": "Side Delts", "weighting": 1 }],
+		"movement_pattern": "LateralRaise",
+		"compound": false
+	},
+	{
+		"id": "ex115",
+		"name": "Zercher Squat",
+		"muscle_weightings": [
+			{ "muscle": "Quads", "weighting": 1 },
+			{ "muscle": "Glutes", "weighting": 0.6 },
+			{ "muscle": "Lower Back", "weighting": 0.4 }
+		],
+		"movement_pattern": "Squat",
+		"compound": true
+	},
+	{
+		"id": "ex116",
+		"name": "Nordic Curl",
+		"muscle_weightings": [{ "muscle": "Hamstrings", "weighting": 1 }],
+		"movement_pattern": "LegCurl",
+		"compound": false
+	},
+	{
+		"id": "ex117",
+		"name": "Reverse Nordic Curl",
+		"muscle_weightings": [{ "muscle": "Quads", "weighting": 1 }],
+		"movement_pattern": "LegExtension",
+		"compound": false
+	},
+	{
+		"id": "ex118",
+		"name": "Farmer's Carry (Unilateral)",
+		"muscle_weightings": [
+			{ "muscle": "Traps", "weighting": 1 },
+			{ "muscle": "Forearms", "weighting": 0.8 },
+			{ "muscle": "Abs", "weighting": 0.5 }
+		],
+		"movement_pattern": "Carry",
+		"compound": true
+	},
+	{
+		"id": "ex119",
+		"name": "Candlestick",
+		"muscle_weightings": [
+			{ "muscle": "Abs", "weighting": 1 },
+			{ "muscle": "Lower Back", "weighting": 0.4 }
+		],
+		"movement_pattern": "Core",
+		"compound": false
+	},
+	{
+		"id": "ex120",
+		"name": "Single Leg Calf Raise",
+		"muscle_weightings": [{ "muscle": "Calves", "weighting": 1 }],
+		"movement_pattern": "CalfRaise",
+		"compound": false
+	},
+	{
+		"id": "ex121",
+		"name": "Jefferson Curl",
+		"muscle_weightings": [
+			{ "muscle": "Lower Back", "weighting": 0.8 },
+			{ "muscle": "Hamstrings", "weighting": 0.5 },
+			{ "muscle": "Abs", "weighting": 0.3 }
+		],
+		"movement_pattern": "Hinge",
+		"compound": true
+	},
+	{
+		"id": "ex122",
+		"name": "Dumbbell Kneeling Hip Raise",
+		"muscle_weightings": [
+			{ "muscle": "Glutes", "weighting": 1 },
+			{ "muscle": "Hamstrings", "weighting": 0.2 }
+		],
+		"movement_pattern": "HipThrust",
+		"compound": false
+	},
+	{
+		"id": "ex123",
+		"name": "Super ROM Lateral Raise",
+		"muscle_weightings": [{ "muscle": "Side Delts", "weighting": 1 }],
+		"movement_pattern": "LateralRaise",
+		"compound": false
+	},
+	{
+		"id": "ex124",
+		"name": "Wrist Roller",
+		"muscle_weightings": [{ "muscle": "Forearms", "weighting": 1 }],
+		"movement_pattern": "Forearm",
+		"compound": false
+	},
+	{
+		"id": "ex125",
+		"name": "Upright Row",
+		"muscle_weightings": [
+			{ "muscle": "Side Delts", "weighting": 1 },
+			{ "muscle": "Traps", "weighting": 0.8 },
+			{ "muscle": "Biceps", "weighting": 0.2 },
+			{ "muscle": "Rear Delts", "weighting": 0.2 }
+		],
+		"movement_pattern": "UprightRow",
+		"compound": true
+	},
+	{
+		"id": "ex126",
+		"name": "Lying Side Raise",
+		"muscle_weightings": [
+			{ "muscle": "Rear Delts", "weighting": 1 },
+			{ "muscle": "Side Delts", "weighting": 0.3 }
+		],
+		"movement_pattern": "ReverseFly",
+		"compound": false
+	},
+	{
+		"id": "ex127",
+		"name": "Copenhagen Hip Adduction",
+		"muscle_weightings": [
+			{ "muscle": "Adductors", "weighting": 1 },
+			{ "muscle": "Abs", "weighting": 0.4 }
+		],
+		"movement_pattern": "Adduction",
+		"compound": false
+	},
+	{
+		"id": "ex128",
+		"name": "Single Arm Tricep Extension (Dumbbell)",
+		"muscle_weightings": [{ "muscle": "Triceps", "weighting": 1 }],
+		"movement_pattern": "TricepExtension",
+		"compound": false
+	},
+	{
+		"id": "ex129",
+		"name": "Barbell Overhead Tricep Extension",
+		"muscle_weightings": [{ "muscle": "Triceps", "weighting": 1 }],
+		"movement_pattern": "TricepExtension",
+		"compound": false
+	}
+]

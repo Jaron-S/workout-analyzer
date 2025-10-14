@@ -1,0 +1,25 @@
+{
+	"Chest": { "mv": 8, "mev": 10, "mav_min": 14, "mav_max": 22, "mrv": 26 },
+	"Lats": { "mv": 8, "mev": 10, "mav_min": 14, "mav_max": 24, "mrv": 30 },
+	"Middle Back": {
+		"mv": 8,
+		"mev": 10,
+		"mav_min": 14,
+		"mav_max": 24,
+		"mrv": 30
+	},
+	"Quads": { "mv": 6, "mev": 8, "mav_min": 12, "mav_max": 20, "mrv": 24 },
+	"Hamstrings": { "mv": 4, "mev": 6, "mav_min": 10, "mav_max": 18, "mrv": 20 },
+	"Glutes": { "mv": 4, "mev": 6, "mav_min": 10, "mav_max": 20, "mrv": 24 },
+	"Side Delts": { "mv": 6, "mev": 8, "mav_min": 12, "mav_max": 20, "mrv": 25 },
+	"Front Delts": { "mv": 5, "mev": 7, "mav_min": 9, "mav_max": 15, "mrv": 18 },
+	"Rear Delts": { "mv": 5, "mev": 7, "mav_min": 12, "mav_max": 20, "mrv": 25 },
+	"Biceps": { "mv": 6, "mev": 8, "mav_min": 12, "mav_max": 20, "mrv": 26 },
+	"Triceps": { "mv": 5, "mev": 7, "mav_min": 10, "mav_max": 18, "mrv": 22 },
+	"Calves": { "mv": 6, "mev": 8, "mav_min": 12, "mav_max": 20, "mrv": 24 },
+	"Forearms": { "mv": 2, "mev": 4, "mav_min": 6, "mav_max": 12, "mrv": 15 },
+	"Abs": { "mv": 4, "mev": 6, "mav_min": 12, "mav_max": 20, "mrv": 25 },
+	"Traps": { "mv": 4, "mev": 6, "mav_min": 10, "mav_max": 20, "mrv": 25 },
+	"Adductors": { "mv": 3, "mev": 5, "mav_min": 8, "mav_max": 14, "mrv": 16 },
+	"Lower Back": { "mv": 3, "mev": 5, "mav_min": 8, "mav_max": 12, "mrv": 15 }
+}

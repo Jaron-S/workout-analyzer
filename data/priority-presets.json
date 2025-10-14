@@ -1,0 +1,67 @@
+[
+	{
+		"id": "preset1",
+		"name": "Aesthetic Blueprint (Male)",
+		"tiers": {
+			"S": ["Lats", "Side Delts"],
+			"A": ["Biceps", "Triceps", "Forearms"],
+			"B": ["Chest", "Glutes", "Abs"],
+			"C": ["Middle Back", "Rear Delts", "Quads", "Hamstrings"],
+			"D": ["Front Delts", "Traps", "Calves", "Lower Back"]
+		}
+	},
+	{
+		"id": "preset2",
+		"name": "V-Shape Focus (Male)",
+		"tiers": {
+			"S": ["Lats", "Side Delts"],
+			"A": ["Chest"],
+			"B": ["Biceps", "Triceps", "Rear Delts"],
+			"C": ["Quads", "Hamstrings", "Middle Back", "Front Delts", "Glutes"],
+			"D": ["Abs", "Calves", "Forearms", "Traps", "Lower Back"]
+		}
+	},
+	{
+		"id": "preset3",
+		"name": "Glute & Lower Body Focus (Female)",
+		"tiers": {
+			"S": ["Glutes"],
+			"A": ["Hamstrings", "Quads"],
+			"B": ["Side Delts", "Lats"],
+			"C": ["Middle Back", "Chest", "Triceps", "Biceps", "Rear Delts"],
+			"D": ["Abs", "Calves", "Forearms", "Traps", "Front Delts", "Lower Back"]
+		}
+	},
+	{
+		"id": "preset4",
+		"name": "Balanced Physique",
+		"tiers": {
+			"A": ["Chest", "Lats", "Quads", "Glutes", "Hamstrings"],
+			"B": ["Side Delts", "Middle Back", "Biceps", "Triceps"],
+			"C": ["Rear Delts", "Front Delts", "Calves", "Abs"],
+			"D": ["Forearms", "Traps", "Lower Back"]
+		}
+	},
+	{
+		"id": "preset5",
+		"name": "Upper Body Focus",
+		"tiers": {
+			"S": ["Chest", "Lats"],
+			"A": ["Side Delts", "Middle Back"],
+			"B": ["Biceps", "Triceps", "Rear Delts", "Front Delts"],
+			"C": ["Traps", "Forearms", "Abs"],
+			"D": ["Quads", "Hamstrings", "Glutes", "Calves", "Lower Back"]
+		}
+	},
+	{
+		"id": "preset6",
+		"name": "Powerbuilding Focus",
+		"tiers": {
+			"S": ["Quads", "Chest", "Glutes", "Lower Back"],
+			"A": ["Hamstrings", "Lats", "Triceps"],
+			"B": ["Middle Back", "Front Delts"],
+			"C": ["Side Delts", "Biceps", "Traps", "Abs"],
+			"D": ["Calves", "Forearms", "Rear Delts"]
+		}
+	}
+]
