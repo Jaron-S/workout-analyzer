@@ -12,7 +12,7 @@
 	"Triceps": { "mv": 5, "mev": 7, "mav_min": 10, "mav_max": 18, "mrv": 22 },
 	"Calves": { "mv": 6, "mev": 8, "mav_min": 12, "mav_max": 20, "mrv": 24 },
 	"Forearms": { "mv": 4, "mev": 6, "mav_min": 8, "mav_max": 14, "mrv": 16 },
-	"Abs": { "mv": 4, "mev": 6, "mav_min": 12, "mav_max": 20, "mrv": 25 },
+	"Abs": { "mv": 2, "mev": 4, "mav_min": 8, "mav_max": 12, "mrv": 20 },
 	"Traps": { "mv": 4, "mev": 6, "mav_min": 10, "mav_max": 20, "mrv": 25 },
 	"Adductors": { "mv": 4, "mev": 6, "mav_min": 8, "mav_max": 14, "mrv": 16 },
 	"Lower Back": { "mv": 3, "mev": 5, "mav_min": 8, "mav_max": 12, "mrv": 15 }
