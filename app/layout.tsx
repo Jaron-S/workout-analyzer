@@ -11,7 +11,6 @@ import "./globals.css";
 export const metadata: Metadata = {
 	title: "Workout Routine Analyzer",
 	description: "Build smarter workout routines with science-backed feedback",
-	generator: "v0.app",
 };
 
 export default function RootLayout({
