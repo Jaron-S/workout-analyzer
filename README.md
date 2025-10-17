@@ -2,7 +2,7 @@
 
 A data-driven fitness planner for creating and analyzing hypertrophy-focused workout routines with a real-time coaching engine.
 
-[**Live Demo**]([workout-analyzer.netlify.app](https://workout-analyzer.netlify.app/))
+[**Live Demo**](https://workout-analyzer.netlify.app/)
 
 ## About This Project
 
