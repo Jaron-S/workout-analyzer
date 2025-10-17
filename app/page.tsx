@@ -168,10 +168,10 @@ export default function Home() {
 
 			{/* Desktop: Two-panel layout */}
 			<div className="hidden lg:grid lg:grid-cols-2 lg:gap-0 h-[calc(100vh-73px)]">
-				<div className="border-r border-border overflow-y-auto">
+				<div className="border-r border-border overflow-y-auto p-6 xl:p-8">
 					<RoutineBuilder routine={routine} onRoutineChange={setRoutine} />
 				</div>
-				<div className="overflow-y-auto bg-card/50">
+				<div className="overflow-y-auto bg-card/50 p-6 xl:p-8">
 					<AnalysisPanel
 						routine={routine}
 						priorities={priorities}
@@ -195,13 +195,13 @@ export default function Home() {
 					</TabsList>
 					<TabsContent
 						value="builder"
-						className="m-0 min-h-[calc(100vh-129px)]"
+						className="m-0 min-h-[calc(100vh-129px)] p-4 sm:p-6"
 					>
 						<RoutineBuilder routine={routine} onRoutineChange={setRoutine} />
 					</TabsContent>
 					<TabsContent
 						value="analysis"
-						className="m-0 min-h-[calc(100vh-129px)]"
+						className="m-0 min-h-[calc(100vh-129px)] p-4 sm:p-6"
 					>
 						<AnalysisPanel
 							routine={routine}

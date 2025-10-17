@@ -5,8 +5,26 @@ import {
 	getPrioritiesFromFirebase,
 	savePrioritiesToFirebase,
 } from "@/lib/firebase-storage";
+import {
+	DndContext,
+	KeyboardSensor,
+	PointerSensor,
+	closestCenter,
+	useSensor,
+	useSensors,
+	type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+	SortableContext,
+	arrayMove,
+	sortableKeyboardCoordinates,
+	useSortable,
+	verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useState } from "react";
 
+// UI Components
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,31 +43,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+// App Data & Types
 import priorityPresets from "@/data/priority-presets.json";
 import { ALL_MUSCLES, PRIORITY_TIERS } from "@/lib/constants";
 import type { PriorityTier } from "@/lib/types";
-import {
-	DndContext,
-	KeyboardSensor,
-	PointerSensor,
-	closestCenter,
-	useSensor,
-	useSensors,
-	type DragEndEvent,
-} from "@dnd-kit/core";
-import {
-	SortableContext,
-	arrayMove,
-	sortableKeyboardCoordinates,
-	useSortable,
-	verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+// Icons & Utilities
 import { GripVertical, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
-// --- Unchanged parts from your original file ---
-// (Props, TIER_INFO, SortableMuscle component)
+// --- Prop and Constant Definitions ---
 interface PrioritySettingsProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
@@ -95,6 +97,7 @@ const TIER_INFO: Record<
 	},
 };
 
+// --- Child Components ---
 function SortableMuscle({
 	muscle,
 	onRemove,
@@ -134,13 +137,14 @@ function SortableMuscle({
 				className="h-6 w-6"
 				onClick={onRemove}
 			>
-				×
+				{" "}
+				×{" "}
 			</Button>
 		</div>
 	);
 }
-// --- End of unchanged parts ---
 
+// --- Main Component ---
 export function PrioritySettings({
 	open,
 	onOpenChange,
@@ -150,32 +154,108 @@ export function PrioritySettings({
 	const { user } = useAuth();
 	const [localPriorities, setLocalPriorities] = useState(priorities);
 	const [isSaving, setIsSaving] = useState(false);
-
 	const sensors = useSensors(
 		useSensor(PointerSensor),
-		useSensor(KeyboardSensor, {
-			coordinateGetter: sortableKeyboardCoordinates,
-		})
+		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
 	);
 
 	useEffect(() => {
-		if (open && user) {
-			getPrioritiesFromFirebase(user.uid).then((firebasePriorities) => {
-				if (Object.keys(firebasePriorities).length > 0) {
-					setLocalPriorities(firebasePriorities);
-				} else {
-					setLocalPriorities(priorities);
-				}
-			});
-		} else if (open) {
-			setLocalPriorities(priorities);
+		if (open) {
+			if (user) {
+				getPrioritiesFromFirebase(user.uid).then((fbPriorities) => {
+					setLocalPriorities(
+						Object.keys(fbPriorities).length > 0 ? fbPriorities : priorities
+					);
+				});
+			} else {
+				setLocalPriorities(priorities);
+			}
 		}
 	}, [open, user, priorities]);
 
 	const assignedMuscles = new Set(Object.values(localPriorities).flat());
-	const unassignedMuscles = ALL_MUSCLES.filter(
-		(muscle) => !assignedMuscles.has(muscle)
-	);
+	const unassignedMuscles = ALL_MUSCLES.filter((m) => !assignedMuscles.has(m));
+
+	const findTierForMuscle = (muscleId: string) => {
+		return PRIORITY_TIERS.find((tier) =>
+			localPriorities[tier]?.includes(muscleId)
+		);
+	};
+
+	const handleDragEnd = (event: DragEndEvent) => {
+		const { active, over } = event;
+
+		if (!over || active.id === over.id) {
+			return;
+		}
+
+		const activeId = active.id as string;
+		const overId = over.id as string;
+
+		setLocalPriorities((currentPriorities) => {
+			const sourceTier = findTierForMuscle(activeId);
+			const destinationTier =
+				(over.data.current?.sortable?.containerId as PriorityTier) ||
+				findTierForMuscle(overId);
+
+			if (!sourceTier || !destinationTier) {
+				return currentPriorities;
+			}
+
+			// Create fresh copies of the source and destination arrays from the current state
+			const sourceItems = [...(currentPriorities[sourceTier] || [])];
+			const destinationItems =
+				sourceTier === destinationTier
+					? sourceItems
+					: [...(currentPriorities[destinationTier] || [])];
+
+			// Find the indexes of the active and over items
+			const activeIndex = sourceItems.indexOf(activeId);
+			const overIndex = destinationItems.indexOf(overId);
+
+			let newPriorities = { ...currentPriorities };
+
+			if (sourceTier === destinationTier) {
+				// Reorder within the same container
+				newPriorities[sourceTier] = arrayMove(
+					sourceItems,
+					activeIndex,
+					overIndex
+				);
+			} else {
+				// Move to a different container
+				// 1. Remove from source
+				sourceItems.splice(activeIndex, 1);
+
+				// 2. Add to destination
+				const newDestinationIndex =
+					overIndex >= 0 ? overIndex : destinationItems.length;
+				destinationItems.splice(newDestinationIndex, 0, activeId);
+
+				newPriorities[sourceTier] = sourceItems;
+				newPriorities[destinationTier] = destinationItems;
+			}
+
+			return newPriorities;
+		});
+	};
+
+	const handleSave = async () => {
+		setIsSaving(true);
+		onPrioritiesChange(localPriorities);
+		if (user) {
+			try {
+				await savePrioritiesToFirebase(user.uid, localPriorities);
+				toast.success("Priorities saved to your account.");
+			} catch (error) {
+				toast.error("Sync failed. Changes saved on this device only.");
+			}
+		} else {
+			toast.success("Priorities saved on this device.");
+		}
+		setIsSaving(false);
+		onOpenChange(false);
+	};
 
 	const addMuscleToTier = (muscle: string, tier: PriorityTier) => {
 		setLocalPriorities((prev) => ({
@@ -183,127 +263,80 @@ export function PrioritySettings({
 			[tier]: [...(prev[tier] || []), muscle],
 		}));
 	};
-
 	const removeMuscleFromTier = (muscle: string, tier: PriorityTier) => {
 		setLocalPriorities((prev) => ({
 			...prev,
 			[tier]: (prev[tier] || []).filter((m) => m !== muscle),
 		}));
 	};
-
-	const handleDragEnd = (event: DragEndEvent, tier: PriorityTier) => {
-		const { active, over } = event;
-		if (over && active.id !== over.id) {
-			setLocalPriorities((prev) => {
-				const tierMuscles = prev[tier] || [];
-				const oldIndex = tierMuscles.indexOf(active.id as string);
-				const newIndex = tierMuscles.indexOf(over.id as string);
-				return {
-					...prev,
-					[tier]: arrayMove(tierMuscles, oldIndex, newIndex),
-				};
-			});
-		}
-	};
-
 	const loadPreset = (presetId: string) => {
 		const preset = priorityPresets.find((p) => p.id === presetId);
 		if (preset) setLocalPriorities(preset.tiers);
 	};
 
-	const handleSave = async () => {
-		setIsSaving(true);
-		onPrioritiesChange(localPriorities);
-
-		if (user) {
-			try {
-				await savePrioritiesToFirebase(user.uid, localPriorities);
-				// MODIFIED: Changed to sonner's success syntax
-				toast.success("Priorities saved", {
-					description: "Your settings are synced to your account.",
-				});
-			} catch (error) {
-				// MODIFIED: Changed to sonner's error syntax
-				toast.error("Sync failed", {
-					description: "Changes are saved on this device only.",
-				});
-			}
-		} else {
-			// MODIFIED: Changed to sonner's success syntax
-			toast.success("Priorities saved", {
-				description: "Your settings have been updated on this device.",
-			});
-		}
-
-		setIsSaving(false);
-		onOpenChange(false);
-	};
-
-	const handleCancel = () => {
-		setLocalPriorities(priorities);
-		onOpenChange(false);
-	};
-
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-5xl max-h-[90vh]">
-				{/* --- JSX is unchanged --- */}
 				<DialogHeader>
 					<DialogTitle>Muscle Priority Settings</DialogTitle>
 					<DialogDescription>
-						Organize muscles into priority tiers to get personalized training
-						recommendations
+						Drag and drop to rank muscles for personalized recommendations.
 					</DialogDescription>
 				</DialogHeader>
-				<div className="space-y-4">
-					<div className="flex items-center gap-2">
-						<Sparkles className="h-4 w-4 text-primary" />
-						<span className="text-sm font-medium">Load Preset:</span>
-						<Select onValueChange={loadPreset}>
-							<SelectTrigger className="w-[280px]">
-								<SelectValue placeholder="Choose a preset..." />
-							</SelectTrigger>
-							<SelectContent>
-								{priorityPresets.map((preset) => (
-									<SelectItem key={preset.id} value={preset.id}>
-										{preset.name}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
+				<div className="flex flex-col h-[75vh]">
+					<div className="flex-shrink-0 space-y-4">
+						<div className="flex items-center gap-2">
+							<Sparkles className="h-4 w-4 text-primary" />
+							<span className="text-sm font-medium">Load Preset:</span>
+							<Select onValueChange={loadPreset}>
+								<SelectTrigger className="w-[280px]">
+									<SelectValue placeholder="Choose a preset..." />
+								</SelectTrigger>
+								<SelectContent>
+									{priorityPresets.map((p) => (
+										<SelectItem key={p.id} value={p.id}>
+											{p.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+						{unassignedMuscles.length > 0 && (
+							<Card className="p-4 bg-muted/50">
+								<h4 className="font-semibold mb-3">Unassigned Muscles</h4>
+								<div className="flex flex-wrap gap-2">
+									{unassignedMuscles.map((muscle) => (
+										<Select
+											key={muscle}
+											onValueChange={(tier) =>
+												addMuscleToTier(muscle, tier as PriorityTier)
+											}
+										>
+											<SelectTrigger className="w-auto">
+												<Badge variant="outline" className="cursor-pointer">
+													{muscle}
+												</Badge>
+											</SelectTrigger>
+											<SelectContent>
+												{PRIORITY_TIERS.map((tier) => (
+													<SelectItem key={tier} value={tier}>
+														{TIER_INFO[tier].label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									))}
+								</div>
+							</Card>
+						)}
 					</div>
 
-					<ScrollArea className="h-[500px] pr-4">
-						<div className="space-y-4">
-							{unassignedMuscles.length > 0 && (
-								<Card className="p-4 bg-muted/50">
-									<h4 className="font-semibold mb-3">Unassigned Muscles</h4>
-									<div className="flex flex-wrap gap-2">
-										{unassignedMuscles.map((muscle) => (
-											<Select
-												key={muscle}
-												onValueChange={(tier) =>
-													addMuscleToTier(muscle, tier as PriorityTier)
-												}
-											>
-												<SelectTrigger className="w-auto">
-													<Badge variant="outline" className="cursor-pointer">
-														{muscle}
-													</Badge>
-												</SelectTrigger>
-												<SelectContent>
-													{PRIORITY_TIERS.map((tier) => (
-														<SelectItem key={tier} value={tier}>
-															{TIER_INFO[tier].label}
-														</SelectItem>
-													))}
-												</SelectContent>
-											</Select>
-										))}
-									</div>
-								</Card>
-							)}
-
+					<ScrollArea className="flex-grow pr-4 -mr-4 mt-4">
+						<DndContext
+							sensors={sensors}
+							collisionDetection={closestCenter}
+							onDragEnd={handleDragEnd}
+						>
 							<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
 								{PRIORITY_TIERS.map((tier) => (
 									<Card
@@ -325,37 +358,29 @@ export function PrioritySettings({
 												</p>
 											</div>
 										</div>
-
-										<DndContext
-											sensors={sensors}
-											collisionDetection={closestCenter}
-											onDragEnd={(event) => handleDragEnd(event, tier)}
+										<SortableContext
+											id={tier}
+											items={localPriorities[tier] || []}
+											strategy={verticalListSortingStrategy}
 										>
-											<SortableContext
-												items={localPriorities[tier] || []}
-												strategy={verticalListSortingStrategy}
-											>
-												<div className="space-y-2 min-h-[100px]">
-													{(localPriorities[tier] || []).map((muscle) => (
-														<SortableMuscle
-															key={muscle}
-															muscle={muscle}
-															onRemove={() =>
-																removeMuscleFromTier(muscle, tier)
-															}
-														/>
-													))}
-												</div>
-											</SortableContext>
-										</DndContext>
+											<div className="space-y-2 min-h-[100px]">
+												{(localPriorities[tier] || []).map((muscle) => (
+													<SortableMuscle
+														key={muscle}
+														muscle={muscle}
+														onRemove={() => removeMuscleFromTier(muscle, tier)}
+													/>
+												))}
+											</div>
+										</SortableContext>
 									</Card>
 								))}
 							</div>
-						</div>
+						</DndContext>
 					</ScrollArea>
 
-					<div className="flex justify-end gap-2 pt-4 border-t">
-						<Button variant="outline" onClick={handleCancel}>
+					<div className="flex-shrink-0 justify-end flex gap-2 pt-4 border-t mt-4">
+						<Button variant="outline" onClick={() => onOpenChange(false)}>
 							Cancel
 						</Button>
 						<Button onClick={handleSave} disabled={isSaving}>
