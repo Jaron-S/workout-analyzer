@@ -1353,12 +1353,5 @@
 		"muscle_weightings": [{ "muscle": "Forearms", "weighting": 1 }],
 		"movement_pattern": "WristFlexion",
 		"compound": false
-	},
-	{
-		"id": "ex135",
-		"name": "Dumbbell Kneeling Hip Raise",
-		"muscle_weightings": [{ "muscle": "Glutes", "weighting": 1 }],
-		"movement_pattern": "HipExtension",
-		"compound": false
 	}
 ]
