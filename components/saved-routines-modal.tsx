@@ -25,9 +25,10 @@ import {
 	deleteRoutineFromFirebase,
 	getPrioritiesFromFirebase,
 	getRoutinesFromFirebase,
+	saveRoutineToFirebase,
 } from "@/lib/firebase-storage";
 import type { PriorityTier, Routine } from "@/lib/types";
-import { Calendar, Dumbbell, Loader2, Trash2 } from "lucide-react";
+import { Calendar, Copy, Dumbbell, Loader2, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -68,7 +69,6 @@ export function SavedRoutinesModal({
 			const fetchedRoutines = await getRoutinesFromFirebase(user.uid);
 			setRoutines(fetchedRoutines);
 		} catch (error) {
-			// MODIFIED: Changed to sonner's error syntax
 			toast.error("Failed to load routines", {
 				description:
 					error instanceof Error
@@ -88,12 +88,10 @@ export function SavedRoutinesModal({
 			onLoadRoutine(routine);
 			onLoadPriorities(priorities);
 			onOpenChange(false);
-			// MODIFIED: Changed to sonner's success syntax
 			toast.success("Routine loaded", {
 				description: `"${routine.name}" has been loaded successfully`,
 			});
 		} catch (error) {
-			// MODIFIED: Changed to sonner's error syntax
 			toast.error("Failed to load routine", {
 				description:
 					error instanceof Error ? error.message : "Could not load the routine",
@@ -101,15 +99,48 @@ export function SavedRoutinesModal({
 		}
 	};
 
-	// --- New functions for delete functionality ---
+	const handleCreateNew = () => {
+		const newRoutine: Routine = {
+			id: crypto.randomUUID(),
+			name: "New Routine",
+			days: [],
+		};
 
-	// Function to open the confirmation dialog
+		onLoadRoutine(newRoutine);
+		onOpenChange(false);
+		toast.success("New routine created", {
+			description: "Started a fresh routine workspace.",
+		});
+	};
+
+	const handleDuplicate = async (routine: Routine) => {
+		if (!user) return;
+
+		try {
+			const copiedRoutine: Routine = {
+				...JSON.parse(JSON.stringify(routine)),
+				id: crypto.randomUUID(),
+				name: `${routine.name} (Copy)`,
+			};
+
+			await saveRoutineToFirebase(user.uid, copiedRoutine);
+			setRoutines((prev) => [...prev, copiedRoutine]);
+
+			toast.success("Routine duplicated", {
+				description: `Created copy of "${routine.name}"`,
+			});
+		} catch (error) {
+			toast.error("Failed to duplicate", {
+				description: "Could not save the copied routine.",
+			});
+		}
+	};
+
 	const confirmDelete = (routine: Routine) => {
 		setRoutineToDelete(routine);
 		setIsAlertOpen(true);
 	};
 
-	// Function to handle the actual deletion after confirmation
 	const handleDeleteRoutine = async () => {
 		if (!user || !routineToDelete) return;
 
@@ -120,12 +151,10 @@ export function SavedRoutinesModal({
 				prevRoutines.filter((r) => r.id !== routineToDelete.id)
 			);
 
-			// MODIFIED: Changed to sonner's success syntax
 			toast.success("Routine deleted", {
 				description: `"${routineToDelete.name}" has been successfully deleted.`,
 			});
 		} catch (error) {
-			// MODIFIED: Changed to sonner's error syntax
 			toast.error("Deletion failed", {
 				description:
 					error instanceof Error
@@ -133,7 +162,6 @@ export function SavedRoutinesModal({
 						: "Could not delete the routine.",
 			});
 		} finally {
-			// Close the dialog and reset the state
 			setIsAlertOpen(false);
 			setRoutineToDelete(null);
 		}
@@ -144,10 +172,25 @@ export function SavedRoutinesModal({
 			<Dialog open={open} onOpenChange={onOpenChange}>
 				<DialogContent className="max-w-2xl max-h-[80vh]">
 					<DialogHeader>
-						<DialogTitle>My Saved Routines</DialogTitle>
-						<DialogDescription>
-							Load or delete a previously saved routine from your account
-						</DialogDescription>
+						<div className="flex items-center justify-between pr-8">
+							<div>
+								<DialogTitle>My Saved Routines</DialogTitle>
+								<DialogDescription>
+									Load, copy, or delete a previously saved routine
+								</DialogDescription>
+							</div>
+
+							{/* STYLING UPDATE: Changed to outline variant */}
+							<Button
+								onClick={handleCreateNew}
+								size="sm"
+								variant="outline"
+								className="gap-2"
+							>
+								<Plus className="h-4 w-4" />
+								New Routine
+							</Button>
+						</div>
 					</DialogHeader>
 
 					{loading ? (
@@ -158,15 +201,21 @@ export function SavedRoutinesModal({
 						<div className="text-center py-12">
 							<Dumbbell className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
 							<h3 className="font-semibold mb-2">No saved routines</h3>
-							<p className="text-sm text-muted-foreground">
+							<p className="text-sm text-muted-foreground mb-4">
 								Create a routine and save it to your account to see it here
 							</p>
+							<Button onClick={handleCreateNew} variant="outline">
+								Create your first routine
+							</Button>
 						</div>
 					) : (
 						<ScrollArea className="h-[400px] pr-4">
 							<div className="space-y-3">
 								{routines.map((routine) => (
-									<Card key={routine.id} className="p-4 transition-colors">
+									<Card
+										key={routine.id}
+										className="p-4 transition-colors hover:bg-muted/40"
+									>
 										<div className="flex items-center justify-between">
 											<div className="flex-1 mr-4">
 												<h4 className="font-semibold mb-1">{routine.name}</h4>
@@ -185,16 +234,34 @@ export function SavedRoutinesModal({
 													</span>
 												</div>
 											</div>
-											{/* Action buttons container */}
+
 											<div className="flex items-center gap-2">
-												<Button onClick={() => handleLoadRoutine(routine)}>
+												{/* STYLING UPDATE: Changed to secondary (usually grey in dark mode) */}
+												<Button
+													onClick={() => handleLoadRoutine(routine)}
+													variant="default"
+													size="sm"
+												>
 													Load
 												</Button>
+
+												{/* STYLING UPDATE: Changed to ghost to reduce clutter */}
 												<Button
-													variant="destructive"
+													variant="ghost"
+													size="icon"
+													onClick={() => handleDuplicate(routine)}
+													title="Duplicate Routine"
+													className="text-muted-foreground hover:text-primary"
+												>
+													<Copy className="h-4 w-4" />
+												</Button>
+
+												<Button
+													variant="ghost"
 													size="icon"
 													onClick={() => confirmDelete(routine)}
 													aria-label={`Delete routine ${routine.name}`}
+													className="text-muted-foreground hover:text-destructive"
 												>
 													<Trash2 className="h-4 w-4" />
 												</Button>
@@ -208,7 +275,6 @@ export function SavedRoutinesModal({
 				</DialogContent>
 			</Dialog>
 
-			{/* Delete Confirmation Dialog */}
 			<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
 				<AlertDialogContent>
 					<AlertDialogHeader>
@@ -222,7 +288,10 @@ export function SavedRoutinesModal({
 						<AlertDialogCancel onClick={() => setRoutineToDelete(null)}>
 							Cancel
 						</AlertDialogCancel>
-						<AlertDialogAction onClick={handleDeleteRoutine}>
+						<AlertDialogAction
+							onClick={handleDeleteRoutine}
+							className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+						>
 							Delete
 						</AlertDialogAction>
 					</AlertDialogFooter>
