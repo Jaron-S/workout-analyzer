@@ -117,13 +117,16 @@ export default function Home() {
 			<header className="border-b border-border bg-card">
 				<div className="container mx-auto px-4 py-4">
 					<div className="flex items-center justify-between">
-						<div>
-							<h1 className="text-2xl font-bold text-balance">
-								Workout Routine Analyzer
-							</h1>
-							<p className="text-sm text-muted-foreground">
-								Build smarter routines with science-backed feedback
-							</p>
+						<div className="flex gap-4 items-center">
+							<Dumbbell />
+							<div>
+								<h1 className="text-2xl font-bold text-balance">
+									Workout Routine Analyzer
+								</h1>
+								<p className="text-sm text-muted-foreground">
+									Build smarter routines with science-backed feedback
+								</p>
+							</div>
 						</div>
 						<div className="flex items-center gap-2">
 							{user ? (
