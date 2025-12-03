@@ -1312,5 +1312,53 @@
 		"muscle_weightings": [{ "muscle": "Triceps", "weighting": 1 }],
 		"movement_pattern": "TricepExtension",
 		"compound": false
+	},
+	{
+		"id": "ex130",
+		"name": "Barbell Reverse Curl",
+		"muscle_weightings": [
+			{ "muscle": "Forearms", "weighting": 1 },
+			{ "muscle": "Biceps", "weighting": 0.5 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex131",
+		"name": "Dumbbell Reverse Curl",
+		"muscle_weightings": [
+			{ "muscle": "Forearms", "weighting": 1 },
+			{ "muscle": "Biceps", "weighting": 0.5 }
+		],
+		"movement_pattern": "BicepCurl",
+		"compound": false
+	},
+	{
+		"id": "ex132",
+		"name": "Dumbbell Preacher Wrist Curl",
+		"muscle_weightings": [{ "muscle": "Forearms", "weighting": 1 }],
+		"movement_pattern": "WristFlexion",
+		"compound": false
+	},
+	{
+		"id": "ex133",
+		"name": "Barbell Preacher Wrist Curl",
+		"muscle_weightings": [{ "muscle": "Forearms", "weighting": 1 }],
+		"movement_pattern": "WristFlexion",
+		"compound": false
+	},
+	{
+		"id": "ex134",
+		"name": "Barbell Wrist Curl",
+		"muscle_weightings": [{ "muscle": "Forearms", "weighting": 1 }],
+		"movement_pattern": "WristFlexion",
+		"compound": false
+	},
+	{
+		"id": "ex135",
+		"name": "Dumbbell Kneeling Hip Raise",
+		"muscle_weightings": [{ "muscle": "Glutes", "weighting": 1 }],
+		"movement_pattern": "HipExtension",
+		"compound": false
 	}
 ]
