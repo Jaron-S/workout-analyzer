@@ -11,43 +11,21 @@ const firebaseConfig = {
 	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// --- Debugging Logs Start ---
-
-// 1. Log the loaded config to check environment variables.
-console.log("--- Firebase Initialization ---");
-console.log("Attempting to load Firebase config...");
-console.table({
-	apiKeyExists: !!firebaseConfig.apiKey,
-	authDomainExists: !!firebaseConfig.authDomain,
-	projectIdExists: !!firebaseConfig.projectId,
-});
-
-// --- Debugging Logs End ---
-
 let app: FirebaseApp;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
 
 // Initialize Firebase only if the config is valid.
 if (firebaseConfig.apiKey) {
-	if (getApps().length === 0) {
-		// 2. Log when a new app is being created.
-		console.log("No Firebase app found. Initializing a new app...");
-		app = initializeApp(firebaseConfig);
-		console.log("✅ Firebase app initialized successfully.");
-	} else {
-		// 3. Log when using an existing app (common in Next.js hot-reloading).
-		console.log(
-			"Firebase app already exists. Getting existing app instance..."
-		);
-		app = getApps()[0];
-	}
+	// getApps() is checked so Next.js hot-reloading reuses the existing app.
+	app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 	auth = getAuth(app);
 	db = getFirestore(app);
-} else {
-	// 4. Log a specific error if the config is missing.
-	console.error(
-		"🚨 Firebase config is incomplete, especially the API Key. Firebase was not initialized."
+} else if (process.env.NODE_ENV === "development") {
+	// Not an error: without Firebase the app runs in guest mode and persists
+	// to localStorage. See .env.example to enable accounts and sync.
+	console.info(
+		"Firebase env vars not set - running in guest mode (localStorage only)."
 	);
 }
 

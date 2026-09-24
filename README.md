@@ -34,7 +34,7 @@ This project was built to demonstrate proficiency in architecting complex, state
 | **Language** | [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                        |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com/)                                                                                                                                                             |
 | **UI/UX** | [shadcn/ui](https://ui.shadcn.com/), [Framer Motion](https://www.framer.com/motion/), [dnd-kit](https://dndkit.com/), [Recharts](https://recharts.org/)                                                   |
-| **Deployment** | [Vercel](https://vercel.com/)                                                                                                                                                                        |
+| **Deployment** | [Netlify](https://www.netlify.com/)                                                                                                                                                                        |
 
 -----
 
@@ -71,16 +71,17 @@ To run this project locally, follow these steps:
 
 ### Prerequisites
 
-  * Node.js (v18.0 or later)
-  * A Firebase project with Authentication and Firestore enabled.
+  * **Node.js v20.9 or later** (required by Next.js 16). Check with `node -v`.
+  * npm 10 or later. This repo uses npm and ships a `package-lock.json`; use `npm install` rather than another package manager so the lockfile stays authoritative.
+  * A Firebase project is **optional** — see step 3.
 
 ### Installation
 
 1.  Clone the repository:
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-    cd YOUR_REPO_NAME
+    git clone https://github.com/Jaron-S/workout-analyzer.git
+    cd workout-analyzer
     ```
 
 2.  Install dependencies:
@@ -89,7 +90,18 @@ To run this project locally, follow these steps:
     npm install
     ```
 
-3.  Set up your environment variables. Create a `.env.local` file in the root of the project and add your Firebase project configuration:
+3.  (Optional) Enable user accounts and cross-device sync.
+
+    The app is fully functional without this step: it runs in guest mode and
+    persists your routines to `localStorage`. Skip to step 4 if that is all you need.
+
+    To enable sign-in, create a Firebase project with **Authentication
+    (Email/Password)** and **Firestore** enabled, then copy the env template and
+    fill in your project's config values:
+
+    ```bash
+    cp .env.example .env.local
+    ```
 
     ```
     NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
@@ -107,3 +119,38 @@ To run this project locally, follow these steps:
     ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Troubleshooting (npm 12)
+
+npm 12 introduced two security defaults that show up with this dependency tree.
+A normal `npm install` or `npm ci` works fine on the defaults; these only matter
+in the cases described below.
+
+**`EALLOWREMOTE` when regenerating the lockfile.** Commands that rebuild the
+dependency tree from scratch (`npm install --package-lock-only`, `npm install
+--dry-run`, or any install against an out-of-sync lockfile) fail with:
+
+```
+npm error code EALLOWREMOTE
+npm error Refusing to fetch "https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/..."
+```
+
+`@tailwindcss/oxide-wasm32-wasi` is the only package in the tree that uses
+`bundleDependencies`, so npm has to download its tarball to enumerate them, and
+that fetch is classified as a `remote` spec. npm 12 defaults `allow-remote` to
+`none`, and the documented "same hostname as the registry" exemption is not
+applied on this code path even though the URL is `registry.npmjs.org`. Pass the
+flag explicitly when you need to regenerate the lockfile:
+
+```bash
+npm install --package-lock-only --allow-remote=all
+```
+
+The package is an optional `wasm32` fallback, so it is never installed on a
+normal x64/arm64 machine — this only affects building the tree, not the install.
+
+**Blocked install scripts.** `npm install` warns that `sharp`, `protobufjs`, and
+`@firebase/util` had install scripts blocked. This is expected and safe to
+ignore: the production build succeeds without them. `sharp` in particular is only
+needed for Next.js image optimization, which is disabled via
+`images.unoptimized` in `next.config.mjs`.
