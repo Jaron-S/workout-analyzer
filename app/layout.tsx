@@ -15,7 +15,7 @@ const DESCRIPTION =
 	"Plan hypertrophy training with live volume analysis, build routines with Claude, and push them straight to Hevy.";
 
 export const metadata: Metadata = {
-	metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://workout-analyzer.netlify.app"),
+	metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
 	title: { default: "Setsmith: forge your training week", template: "%s · Setsmith" },
 	description: DESCRIPTION,
 	applicationName: "Setsmith",
