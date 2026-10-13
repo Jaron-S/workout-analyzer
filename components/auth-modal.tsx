@@ -141,9 +141,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 					{message && (
 						<Alert
 							variant="default"
-							className="border-green-200 bg-green-50 text-green-800"
+							className="border-status-optimal/40 bg-status-optimal/10 text-foreground"
 						>
-							<CheckCircle2 className="h-4 w-4 text-green-500" />
+							<CheckCircle2 className="h-4 w-4 text-status-optimal" />
 							<AlertDescription>{message}</AlertDescription>
 						</Alert>
 					)}

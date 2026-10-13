@@ -3,76 +3,95 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Setsmith design tokens. Ember amber is the only accent; neutrals carry a
+ * slight warm tint to sit with it. Status colours (volume against landmarks)
+ * and tier colours are shared by every view, so the same state always looks
+ * the same.
+ */
 :root {
-  /* Athletic dark theme inspired by fitness/analytics dashboards */
-  --background: oklch(0.12 0.01 240);
-  --foreground: oklch(0.98 0.01 240);
-  --card: oklch(0.16 0.01 240);
-  --card-foreground: oklch(0.98 0.01 240);
-  --popover: oklch(0.14 0.01 240);
-  --popover-foreground: oklch(0.98 0.01 240);
-  --primary: oklch(0.65 0.22 220);
-  --primary-foreground: oklch(0.98 0.01 240);
-  --secondary: oklch(0.22 0.01 240);
-  --secondary-foreground: oklch(0.98 0.01 240);
-  --muted: oklch(0.22 0.01 240);
-  --muted-foreground: oklch(0.6 0.01 240);
-  --accent: oklch(0.65 0.18 40);
-  --accent-foreground: oklch(0.98 0.01 240);
-  --destructive: oklch(0.55 0.22 25);
-  --destructive-foreground: oklch(0.98 0.01 240);
-  --border: oklch(0.25 0.01 240);
-  --input: oklch(0.25 0.01 240);
-  --ring: oklch(0.65 0.22 220);
-  --chart-1: oklch(0.65 0.22 220);
-  --chart-2: oklch(0.65 0.18 40);
-  --chart-3: oklch(0.7 0.2 160);
-  --chart-4: oklch(0.6 0.2 280);
-  --chart-5: oklch(0.75 0.15 340);
-  --radius: 0.5rem;
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+
+  --background: oklch(0.985 0.002 75);
+  --foreground: oklch(0.2 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.01 60);
+  --primary: oklch(0.77 0.165 70);
+  --primary-foreground: oklch(0.22 0.04 60);
+  --brand-text: oklch(0.58 0.15 60);
+  --secondary: oklch(0.955 0.004 75);
+  --secondary-foreground: oklch(0.25 0.01 60);
+  --muted: oklch(0.955 0.004 75);
+  --muted-foreground: oklch(0.5 0.01 60);
+  --accent: oklch(0.95 0.006 75);
+  --accent-foreground: oklch(0.2 0.01 60);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0.01 60 / 10%);
+  --input: oklch(0.2 0.01 60 / 14%);
+  --ring: oklch(0.77 0.165 70);
+  --surface: oklch(0.97 0.003 75);
+
+  --status-under: oklch(0.6 0.2 25);
+  --status-maintain: oklch(0.6 0.01 60);
+  --status-growing: oklch(0.6 0.13 235);
+  --status-optimal: oklch(0.6 0.15 160);
+  --status-high: oklch(0.58 0.18 295);
+  --status-over: oklch(0.55 0.22 20);
+
+  --chart-1: oklch(0.77 0.165 70);
+  --chart-2: oklch(0.6 0.13 235);
+  --chart-3: oklch(0.6 0.15 160);
+  --chart-4: oklch(0.58 0.18 295);
+  --chart-5: oklch(0.6 0.2 25);
+
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: oklch(0.145 0.004 60);
+  --foreground: oklch(0.96 0.004 75);
+  --card: oklch(0.185 0.005 60);
+  --card-foreground: oklch(0.96 0.004 75);
+  --popover: oklch(0.205 0.006 60);
+  --popover-foreground: oklch(0.96 0.004 75);
+  --primary: oklch(0.77 0.165 70);
+  --primary-foreground: oklch(0.2 0.03 60);
+  --brand-text: oklch(0.8 0.15 72);
+  --secondary: oklch(0.235 0.006 60);
+  --secondary-foreground: oklch(0.96 0.004 75);
+  --muted: oklch(0.235 0.006 60);
+  --muted-foreground: oklch(0.68 0.01 70);
+  --accent: oklch(0.26 0.008 60);
+  --accent-foreground: oklch(0.96 0.004 75);
+  --destructive: oklch(0.64 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.77 0.165 70);
+  --surface: oklch(0.165 0.005 60);
+
+  --status-under: oklch(0.68 0.19 25);
+  --status-maintain: oklch(0.62 0.01 70);
+  --status-growing: oklch(0.72 0.12 235);
+  --status-optimal: oklch(0.74 0.15 160);
+  --status-high: oklch(0.7 0.16 295);
+  --status-over: oklch(0.65 0.22 20);
+
+  --chart-1: oklch(0.77 0.165 70);
+  --chart-2: oklch(0.72 0.12 235);
+  --chart-3: oklch(0.74 0.15 160);
+  --chart-4: oklch(0.7 0.16 295);
+  --chart-5: oklch(0.68 0.19 25);
 }
 
 @theme inline {
@@ -97,6 +116,14 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-brand-text: var(--brand-text);
+  --color-surface: var(--surface);
+  --color-status-under: var(--status-under);
+  --color-status-maintain: var(--status-maintain);
+  --color-status-growing: var(--status-growing);
+  --color-status-optimal: var(--status-optimal);
+  --color-status-high: var(--status-high);
+  --color-status-over: var(--status-over);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -121,6 +148,11 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  /* Numbers line up in tables, steppers and stats. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }

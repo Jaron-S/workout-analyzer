@@ -1,457 +1,236 @@
 "use client";
 
 import { PrioritySettings } from "@/components/priority-settings";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
+import { TierBadge, ToneBadge, VolumeBar } from "@/components/status";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import volumeLandmarks from "@/data/volume-landmarks.json";
 import { usePersistedState } from "@/hooks/use-persisted-state";
-import type { MuscleVolume, PriorityTier } from "@/lib/types";
-import { getVolumeZone } from "@/lib/volume-calculator";
-import {
-	AlertTriangle,
-	CheckCircle2,
-	Settings,
-	ShieldAlert,
-	Target,
-	TrendingUp,
-} from "lucide-react";
+import { TIER_ORDER, TONE_CLASSES } from "@/lib/design";
+import { useExercises } from "@/lib/exercise-context";
+import { STATUS_TONE, type PriorityResult, type PriorityStatus } from "@/lib/priority-analysis";
+import { buildSuggestions } from "@/lib/suggestions";
+import type { PriorityTier, Routine, VolumeLandmarks } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { CheckCircle2, Lightbulb, Plus, SlidersHorizontal, Target } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
-// --- PROPS ---
+const LANDMARKS = volumeLandmarks as VolumeLandmarks;
+
 interface PriorityAnalysisProps {
-	muscleVolumes: MuscleVolume[];
+	routine: Routine;
+	results: PriorityResult[];
 	priorities: Partial<Record<PriorityTier, string[]>>;
-	onPrioritiesChange: (
-		priorities: Partial<Record<PriorityTier, string[]>>
-	) => void;
+	onPrioritiesChange: (priorities: Partial<Record<PriorityTier, string[]>>) => void;
+	onAddExercise: (dayId: string, exerciseId: string, sets: number) => void;
 }
 
-// --- CONFIGURATION ---
-const TIER_TARGETS: Record<
-	PriorityTier,
-	{
-		targetZone: "mav" | "mev-mav" | "mv-mev";
-		description: string;
-	}
-> = {
-	S: {
-		targetZone: "mav",
-		description: "Maximize growth with optimal MAV stimulus.",
-	},
-	A: {
-		targetZone: "mav",
-		description: "Target the MAV range for strong growth.",
-	},
-	B: {
-		targetZone: "mev-mav",
-		description: "Aim for the MEV-MAV range for steady progress.",
-	},
-	C: {
-		targetZone: "mv-mev",
-		description: "Maintain muscle with volume above MV.",
-	},
-	D: {
-		targetZone: "mv-mev",
-		description: "Acceptable to be at MV; focus on higher tiers.",
-	},
-	F: {
-		targetZone: "mv-mev",
-		description: "Avoid direct work; minimize indirect stimulus.",
-	},
-};
-
-const TIER_COLORS: Record<PriorityTier, string> = {
-	S: "hsl(var(--destructive))",
-	A: "hsl(var(--primary))",
-	B: "hsl(142.1 76.2% 46.5%)", // Green
-	C: "hsl(47.9 95.8% 53.1%)", // Yellow
-	D: "hsl(210 40% 96.1%)", // Muted
-	F: "hsl(215 20.2% 65.1%)", // Gray
-};
-
-type AnalysisStatus = "optimal" | "good" | "warning" | "critical";
 type SortOption = "priority" | "volume-high" | "volume-low" | "status";
-// 3. Define a key for localStorage
 const SORT_STORAGE_KEY = "priorityAnalysisSortOption";
+const STATUS_ORDER: Record<PriorityStatus, number> = { critical: 0, warning: 1, good: 2, optimal: 3 };
+const STATUS_LABEL: Record<PriorityStatus, string> = {
+	critical: "Needs work",
+	warning: "Off target",
+	good: "On track",
+	optimal: "On target",
+};
 
-// --- COMPONENT ---
-export function PriorityAnalysis({
-	muscleVolumes,
-	priorities,
-	onPrioritiesChange,
-}: PriorityAnalysisProps) {
-	// 4. Define helper functions for saving and loading
-	const saveSortOption = useCallback((value: SortOption) => {
+export function PriorityAnalysis({ routine, results, priorities, onPrioritiesChange, onAddExercise }: PriorityAnalysisProps) {
+	const { exercises, getExercise } = useExercises();
+	const [showSettings, setShowSettings] = useState(false);
+	const save = useCallback((value: SortOption) => {
 		try {
 			window.localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(value));
-		} catch (error) {
-			console.error("Error saving to localStorage", error);
-		}
+		} catch {}
 	}, []);
-
-	const loadSortOption = useCallback((): SortOption | null => {
+	const load = useCallback((): SortOption | null => {
 		try {
 			const item = window.localStorage.getItem(SORT_STORAGE_KEY);
 			return item ? (JSON.parse(item) as SortOption) : null;
-		} catch (error) {
-			console.error("Error loading from localStorage", error);
+		} catch {
 			return null;
 		}
 	}, []);
+	const [sortBy, setSortBy] = usePersistedState<SortOption>(SORT_STORAGE_KEY, "status", save, load);
 
-	// 5. Use the persisted state hook instead of useState
-	const [sortBy, setSortBy] = usePersistedState<SortOption>(
-		SORT_STORAGE_KEY,
-		"status",
-		saveSortOption,
-		loadSortOption
+	const suggestions = useMemo(
+		() => buildSuggestions(results, routine, exercises, getExercise),
+		[results, routine, exercises, getExercise]
 	);
 
-	const [showSettings, setShowSettings] = useState(false);
-	const hasPriorities = useMemo(
-		() => Object.values(priorities).some((arr) => arr.length > 0),
-		[priorities]
-	);
-
-	// ... (The rest of your component logic remains unchanged)
-	const analysis = useMemo(() => {
-		if (!hasPriorities) return [];
-
-		const results = [];
-		const allMuscles = Object.values(priorities).flat();
-
-		for (const muscle of allMuscles) {
-			const tier = (Object.keys(priorities) as PriorityTier[]).find((t) =>
-				priorities[t]?.includes(muscle)
-			);
-			if (!tier) continue;
-
-			const landmarks = volumeLandmarks[muscle as keyof typeof volumeLandmarks];
-			if (!landmarks) continue;
-
-			const volume = muscleVolumes.find((mv) => mv.muscle === muscle);
-			const currentSets = volume?.totalSets || 0;
-			const zone = getVolumeZone(currentSets, volumeLandmarks, muscle);
-			const target = TIER_TARGETS[tier];
-
-			let status: AnalysisStatus = "good";
-			let recommendation = "";
-
-			if (zone === "above-mrv") {
-				status = "critical";
-				recommendation = `Exceeding MRV (${landmarks.mrv} sets). This is unsustainable and risks injury. Reduce volume immediately.`;
-			} else if (tier === "F" && currentSets > landmarks.mv) {
-				status = "warning";
-				recommendation = `Receiving ${currentSets.toFixed(
-					1
-				)} sets of stimulus. To minimize growth, reduce indirect work from other lifts.`;
-			} else if (tier === "S" || tier === "A") {
-				if (zone === "mav") {
-					status = "optimal";
-					recommendation =
-						"Perfect! Volume is in the optimal range for maximum growth.";
-				} else if (zone === "mev-mav" || zone === "mav-mrv") {
-					status = "good";
-					recommendation =
-						"Great work! You're in a productive growth zone. Aim for the MAV sweet spot for the best results.";
-				} else {
-					status = "critical";
-					const setsNeeded = (landmarks.mav_min - currentSets).toFixed(1);
-					recommendation = `CRITICAL: High priority, but volume is too low. Add ~${setsNeeded} sets to reach the optimal MAV range.`;
-				}
-			} else if (tier === "B") {
-				if (zone === "mev-mav" || zone === "mav" || zone === "mav-mrv") {
-					status = "optimal";
-					recommendation =
-						"Excellent! You've hit the target zone for steady progress.";
-				} else {
-					status = "warning";
-					const setsNeeded = (landmarks.mev - currentSets).toFixed(1);
-					recommendation = `Volume is below target. Add ~${setsNeeded} sets to stimulate consistent growth.`;
-				}
-			} else if (tier === "C" || tier === "D") {
-				// *** REFACTORED LOGIC WITH LENIENCY ZONE ***
-				if (zone === "below-mv") {
-					status = "warning";
-					recommendation =
-						"Volume is below maintenance, risking muscle loss for this group.";
-				} else if (zone === "mv-mev") {
-					status = "optimal";
-					recommendation =
-						"Perfect! Volume is ideal for this priority level, allowing you to focus on your main goals.";
-				} else if (zone === "mev-mav") {
-					// The new "Leniency Zone"
-					status = "good";
-					recommendation =
-						"Good. Volume is slightly high for this priority, but acceptable. You can consider reducing it to optimize recovery.";
-				} else {
-					// Catches mav and mav-mrv as "Significantly Over-invested"
-					status = "warning";
-					recommendation = `Warning: Volume is unnecessarily high. This may be stealing recovery capacity from your main goals.`;
-				}
-			}
-
-			const targetMin =
-				landmarks[
-					target.targetZone === "mav"
-						? "mav_min"
-						: target.targetZone === "mev-mav"
-						? "mev"
-						: "mv"
-				];
-			const targetMax =
-				landmarks[
-					target.targetZone === "mav"
-						? "mav_max"
-						: target.targetZone === "mev-mav"
-						? "mav_max"
-						: "mev"
-				];
-			const displayMax = Math.max(targetMax, currentSets) * 1.2;
-
-			results.push({
-				tier,
-				muscle,
-				currentSets,
-				zone,
-				status,
-				recommendation,
-				targetMin,
-				targetMax,
-				displayMax,
-			});
-		}
-		return results;
-	}, [muscleVolumes, priorities, hasPriorities]);
-
-	const sortedAnalysis = useMemo(() => {
-		const sorted = [...analysis];
-		const statusOrder: Record<AnalysisStatus, number> = {
-			critical: 0,
-			warning: 1,
-			good: 2,
-			optimal: 3,
-		};
+	const sorted = useMemo(() => {
+		const rows = [...results];
 		switch (sortBy) {
 			case "priority":
-				const tierOrder: Record<PriorityTier, number> = {
-					S: 0,
-					A: 1,
-					B: 2,
-					C: 3,
-					D: 4,
-					F: 5,
-				};
-				return sorted.sort((a, b) => tierOrder[a.tier] - tierOrder[b.tier]);
+				return rows.sort((a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
 			case "volume-high":
-				return sorted.sort((a, b) => b.currentSets - a.currentSets);
+				return rows.sort((a, b) => b.currentSets - a.currentSets);
 			case "volume-low":
-				return sorted.sort((a, b) => a.currentSets - b.currentSets);
-			case "status":
-				return sorted.sort(
-					(a, b) => statusOrder[a.status] - statusOrder[b.status]
-				);
+				return rows.sort((a, b) => a.currentSets - b.currentSets);
 			default:
-				return sorted;
+				return rows.sort(
+					(a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier)
+				);
 		}
-	}, [analysis, sortBy]);
+	}, [results, sortBy]);
 
-	if (!hasPriorities) {
+	const settings = (
+		<PrioritySettings
+			open={showSettings}
+			onOpenChange={setShowSettings}
+			priorities={priorities}
+			onPrioritiesChange={onPrioritiesChange}
+		/>
+	);
+
+	if (results.length === 0) {
 		return (
-			<Card className="p-6 text-center">
-				<div className="flex flex-col items-center justify-center h-full py-12">
-					<Target className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-					<h3 className="text-xl font-semibold mb-2">
-						Set Your Physique Goals
-					</h3>
-					<p className="text-sm text-muted-foreground mb-6 max-w-sm">
-						Define your muscle priorities to unlock personalized coaching and
-						see how your routine stacks up against your goals.
-					</p>
-					<Button onClick={() => setShowSettings(true)}>
-						<Settings className="h-4 w-4 mr-2" />
-						Set Priorities
-					</Button>
+			<Card className="items-center gap-3 p-8 text-center">
+				<div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-brand-text">
+					<Target className="h-6 w-6" />
 				</div>
-				<PrioritySettings
-					open={showSettings}
-					onOpenChange={setShowSettings}
-					priorities={priorities}
-					onPrioritiesChange={onPrioritiesChange}
-				/>
+				<h3 className="text-lg font-semibold">Rank your muscles</h3>
+				<p className="max-w-sm text-sm text-muted-foreground">
+					Put muscles into tiers from S (most important) to F. Setsmith then checks every one against the volume its tier
+					calls for and suggests what to add.
+				</p>
+				<Button onClick={() => setShowSettings(true)} className="mt-2">
+					Set priorities
+				</Button>
+				{settings}
 			</Card>
 		);
 	}
 
-	const criticalIssues = analysis.filter((a) => a.status === "critical").length;
-	const warnings = analysis.filter((a) => a.status === "warning").length;
-	const optimalCount = analysis.filter((a) => a.status === "optimal").length;
+	const needWork = results.filter((r) => r.status === "critical").length;
+	const offTarget = results.filter((r) => r.status === "warning").length;
+	const onTarget = results.length - needWork - offTarget;
+	const days = new Map(routine.days.map((d) => [d.id, d.name]));
 
 	return (
-		<div className="space-y-6">
-			{/* Summary Alerts */}
-			<div>
-				{criticalIssues > 0 && (
-					<Alert variant="destructive">
-						<ShieldAlert className="h-4 w-4" />
-						<AlertTitle>Critical Alert</AlertTitle>
-						<AlertDescription>
-							You have{" "}
-							<span className="font-bold">
-								{criticalIssues} critical issues
-							</span>{" "}
-							where high-priority muscles are severely undertrained or a muscle
-							is exceeding its MRV.
-						</AlertDescription>
-					</Alert>
-				)}
-				{warnings > 0 && criticalIssues === 0 && (
-					<Alert className="border-yellow-500/50 text-yellow-500 [&>svg]:text-yellow-500">
-						<AlertTriangle className="h-4 w-4" />
-						<AlertTitle>Suggestions for Improvement</AlertTitle>
-						<AlertDescription>
-							There are <span className="font-bold">{warnings} areas</span> to
-							adjust for better alignment with your goals. Check the
-							recommendations below.
-						</AlertDescription>
-					</Alert>
-				)}
-				{criticalIssues === 0 && warnings === 0 && (
-					<Alert className="border-green-500/50 text-green-500 [&>svg]:text-green-500">
-						<CheckCircle2 className="h-4 w-4" />
-						<AlertTitle>Great Work!</AlertTitle>
-						<AlertDescription>
-							Your routine is well-aligned with your priorities. You have{" "}
-							<span className="font-bold">{optimalCount} muscles</span> in their
-							target growth zones.
-						</AlertDescription>
-					</Alert>
-				)}
-			</div>
+		<div className="space-y-4">
+			<SummaryBanner needWork={needWork} offTarget={offTarget} onTarget={onTarget} />
 
-			{/* Detailed Analysis Card */}
-			<Card>
-				<CardHeader className="flex flex-row items-center justify-between">
-					<CardTitle className="flex items-center gap-2 text-xl">
-						<Target className="h-5 w-5" />
-						Priority Analysis
-					</CardTitle>
+			{suggestions.length > 0 && (
+				<Card className="gap-3 p-4 sm:p-5">
 					<div className="flex items-center gap-2">
-						<Select
-							value={sortBy}
-							onValueChange={(value) => setSortBy(value as SortOption)}
-						>
-							<SelectTrigger className="w-[180px] hidden md:flex">
-								<SelectValue placeholder="Sort by..." />
+						<Lightbulb className="h-4 w-4 text-brand-text" />
+						<h3 className="font-semibold">Suggestions</h3>
+					</div>
+					<ul className="divide-y divide-border">
+						{suggestions.map((s) => {
+							const best = s.exercises[0];
+							return (
+								<li key={s.muscle} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+									{best.thumbnailUrl ? (
+										<img src={best.thumbnailUrl} alt="" loading="lazy" className="h-10 w-10 shrink-0 rounded-md bg-white object-contain" />
+									) : (
+										<div className="h-10 w-10 shrink-0 rounded-md bg-muted" />
+									)}
+									<div className="min-w-0 flex-1">
+										<p className="flex items-center gap-1.5 text-sm font-medium">
+											<TierBadge tier={s.result.tier} />
+											{s.muscle}
+											<span className="tabular font-normal text-muted-foreground">
+												+{Math.round(s.result.setsToTarget)} set{Math.round(s.result.setsToTarget) === 1 ? "" : "s"}
+											</span>
+										</p>
+										<p className="truncate text-xs text-muted-foreground">
+											{s.sets} × {best.name}
+											{s.dayId && ` on ${days.get(s.dayId)}`}
+										</p>
+									</div>
+									{s.dayId && (
+										<Button size="sm" variant="secondary" onClick={() => onAddExercise(s.dayId!, best.id, s.sets)}>
+											<Plus className="h-4 w-4" />
+											Add
+										</Button>
+									)}
+								</li>
+							);
+						})}
+					</ul>
+				</Card>
+			)}
+
+			<Card className="gap-4 p-4 sm:p-5">
+				<div className="flex items-start justify-between gap-3">
+					<div>
+						<h3 className="font-semibold">Your priorities</h3>
+						<p className="text-xs text-muted-foreground">Each muscle against the range its tier calls for</p>
+					</div>
+					<div className="flex shrink-0 items-center gap-2">
+						<Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+							<SelectTrigger size="sm" className="w-[120px]">
+								<SelectValue />
 							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="status">Sort by Status</SelectItem>
-								<SelectItem value="priority">Sort by Priority</SelectItem>
-								<SelectItem value="volume-high">
-									Sort by Volume (High-Low)
-								</SelectItem>
-								<SelectItem value="volume-low">
-									Sort by Volume (Low-High)
-								</SelectItem>
+							<SelectContent align="end">
+								<SelectItem value="status">Status</SelectItem>
+								<SelectItem value="priority">Tier</SelectItem>
+								<SelectItem value="volume-high">Most volume</SelectItem>
+								<SelectItem value="volume-low">Least volume</SelectItem>
 							</SelectContent>
 						</Select>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={() => setShowSettings(true)}
-						>
-							<Settings className="h-4 w-4 md:mr-2" />
-							<span className="hidden md:inline">Edit Priorities</span>
+						<Button variant="outline" size="sm" onClick={() => setShowSettings(true)} aria-label="Edit priorities">
+							<SlidersHorizontal className="h-4 w-4" />
 						</Button>
 					</div>
-				</CardHeader>
-				<CardContent className="space-y-4">
-					{sortedAnalysis.map((item) => {
-						const statusConfig = {
-							optimal: { icon: CheckCircle2, color: "text-green-500" },
-							good: { icon: TrendingUp, color: "text-sky-500" },
-							warning: { icon: AlertTriangle, color: "text-yellow-500" },
-							critical: { icon: ShieldAlert, color: "text-destructive" },
-						}[item.status];
-						const StatusIcon = statusConfig.icon;
-
-						const currentPercent = (item.currentSets / item.displayMax) * 100;
-						const targetMinPercent = (item.targetMin / item.displayMax) * 100;
-						const targetWidthPercent =
-							((item.targetMax - item.targetMin) / item.displayMax) * 100;
-
+				</div>
+				<ul className="space-y-4">
+					{sorted.map((item) => {
+						const tone = STATUS_TONE[item.status];
 						return (
-							<div
-								key={`${item.tier}-${item.muscle}`}
-								className="p-4 bg-secondary/50 rounded-lg border-l-4 space-y-3"
-								style={{ borderLeftColor: TIER_COLORS[item.tier] }}
-							>
-								<div className="flex flex-wrap items-center justify-between gap-2">
-									<div className="flex items-center gap-3">
-										<Badge
-											variant="outline"
-											style={{
-												borderColor: TIER_COLORS[item.tier],
-												color: TIER_COLORS[item.tier],
-											}}
-										>
-											{item.tier}-Tier
-										</Badge>
-										<span className="font-semibold text-lg">{item.muscle}</span>
-									</div>
-									<div className="text-sm font-mono text-muted-foreground">
-										<span className="font-bold text-foreground">
-											Current: {item.currentSets.toFixed(1)}
-										</span>
-										<span className="mx-2">|</span>
-										<span title="Target Volume Range">
-											Target: {item.targetMin}-{item.targetMax}
-										</span>
-									</div>
+							<li key={item.muscle} className="space-y-2">
+								<div className="flex items-center gap-2">
+									<TierBadge tier={item.tier} />
+									<span className="truncate text-sm font-medium">{item.muscle}</span>
+									<ToneBadge tone={tone} className="ml-auto shrink-0">
+										{STATUS_LABEL[item.status]}
+									</ToneBadge>
+									<span className="tabular w-[5.5rem] shrink-0 text-right text-xs text-muted-foreground">
+										<span className="text-sm font-semibold text-foreground">{item.currentSets.toFixed(1)}</span> / {item.targetMin}–
+										{item.targetMax}
+									</span>
 								</div>
-
-								<div className="relative h-2 w-full bg-muted rounded-full">
-									<div
-										className="absolute top-0 h-full bg-green-500/30 rounded-full"
-										style={{
-											left: `${targetMinPercent}%`,
-											width: `${targetWidthPercent}%`,
-										}}
-										title={`Target Zone: ${item.targetMin}-${item.targetMax} sets`}
-									/>
-									<div
-										className="absolute top-0 h-full bg-white/20 border border-white/50 rounded-full"
-										style={{ width: `${currentPercent}%` }}
-									/>
-								</div>
-
-								<div
-									className={`flex items-start gap-2 text-sm ${statusConfig.color}`}
-								>
-									<StatusIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
-									<p>{item.recommendation}</p>
-								</div>
-							</div>
+								<VolumeBar
+									sets={item.currentSets}
+									landmarks={LANDMARKS[item.muscle]}
+									tone={tone}
+									target={[item.targetMin, item.targetMax]}
+								/>
+								<p className={cn("text-xs", item.status === "critical" ? TONE_CLASSES[tone].text : "text-muted-foreground")}>
+									{item.recommendation}
+								</p>
+							</li>
 						);
 					})}
-				</CardContent>
+				</ul>
 			</Card>
+			{settings}
+		</div>
+	);
+}
 
-			<PrioritySettings
-				open={showSettings}
-				onOpenChange={setShowSettings}
-				priorities={priorities}
-				onPrioritiesChange={onPrioritiesChange}
-			/>
+function SummaryBanner({ needWork, offTarget, onTarget }: { needWork: number; offTarget: number; onTarget: number }) {
+	const tone = needWork > 0 ? "under" : offTarget > 0 ? "maintain" : "optimal";
+	const t = TONE_CLASSES[tone];
+	const text =
+		needWork > 0
+			? `${needWork} high-priority muscle${needWork > 1 ? "s need" : " needs"} more work${offTarget ? `, and ${offTarget} more ${offTarget > 1 ? "are" : "is"} off target` : ""}.`
+			: offTarget > 0
+				? `${offTarget} muscle${offTarget > 1 ? "s are" : " is"} off target. Small changes will line them up.`
+				: `All ${onTarget} prioritised muscles are on target.`;
+	return (
+		<div className={cn("flex items-start gap-3 rounded-xl px-4 py-3 text-sm ring-1 ring-inset", t.soft, t.ring)}>
+			{tone === "optimal" ? (
+				<CheckCircle2 className={cn("mt-0.5 h-4 w-4 shrink-0", t.text)} />
+			) : (
+				<Target className={cn("mt-0.5 h-4 w-4 shrink-0", t.text)} />
+			)}
+			<p>
+				<span className="tabular font-semibold">{onTarget}</span> on target. {text}
+			</p>
 		</div>
 	);
 }

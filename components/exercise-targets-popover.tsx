@@ -41,7 +41,7 @@ export function ExerciseTargetsPopover({
 			<PopoverTrigger asChild>
 				<button
 					type="button"
-					className="text-xs text-muted-foreground hover:text-foreground underline-offset-2 hover:underline"
+					className="min-w-0 max-w-full truncate text-left text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
 				>
 					{summary}
 					{routineExercise.notes ? " · note" : ""}

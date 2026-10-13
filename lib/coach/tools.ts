@@ -7,6 +7,7 @@ import { z } from "zod/v4";
 import volumeLandmarks from "@/data/volume-landmarks.json";
 import { ALL_MUSCLES, MAX_MUSCLE_SETS_PER_SESSION, MAX_SETS_PER_SESSION } from "../constants";
 import { HEVY_EQUIPMENT } from "../hevy/exercises";
+import { searchExercises } from "../search";
 import { formatReps, formatRest, resolveTargets } from "../training-defaults";
 import type {
 	Exercise,
@@ -221,11 +222,9 @@ export const COACH_TOOLS = [
 			limit: z.number().int().min(1).max(40).optional().describe("Default 15."),
 		}),
 		run: (input, routine, ctx) => {
-			const words = (input.query ?? "").toLowerCase().split(/\s+/).filter(Boolean);
-			const matches = ctx.exercises.filter(
+			const matches = searchExercises(ctx.exercises, input.query ?? "").filter(
 				(e) =>
 					!e.legacy &&
-					words.every((w) => e.name.toLowerCase().includes(w)) &&
 					(!input.muscle || e.muscle_weightings[0]?.muscle === input.muscle) &&
 					(!input.equipment || e.equipment === input.equipment)
 			);

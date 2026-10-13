@@ -1,30 +1,23 @@
-# Intelligent Workout Analyzer
+# Setsmith
 
-A data-driven fitness planner for creating and analyzing hypertrophy-focused workout routines with a real-time coaching engine.
+**Forge your training week.** Plan hypertrophy training with live volume analysis for every muscle, build routines with Claude, and push them straight to Hevy.
 
-[**Live Demo**](https://workout-analyzer.netlify.app/)
+[**Open Setsmith**](https://workout-analyzer.netlify.app/)
 
-## About This Project
+## Features
 
-Intelligent Workout Analyzer is a sophisticated web application designed for fitness enthusiasts to build, manage, and analyze their training programs based on established scientific principles of muscle growth. The core of the application is a real-time analysis engine that provides instant, actionable feedback on every user interaction, creating a "live coaching" experience.
-
-This project was built to demonstrate proficiency in architecting complex, state-intensive front-end applications with a heavy focus on user experience, performance optimization, and interactive data visualization, all built on a modern, serverless architecture.
-
------
-
-## Key Features
-
-  * **Interactive Routine Builder:** Create and customize multi-day workout splits with an intuitive drag-and-drop interface.
-  * **Real-Time Analysis Engine:** Get instant feedback across three distinct tabs as you build your routine:
-      * **Volume Analysis:** Compares your weekly training volume for each muscle group against scientific landmarks (MV, MEV, MAV, MRV).
-      * **Priority Analysis:** Provides personalized coaching and recommendations based on your self-defined physique goals and priority tiers.
-      * **Fatigue Management:** Analyzes per-session fatigue, "junk volume" risks, and training frequency to ensure your program is sustainable and effective.
-  * **Personalized Goal Setting:** A unique drag-and-drop interface allows you to create your own S-F tier list of muscle groups, which directly drives the app's coaching feedback.
-  * **Secure User Accounts:** Full authentication powered by **Firebase Auth**, with user data securely stored and synced across devices using **Firestore**.
-  * **Seamless Guest Mode:** The entire application is fully functional without an account, with all data persisted in `localStorage` for a frictionless user experience.
-  * **Hevy Exercise Library:** Routines are built from [Hevy](https://www.hevyapp.com/)'s exercise library (451 built-in exercises, plus your own custom exercises once you connect Hevy), each with curated muscle weightings you can override to match how an exercise feels for you.
-  * **Push to Hevy:** Connect your Hevy API key (Hevy Pro) and push a routine as a Hevy folder with one routine per training day, including rep ranges, rest times and notes. Pushing again updates the same routines in place.
-  * **Claude Coach:** Add your own Anthropic API key and ask Claude to build or adjust your routine. Claude edits a draft using the same analysis the app shows; you review its changes and apply, discard or undo them.
+  * **Routine builder:** multi-day splits with drag-to-reorder exercises and days, duplicate days, per-exercise reps, rest and notes (falling back to your own defaults), and one-tap set steppers. Works on phones, tablets and desktops.
+  * **Live analysis:**
+      * **Body map:** front and back figures coloured by each muscle's weekly volume status.
+      * **Volume:** every muscle's weighted weekly sets against its landmarks (MV, MEV, MAV, MRV).
+      * **Priorities:** rank muscles S to F; each is checked against the range its tier calls for, with one-tap suggestions for whatever is short.
+      * **Fatigue:** session size, junk-volume risk and training frequency.
+  * **Hevy exercise library:** Hevy's 451 built-in exercises plus your own custom exercises once you connect Hevy, each with curated muscle weightings you can override to match how an exercise feels for you.
+  * **Push to Hevy:** push a routine as a Hevy folder with one routine per day, including rep ranges, rest and notes. Pushing again updates the same routines in place.
+  * **Claude coach:** with your own Anthropic API key, ask Claude to build or change your routine. Its edits appear inline as a draft you apply, discard or undo.
+  * **Share:** a link that carries the whole routine and previews as an image of it on Reddit, Discord and elsewhere; recipients can import it in one tap. Or download the image.
+  * **Templates, command menu (Cmd/Ctrl+K), light and dark themes.**
+  * **Accounts optional:** everything works as a guest in the browser; signing in (Firebase) auto-saves to your account and syncs devices.
 
 -----
 

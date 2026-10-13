@@ -1,17 +1,27 @@
 "use client";
 
-import { ExerciseCard } from "@/components/exercise-card";
+import { ExerciseCard, GhostExercise } from "@/components/exercise-card";
 import { ExerciseLibraryModal } from "@/components/exercise-library-modal";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { useExercises } from "@/lib/exercise-context";
-import type { Routine, RoutineExercise } from "@/lib/types";
+import { diffRoutine, type DayDiff } from "@/lib/routine-diff";
+import type { Suggestion } from "@/lib/suggestions";
+import type { Routine, RoutineExercise, WorkoutDay } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import {
 	closestCenter,
 	DndContext,
 	KeyboardSensor,
 	PointerSensor,
+	TouchSensor,
 	useSensor,
 	useSensors,
 	type DragEndEvent,
@@ -20,334 +30,323 @@ import {
 	arrayMove,
 	SortableContext,
 	sortableKeyboardCoordinates,
+	useSortable,
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Edit2, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { CSS } from "@dnd-kit/utilities";
+import { Copy, GripVertical, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 
 // Firestore rejects undefined fields, and clearing a target sets it to undefined.
 const withoutUndefined = <T extends object>(value: T): T =>
 	Object.fromEntries(Object.entries(value).filter(([, v]) => v !== undefined)) as T;
 
+const totalSets = (day: WorkoutDay) => day.exercises.reduce((n, ex) => n + ex.sets, 0);
+
+type LibraryMode = { kind: "add"; dayId: string } | { kind: "replace"; dayId: string; index: number };
+
 interface RoutineBuilderProps {
 	routine: Routine;
 	onRoutineChange: (routine: Routine) => void;
+	/** The applied routine while a draft is shown, to highlight what the draft changes. */
+	baseRoutine?: Routine;
+	suggestions?: Suggestion[];
 }
 
-export function RoutineBuilder({
-	routine,
-	onRoutineChange,
-}: RoutineBuilderProps) {
-	const { getExercise } = useExercises();
-	const [isLibraryOpen, setIsLibraryOpen] = useState(false);
-	const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
-	const [editingRoutineName, setEditingRoutineName] = useState(false);
-	const [routineName, setRoutineName] = useState(routine.name);
-	const [editingDayId, setEditingDayId] = useState<string | null>(null);
-	const [editingDayName, setEditingDayName] = useState("");
-
-	const sensors = useSensors(
-		useSensor(PointerSensor),
-		useSensor(KeyboardSensor, {
-			coordinateGetter: sortableKeyboardCoordinates,
-		})
+function useDragSensors() {
+	return useSensors(
+		// A small distance (mouse) or a short press (touch) starts a drag, so taps
+		// and scrolling still work.
+		useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+		useSensor(TouchSensor, { activationConstraint: { delay: 180, tolerance: 6 } }),
+		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
 	);
+}
 
-	const addDay = () => {
-		const newDay = {
-			id: `day-${Date.now()}`,
-			name: `Day ${routine.days.length + 1}`,
-			exercises: [],
-		};
-		onRoutineChange({
-			...routine,
-			days: [...routine.days, newDay],
-		});
+export function RoutineBuilder({ routine, onRoutineChange, baseRoutine, suggestions }: RoutineBuilderProps) {
+	const [library, setLibrary] = useState<LibraryMode | null>(null);
+	const [editingName, setEditingName] = useState<string | null>(null);
+	const sensors = useDragSensors();
+	const diff = useMemo(() => (baseRoutine ? diffRoutine(baseRoutine, routine) : null), [baseRoutine, routine]);
+
+	const setDays = (days: WorkoutDay[]) => onRoutineChange({ ...routine, days });
+	const updateDay = (dayId: string, update: (day: WorkoutDay) => WorkoutDay) =>
+		setDays(routine.days.map((d) => (d.id === dayId ? update(d) : d)));
+
+	const addDay = () =>
+		setDays([...routine.days, { id: `day-${Date.now().toString(36)}`, name: `Day ${routine.days.length + 1}`, exercises: [] }]);
+
+	const duplicateDay = (day: WorkoutDay) => {
+		const copy = { ...structuredClone(day), id: `day-${Date.now().toString(36)}`, name: `${day.name} (copy)` };
+		const i = routine.days.findIndex((d) => d.id === day.id);
+		setDays([...routine.days.slice(0, i + 1), copy, ...routine.days.slice(i + 1)]);
 	};
 
-	const removeDay = (dayId: string) => {
-		onRoutineChange({
-			...routine,
-			days: routine.days.filter((d) => d.id !== dayId),
-		});
-	};
-
-	const updateDayName = (dayId: string, newName: string) => {
-		onRoutineChange({
-			...routine,
-			days: routine.days.map((day) =>
-				day.id === dayId ? { ...day, name: newName } : day
-			),
-		});
-	};
-
-	const addExerciseToDay = (dayId: string, exerciseId: string) => {
-		onRoutineChange({
-			...routine,
-			days: routine.days.map((day) =>
-				day.id === dayId
-					? {
-							...day,
-							exercises: [...day.exercises, { exerciseId, sets: 3 }],
-					  }
-					: day
-			),
-		});
-	};
-
-	const updateExercise = (
-		dayId: string,
-		exerciseIndex: number,
-		patch: Partial<RoutineExercise>
-	) => {
-		onRoutineChange({
-			...routine,
-			days: routine.days.map((day) =>
-				day.id === dayId
-					? {
-							...day,
-							exercises: day.exercises.map((ex, idx) =>
-								idx === exerciseIndex ? withoutUndefined({ ...ex, ...patch }) : ex
-							),
-					  }
-					: day
-			),
-		});
-	};
-
-	const removeExercise = (dayId: string, exerciseIndex: number) => {
-		onRoutineChange({
-			...routine,
-			days: routine.days.map((day) =>
-				day.id === dayId
-					? {
-							...day,
-							exercises: day.exercises.filter(
-								(_, idx) => idx !== exerciseIndex
-							),
-					  }
-					: day
-			),
-		});
-	};
-
-	const handleDragEnd = (event: DragEndEvent, dayId: string) => {
-		const { active, over } = event;
-
-		if (over && active.id !== over.id) {
-			const day = routine.days.find((d) => d.id === dayId);
-			if (!day) return;
-
-			const oldIndex = day.exercises.findIndex(
-				(_, idx) => `${dayId}-${idx}` === active.id
-			);
-			const newIndex = day.exercises.findIndex(
-				(_, idx) => `${dayId}-${idx}` === over.id
-			);
-
-			const newExercises = arrayMove(day.exercises, oldIndex, newIndex);
-
-			onRoutineChange({
-				...routine,
-				days: routine.days.map((d) =>
-					d.id === dayId ? { ...d, exercises: newExercises } : d
-				),
-			});
-		}
-	};
-
-	const openLibraryForDay = (dayId: string) => {
-		setSelectedDayId(dayId);
-		setIsLibraryOpen(true);
+	const handleDayDragEnd = ({ active, over }: DragEndEvent) => {
+		if (!over || active.id === over.id) return;
+		const from = routine.days.findIndex((d) => d.id === active.id);
+		const to = routine.days.findIndex((d) => d.id === over.id);
+		setDays(arrayMove(routine.days, from, to));
 	};
 
 	const handleSelectExercise = (exerciseId: string) => {
-		if (selectedDayId) {
-			addExerciseToDay(selectedDayId, exerciseId);
+		if (!library) return;
+		if (library.kind === "add") {
+			updateDay(library.dayId, (d) => ({ ...d, exercises: [...d.exercises, { exerciseId, sets: 3 }] }));
+		} else {
+			updateDay(library.dayId, (d) => ({
+				...d,
+				exercises: d.exercises.map((ex, i) => (i === library.index ? { ...ex, exerciseId } : ex)),
+			}));
 		}
 	};
 
-	const updateRoutineName = () => {
-		onRoutineChange({
-			...routine,
-			name: routineName,
-		});
-		setEditingRoutineName(false);
-	};
-
-	const saveDayNameEdit = (dayId: string) => {
-		if (editingDayName.trim()) {
-			updateDayName(dayId, editingDayName);
-		}
-		setEditingDayId(null);
-		setEditingDayName("");
+	const weeklySets = routine.days.reduce((n, d) => n + totalSets(d), 0);
+	const saveName = () => {
+		if (editingName?.trim()) onRoutineChange({ ...routine, name: editingName.trim() });
+		setEditingName(null);
 	};
 
 	return (
-		<div className="p-4 space-y-6">
-			<div className="flex items-center justify-between">
-				<div className="flex-1">
-					{editingRoutineName ? (
-						<div className="flex items-center gap-2">
-							<Input
-								value={routineName}
-								onChange={(e) => setRoutineName(e.target.value)}
-								onBlur={updateRoutineName}
-								onKeyDown={(e) => {
-									if (e.key === "Enter") updateRoutineName();
-									if (e.key === "Escape") {
-										setRoutineName(routine.name);
-										setEditingRoutineName(false);
-									}
-								}}
-								className="text-xl font-bold h-auto py-1"
-								autoFocus
-							/>
-						</div>
+		<div className="space-y-4">
+			<div className="flex items-end justify-between gap-3">
+				<div className="min-w-0">
+					{editingName !== null ? (
+						<Input
+							value={editingName}
+							onChange={(e) => setEditingName(e.target.value)}
+							onBlur={saveName}
+							onKeyDown={(e) => {
+								if (e.key === "Enter") saveName();
+								if (e.key === "Escape") setEditingName(null);
+							}}
+							className="h-9 text-xl font-semibold"
+							autoFocus
+						/>
 					) : (
-						<div className="flex items-center gap-2">
-							<h2 className="text-xl font-bold">{routine.name}</h2>
-							<Button
-								size="icon"
-								variant="ghost"
-								className="h-6 w-6"
-								onClick={() => setEditingRoutineName(true)}
-							>
-								<Edit2 className="h-3 w-3" />
-							</Button>
-						</div>
+						<button
+							type="button"
+							onClick={() => setEditingName(routine.name)}
+							className={cn(
+								"group flex max-w-full items-center gap-2 rounded-md text-left",
+								diff?.renamed && "text-status-growing"
+							)}
+						>
+							<h2 className="truncate text-xl font-semibold tracking-tight @lg:text-2xl">{routine.name}</h2>
+							<Pencil className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 max-md:opacity-100" />
+						</button>
 					)}
-					<p className="text-sm text-muted-foreground">
-						{routine.days.length} training days per week
+					<p className="tabular text-sm text-muted-foreground">
+						{routine.days.length} day{routine.days.length === 1 ? "" : "s"} · {weeklySets} sets a week
 					</p>
 				</div>
-				<Button onClick={addDay} size="sm" variant="outline">
-					<Plus className="h-4 w-4 mr-2" />
-					Add Day
+				<Button onClick={addDay} size="sm" variant="outline" className="shrink-0">
+					<Plus className="h-4 w-4" />
+					Day
 				</Button>
 			</div>
 
-			<div className="space-y-4">
-				{routine.days.map((day, dayIndex) => {
-					const totalSets = day.exercises.reduce((sum, ex) => sum + ex.sets, 0);
-					return (
-						<Card key={day.id} className="p-4 bg-card">
-							<div className="mb-4 flex items-start justify-between gap-2">
-								<div className="min-w-0">
-									{editingDayId === day.id ? (
-										<Input
-											value={editingDayName}
-											onChange={(e) => setEditingDayName(e.target.value)}
-											onBlur={() => saveDayNameEdit(day.id)}
-											onKeyDown={(e) => {
-												if (e.key === "Enter") saveDayNameEdit(day.id);
-												if (e.key === "Escape") {
-													setEditingDayId(null);
-													setEditingDayName("");
-												}
-											}}
-											className="text-lg font-semibold h-auto py-1 w-full max-w-48"
-											autoFocus
-										/>
-									) : (
-										<div className="flex min-w-0 items-center gap-1">
-											<h3 className="truncate font-semibold text-lg">{day.name}</h3>
-											<Button
-												size="icon"
-												variant="ghost"
-												className="h-6 w-6 shrink-0"
-												aria-label={`Rename ${day.name}`}
-												onClick={() => {
-													setEditingDayId(day.id);
-													setEditingDayName(day.name);
-												}}
-											>
-												<Edit2 className="h-3 w-3" />
-											</Button>
-										</div>
-									)}
-									<p className="text-sm text-muted-foreground">
-										{day.exercises.length} exercise{day.exercises.length === 1 ? "" : "s"} · {totalSets} set{totalSets === 1 ? "" : "s"}
-									</p>
-								</div>
-								<div className="flex shrink-0 items-center gap-1">
-									<Button
-										onClick={() => openLibraryForDay(day.id)}
-										size="sm"
-										variant="ghost"
-										aria-label={`Add exercise to ${day.name}`}
-									>
-										<Plus className="h-4 w-4 sm:mr-1" />
-										<span className="hidden sm:inline">Exercise</span>
-									</Button>
-									{routine.days.length > 1 && (
-										<Button
-											onClick={() => removeDay(day.id)}
-											size="sm"
-											variant="ghost"
-											className="text-destructive"
-											aria-label={`Remove ${day.name}`}
-										>
-											<Trash2 className="h-4 w-4" />
-										</Button>
-									)}
-								</div>
-							</div>
+			<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDayDragEnd}>
+				<SortableContext items={routine.days.map((d) => d.id)} strategy={verticalListSortingStrategy}>
+					<div className="space-y-3">
+						{routine.days.map((day) => (
+							<DayCard
+								key={day.id}
+								day={day}
+								diff={diff?.days.get(day.id)}
+								canRemove={routine.days.length > 1}
+								onChange={(update) => updateDay(day.id, update)}
+								onRemove={() => setDays(routine.days.filter((d) => d.id !== day.id))}
+								onDuplicate={() => duplicateDay(day)}
+								onAddExercise={() => setLibrary({ kind: "add", dayId: day.id })}
+								onReplaceExercise={(index) => setLibrary({ kind: "replace", dayId: day.id, index })}
+							/>
+						))}
+					</div>
+				</SortableContext>
+			</DndContext>
 
-							{day.exercises.length === 0 ? (
-								<div className="text-center py-8 text-muted-foreground border-2 border-dashed border-border rounded-lg">
-									<p className="text-sm">No exercises yet</p>
-									<Button
-										onClick={() => openLibraryForDay(day.id)}
-										variant="link"
-										size="sm"
-										className="mt-2"
-									>
-										Add your first exercise
-									</Button>
-								</div>
-							) : (
-								<DndContext
-									sensors={sensors}
-									collisionDetection={closestCenter}
-									onDragEnd={(e) => handleDragEnd(e, day.id)}
-								>
-									<SortableContext
-										items={day.exercises.map((_, idx) => `${day.id}-${idx}`)}
-										strategy={verticalListSortingStrategy}
-									>
-										<div className="space-y-2">
-											{day.exercises.map((routineEx, exIndex) => {
-												const exercise = getExercise(routineEx.exerciseId);
-												if (!exercise) return null;
-
-												return (
-													<ExerciseCard
-														key={`${day.id}-${exIndex}`}
-														id={`${day.id}-${exIndex}`}
-														exercise={exercise}
-														routineExercise={routineEx}
-														onChange={(patch) =>
-															updateExercise(day.id, exIndex, patch)
-														}
-														onRemove={() => removeExercise(day.id, exIndex)}
-													/>
-												);
-											})}
-										</div>
-									</SortableContext>
-								</DndContext>
-							)}
-						</Card>
-					);
-				})}
-			</div>
+			{diff?.removedDays.map((day) => (
+				<div key={day.id} className="rounded-2xl border border-dashed border-status-under/40 p-4 opacity-70">
+					<p className="text-sm font-medium line-through">{day.name}</p>
+					<p className="text-xs text-status-under">Removed by Claude · {day.exercises.length} exercises</p>
+				</div>
+			))}
 
 			<ExerciseLibraryModal
-				open={isLibraryOpen}
-				onOpenChange={setIsLibraryOpen}
+				open={library !== null}
+				onOpenChange={(open) => !open && setLibrary(null)}
 				onSelectExercise={handleSelectExercise}
+				title={library?.kind === "replace" ? "Replace exercise" : undefined}
+				suggestions={library?.kind === "add" ? suggestions : undefined}
 			/>
 		</div>
+	);
+}
+
+function DayCard({
+	day,
+	diff,
+	canRemove,
+	onChange,
+	onRemove,
+	onDuplicate,
+	onAddExercise,
+	onReplaceExercise,
+}: {
+	day: WorkoutDay;
+	diff?: DayDiff;
+	canRemove: boolean;
+	onChange: (update: (day: WorkoutDay) => WorkoutDay) => void;
+	onRemove: () => void;
+	onDuplicate: () => void;
+	onAddExercise: () => void;
+	onReplaceExercise: (index: number) => void;
+}) {
+	const { getExercise } = useExercises();
+	const [editingName, setEditingName] = useState<string | null>(null);
+	const sensors = useDragSensors();
+	const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({
+		id: day.id,
+	});
+
+	const updateExercise = (index: number, patch: Partial<RoutineExercise>) =>
+		onChange((d) => ({
+			...d,
+			exercises: d.exercises.map((ex, i) => (i === index ? withoutUndefined({ ...ex, ...patch }) : ex)),
+		}));
+
+	const handleDragEnd = ({ active, over }: DragEndEvent) => {
+		if (!over || active.id === over.id) return;
+		const from = Number(String(active.id).split(":")[1]);
+		const to = Number(String(over.id).split(":")[1]);
+		onChange((d) => ({ ...d, exercises: arrayMove(d.exercises, from, to) }));
+	};
+
+	const saveName = () => {
+		if (editingName?.trim()) onChange((d) => ({ ...d, name: editingName.trim() }));
+		setEditingName(null);
+	};
+
+	const sets = totalSets(day);
+
+	return (
+		<section
+			ref={setNodeRef}
+			style={{ transform: CSS.Transform.toString(transform), transition }}
+			className={cn(
+				"rounded-2xl border bg-card p-2 shadow-xs @md:p-3",
+				isDragging && "z-10 opacity-80 shadow-lg",
+				diff?.added && "border-status-optimal/50 ring-1 ring-status-optimal/30"
+			)}
+		>
+			<header className="flex items-center gap-1 py-1 pl-0.5 pr-1">
+				<button
+					ref={setActivatorNodeRef}
+					{...attributes}
+					{...listeners}
+					className="flex h-8 w-6 shrink-0 cursor-grab touch-none items-center justify-center rounded text-muted-foreground/60 hover:text-muted-foreground active:cursor-grabbing"
+					aria-label={`Reorder ${day.name}`}
+				>
+					<GripVertical className="h-4 w-4" />
+				</button>
+				<div className="min-w-0 flex-1">
+					{editingName !== null ? (
+						<Input
+							value={editingName}
+							onChange={(e) => setEditingName(e.target.value)}
+							onBlur={saveName}
+							onKeyDown={(e) => {
+								if (e.key === "Enter") saveName();
+								if (e.key === "Escape") setEditingName(null);
+							}}
+							className="h-8 font-semibold"
+							autoFocus
+						/>
+					) : (
+						<button
+							type="button"
+							onClick={() => setEditingName(day.name)}
+							className="block max-w-full truncate text-left font-semibold"
+							title="Rename"
+						>
+							{day.name}
+							{diff?.added && <span className="ml-2 text-xs font-medium text-status-optimal">New</span>}
+							{diff?.renamed && <span className="ml-2 text-xs font-medium text-status-growing">Renamed</span>}
+						</button>
+					)}
+					<p className="tabular text-xs text-muted-foreground">
+						{day.exercises.length} exercise{day.exercises.length === 1 ? "" : "s"} · {sets} set{sets === 1 ? "" : "s"}
+					</p>
+				</div>
+				<Button onClick={onAddExercise} size="sm" variant="ghost" aria-label={`Add exercise to ${day.name}`}>
+					<Plus className="h-4 w-4" />
+					<span className="hidden @md:inline">Exercise</span>
+				</Button>
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button size="icon" variant="ghost" className="h-8 w-8" aria-label={`${day.name} options`}>
+							<MoreHorizontal className="h-4 w-4" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end">
+						<DropdownMenuItem onSelect={() => setEditingName(day.name)}>
+							<Pencil className="h-4 w-4" />
+							Rename
+						</DropdownMenuItem>
+						<DropdownMenuItem onSelect={onDuplicate}>
+							<Copy className="h-4 w-4" />
+							Duplicate
+						</DropdownMenuItem>
+						{canRemove && (
+							<>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem variant="destructive" onSelect={onRemove}>
+									<Trash2 className="h-4 w-4" />
+									Delete day
+								</DropdownMenuItem>
+							</>
+						)}
+					</DropdownMenuContent>
+				</DropdownMenu>
+			</header>
+
+			{day.exercises.length === 0 && !diff?.removed.length ? (
+				<button
+					type="button"
+					onClick={onAddExercise}
+					className="mt-1 flex w-full flex-col items-center gap-1 rounded-xl border border-dashed py-6 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+				>
+					<Plus className="h-5 w-5" />
+					Add an exercise
+				</button>
+			) : (
+				<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+					<SortableContext items={day.exercises.map((_, i) => `${day.id}:${i}`)} strategy={verticalListSortingStrategy}>
+						<ul className="mt-1 space-y-1.5">
+							{day.exercises.map((routineEx, i) => {
+								const exercise = getExercise(routineEx.exerciseId);
+								if (!exercise) return null;
+								return (
+									<ExerciseCard
+										key={`${day.id}:${i}`}
+										id={`${day.id}:${i}`}
+										exercise={exercise}
+										routineExercise={routineEx}
+										change={diff?.exercises.get(i)}
+										onChange={(patch) => updateExercise(i, patch)}
+										onReplace={() => onReplaceExercise(i)}
+										onRemove={() => onChange((d) => ({ ...d, exercises: d.exercises.filter((_, j) => j !== i) }))}
+									/>
+								);
+							})}
+							{diff?.removed.map((ex, i) => (
+								<GhostExercise key={`removed-${i}`} exercise={getExercise(ex.exerciseId)} sets={ex.sets} />
+							))}
+						</ul>
+					</SortableContext>
+				</DndContext>
+			)}
+		</section>
 	);
 }

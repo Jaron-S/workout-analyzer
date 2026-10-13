@@ -206,7 +206,7 @@ function PushSummary({ result }: { result: PushResult }) {
 	return (
 		<div className="space-y-2 text-sm">
 			<p className="flex items-center gap-2 font-medium">
-				<CheckCircle2 className="h-4 w-4 text-green-500" />
+				<CheckCircle2 className="h-4 w-4 text-status-optimal" />
 				Done. Open Hevy to see it.
 			</p>
 			{result.folderCreated && <p>Created a new folder.</p>}

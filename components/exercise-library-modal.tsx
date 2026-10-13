@@ -1,163 +1,187 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search } from "lucide-react"
-import { useExercises } from "@/lib/exercise-context"
+import { Thumb } from "@/components/exercise-card";
+import { TierBadge } from "@/components/status";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ALL_MUSCLES } from "@/lib/constants";
+import { useExercises } from "@/lib/exercise-context";
+import { searchExercises } from "@/lib/search";
+import type { Suggestion } from "@/lib/suggestions";
+import type { Exercise } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
+import { useMemo, useState } from "react";
 
 interface ExerciseLibraryModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onSelectExercise: (exerciseId: string) => void
+	open: boolean;
+	onOpenChange: (open: boolean) => void;
+	onSelectExercise: (exerciseId: string) => void;
+	title?: string;
+	/** Exercises for muscles short of their priority target, shown first. */
+	suggestions?: Suggestion[];
 }
 
-const ALL_EQUIPMENT = "all"
+const ALL_EQUIPMENT = "all";
 
 const formatEquipment = (equipment: string) =>
-  equipment === "none" ? "Bodyweight" : equipment.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase())
+	equipment === "none" ? "Bodyweight" : equipment.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
-export function ExerciseLibraryModal({ open, onOpenChange, onSelectExercise }: ExerciseLibraryModalProps) {
-  const { exercises } = useExercises()
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedMuscle, setSelectedMuscle] = useState<string | null>(null)
-  const [selectedEquipment, setSelectedEquipment] = useState(ALL_EQUIPMENT)
+export function ExerciseLibraryModal({ open, onOpenChange, onSelectExercise, title, suggestions = [] }: ExerciseLibraryModalProps) {
+	const { exercises } = useExercises();
+	const [query, setQuery] = useState("");
+	const [muscle, setMuscle] = useState<string | null>(null);
+	const [equipment, setEquipment] = useState(ALL_EQUIPMENT);
 
-  const allMuscles = useMemo(() => {
-    const muscles = new Set<string>()
-    exercises.forEach((ex) => {
-      ex.muscle_weightings.forEach((mw) => muscles.add(mw.muscle))
-    })
-    return Array.from(muscles).sort()
-  }, [exercises])
+	const allEquipment = useMemo(
+		() => Array.from(new Set(exercises.flatMap((ex) => (ex.equipment ? [ex.equipment] : [])))).sort(),
+		[exercises]
+	);
 
-  const allEquipment = useMemo(
-    () => Array.from(new Set(exercises.flatMap((ex) => (ex.equipment ? [ex.equipment] : [])))).sort(),
-    [exercises],
-  )
+	const filtered = useMemo(
+		() =>
+			searchExercises(exercises, query).filter(
+				(ex) =>
+					// Legacy exercises only exist so old routines keep working.
+					!ex.legacy &&
+					// Main muscle only, so "Chest" doesn't list every triceps exercise.
+					(!muscle || ex.muscle_weightings[0]?.muscle === muscle) &&
+					(equipment === ALL_EQUIPMENT || ex.equipment === equipment)
+			),
+		[exercises, query, muscle, equipment]
+	);
 
-  const filteredExercises = useMemo(() => {
-    const words = searchQuery.toLowerCase().split(/\s+/).filter(Boolean)
-    return exercises.filter((ex) => {
-      // Legacy exercises only exist so old routines keep working.
-      if (ex.legacy) return false
-      const name = ex.name.toLowerCase()
-      const matchesSearch = words.every((word) => name.includes(word))
-      // Only the main muscle counts, so "Chest" doesn't list every triceps exercise.
-      const matchesMuscle = !selectedMuscle || ex.muscle_weightings[0]?.muscle === selectedMuscle
-      const matchesEquipment = selectedEquipment === ALL_EQUIPMENT || ex.equipment === selectedEquipment
-      return matchesSearch && matchesMuscle && matchesEquipment
-    })
-  }, [exercises, searchQuery, selectedMuscle, selectedEquipment])
+	const browsing = !query && !muscle && equipment === ALL_EQUIPMENT;
 
-  const handleSelect = (exerciseId: string) => {
-    onSelectExercise(exerciseId)
-    onOpenChange(false)
-    setSearchQuery("")
-    setSelectedMuscle(null)
-    setSelectedEquipment(ALL_EQUIPMENT)
-  }
+	const select = (id: string) => {
+		onSelectExercise(id);
+		onOpenChange(false);
+		setQuery("");
+		setMuscle(null);
+		setEquipment(ALL_EQUIPMENT);
+	};
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[80vh]">
-        <DialogHeader>
-          <DialogTitle>Exercise Library</DialogTitle>
-          <DialogDescription>Search and filter exercises to add to your routine</DialogDescription>
-        </DialogHeader>
+	return (
+		<Dialog open={open} onOpenChange={onOpenChange}>
+			<DialogContent className="flex h-[min(720px,88vh)] flex-col gap-0 p-0 sm:max-w-2xl max-sm:h-[92dvh] max-sm:p-0">
+				<DialogHeader className="space-y-3 border-b p-4 pb-3 text-left sm:p-5 sm:pb-4">
+					<div>
+						<DialogTitle>{title ?? "Add exercise"}</DialogTitle>
+						<DialogDescription className="text-xs">
+							{exercises.filter((e) => !e.legacy).length} exercises from the Hevy library
+						</DialogDescription>
+					</div>
+					<div className="flex gap-2">
+						<div className="relative flex-1">
+							<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+							<Input
+								placeholder="Search exercises"
+								value={query}
+								onChange={(e) => setQuery(e.target.value)}
+								className="pl-9"
+								autoFocus={false}
+							/>
+						</div>
+						<Select value={equipment} onValueChange={setEquipment}>
+							<SelectTrigger className="w-[9.5rem] shrink-0">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value={ALL_EQUIPMENT}>Any equipment</SelectItem>
+								{allEquipment.map((e) => (
+									<SelectItem key={e} value={e}>
+										{formatEquipment(e)}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+					<div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:-mx-5 sm:px-5">
+						{[null, ...ALL_MUSCLES].map((m) => (
+							<button
+								key={m ?? "all"}
+								type="button"
+								onClick={() => setMuscle(m)}
+								className={cn(
+									"shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors",
+									muscle === m ? "bg-foreground text-background" : "bg-muted text-muted-foreground hover:text-foreground"
+								)}
+							>
+								{m ?? "All"}
+							</button>
+						))}
+					</div>
+				</DialogHeader>
 
-        <div className="space-y-4">
-          {/* Search and equipment */}
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search exercises..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            <Select value={selectedEquipment} onValueChange={setSelectedEquipment}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ALL_EQUIPMENT}>All equipment</SelectItem>
-                {allEquipment.map((equipment) => (
-                  <SelectItem key={equipment} value={equipment}>
-                    {formatEquipment(equipment)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+				<div className="flex-1 overflow-y-auto p-2 sm:p-3">
+					{browsing && suggestions.length > 0 && (
+						<section className="mb-3">
+							<h3 className="px-2 pb-1.5 pt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+								Suggested for your priorities
+							</h3>
+							{suggestions.map((s) =>
+								s.exercises.slice(0, 2).map((ex) => (
+									<ExerciseOption
+										key={`${s.muscle}-${ex.id}`}
+										exercise={ex}
+										onSelect={select}
+										note={
+											<span className="flex items-center gap-1">
+												<TierBadge tier={s.result.tier} className="h-4 min-w-4 px-1 text-[10px]" />
+												{s.muscle} needs ~{Math.round(s.result.setsToTarget)} more set{Math.round(s.result.setsToTarget) === 1 ? "" : "s"}
+											</span>
+										}
+									/>
+								))
+							)}
+							<h3 className="px-2 pb-1.5 pt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+								All exercises
+							</h3>
+						</section>
+					)}
+					{filtered.map((ex) => (
+						<ExerciseOption key={ex.id} exercise={ex} onSelect={select} />
+					))}
+					{filtered.length === 0 && (
+						<p className="py-12 text-center text-sm text-muted-foreground">No exercises match. Try fewer words.</p>
+					)}
+				</div>
+			</DialogContent>
+		</Dialog>
+	);
+}
 
-          {/* Muscle Filter */}
-          <div className="flex flex-wrap gap-2">
-            <Button
-              size="sm"
-              variant={selectedMuscle === null ? "default" : "outline"}
-              onClick={() => setSelectedMuscle(null)}
-            >
-              All
-            </Button>
-            {allMuscles.map((muscle) => (
-              <Button
-                key={muscle}
-                size="sm"
-                variant={selectedMuscle === muscle ? "default" : "outline"}
-                onClick={() => setSelectedMuscle(muscle)}
-              >
-                {muscle}
-              </Button>
-            ))}
-          </div>
-
-          {/* Exercise List */}
-          <ScrollArea className="h-[400px] pr-4">
-            <div className="space-y-2">
-              {filteredExercises.map((exercise) => (
-                <button
-                  key={exercise.id}
-                  onClick={() => handleSelect(exercise.id)}
-                  className="w-full text-left p-3 rounded-lg border border-border bg-card hover:bg-accent transition-colors flex items-center gap-3"
-                >
-                  {exercise.thumbnailUrl ? (
-                    <img
-                      src={exercise.thumbnailUrl}
-                      alt=""
-                      loading="lazy"
-                      className="h-12 w-12 rounded-md bg-white object-contain flex-shrink-0"
-                    />
-                  ) : (
-                    <div className="h-12 w-12 rounded-md bg-muted flex-shrink-0" />
-                  )}
-                  <div className="min-w-0">
-                    <h4 className="font-medium mb-2">{exercise.name}</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {exercise.muscle_weightings.map((mw, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs">
-                          {mw.muscle} {mw.weighting < 1 && `(${Math.round(mw.weighting * 100)}%)`}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </button>
-              ))}
-              {filteredExercises.length === 0 && (
-                <div className="text-center py-8 text-muted-foreground">
-                  <p>No exercises found</p>
-                </div>
-              )}
-            </div>
-          </ScrollArea>
-        </div>
-      </DialogContent>
-    </Dialog>
-  )
+function ExerciseOption({
+	exercise,
+	onSelect,
+	note,
+}: {
+	exercise: Exercise;
+	onSelect: (id: string) => void;
+	note?: React.ReactNode;
+}) {
+	return (
+		<button
+			type="button"
+			onClick={() => onSelect(exercise.id)}
+			className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
+		>
+			<Thumb exercise={exercise} className="h-11 w-11" />
+			<div className="min-w-0 flex-1">
+				<p className="truncate text-sm font-medium">
+					{exercise.name}
+					{exercise.hevyCustom && <span className="ml-1.5 text-[11px] font-normal text-brand-text">Custom</span>}
+				</p>
+				<p className="truncate text-xs text-muted-foreground">
+					{note ??
+						(exercise.muscle_weightings
+							.slice(0, 3)
+							.map((w) => (w.weighting < 1 ? `${w.muscle} ${Math.round(w.weighting * 100)}%` : w.muscle))
+							.join(" · ") ||
+							"No muscle volume")}
+				</p>
+			</div>
+		</button>
+	);
 }

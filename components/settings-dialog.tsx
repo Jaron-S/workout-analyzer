@@ -22,7 +22,8 @@ import {
 	inferDefaultsFromRoutines,
 } from "@/lib/training-defaults";
 import type { RepRange, TrainingDefaults } from "@/lib/types";
-import { Loader2 } from "lucide-react";
+import { Loader2, Monitor, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -42,6 +43,8 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 						no reps or rest of its own.
 					</DialogDescription>
 				</DialogHeader>
+				<AppearanceSection />
+				<Separator />
 				<HevySection />
 				<Separator />
 				<ClaudeSection />
@@ -182,6 +185,29 @@ function HevySection() {
 					</div>
 				</div>
 			)}
+		</section>
+	);
+}
+
+function AppearanceSection() {
+	const { theme, setTheme } = useTheme();
+	return (
+		<section className="flex items-center justify-between gap-3">
+			<h3 className="font-semibold">Appearance</h3>
+			<ToggleGroup type="single" variant="outline" size="sm" value={theme ?? "system"} onValueChange={(t) => t && setTheme(t)}>
+				<ToggleGroupItem value="system" aria-label="Match system" className="gap-1.5 px-2.5">
+					<Monitor className="h-3.5 w-3.5" />
+					Auto
+				</ToggleGroupItem>
+				<ToggleGroupItem value="light" aria-label="Light" className="gap-1.5 px-2.5">
+					<Sun className="h-3.5 w-3.5" />
+					Light
+				</ToggleGroupItem>
+				<ToggleGroupItem value="dark" aria-label="Dark" className="gap-1.5 px-2.5">
+					<Moon className="h-3.5 w-3.5" />
+					Dark
+				</ToggleGroupItem>
+			</ToggleGroup>
 		</section>
 	);
 }

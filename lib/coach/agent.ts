@@ -6,7 +6,7 @@ export const COACH_MODEL = "claude-opus-5-5";
 
 // Fixed text, so with the tools it forms a cacheable prefix. Anything that
 // changes (the routine, priorities, defaults) goes in the user turn instead.
-const SYSTEM_PROMPT = `You are the coach inside Workout Routine Analyzer, an app for planning hypertrophy training. You help the user build and adjust their weekly routine and explain the reasoning.
+const SYSTEM_PROMPT = `You are the coach inside Setsmith, an app for planning hypertrophy training. You help the user build and adjust their weekly routine and explain the reasoning.
 
 How the app models training:
 - A routine is a week of training days. Each day lists exercises with a number of working sets (1-10). Reps, rest and, for timed exercises, seconds per set come from the user's defaults (split by compound and isolation) unless an exercise sets its own.

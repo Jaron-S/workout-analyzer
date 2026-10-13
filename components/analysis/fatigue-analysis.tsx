@@ -1,326 +1,130 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-	MAX_MUSCLE_SETS_PER_SESSION,
-	MAX_SETS_PER_SESSION,
-} from "@/lib/constants";
+import { ToneBadge } from "@/components/status";
+import { Card } from "@/components/ui/card";
+import { MAX_MUSCLE_SETS_PER_SESSION, MAX_SETS_PER_SESSION } from "@/lib/constants";
+import { TONE_CLASSES, type Tone } from "@/lib/design";
 import { useExercises } from "@/lib/exercise-context";
 import type { MuscleVolume, Routine } from "@/lib/types";
-import { getTotalSessionSets } from "@/lib/volume-calculator";
-import { AlertTriangle, CheckCircle2, Repeat, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 
-// --- PROPS ---
 interface FatigueAnalysisProps {
 	routine: Routine;
 	muscleVolumes: MuscleVolume[];
 }
 
-// --- CONFIGURATION ---
-const FATIGUE_THRESHOLDS = [
-	{
-		level: "low",
-		maxSets: 12,
-		label: "Low",
-		color: "bg-green-500",
-		icon: CheckCircle2,
-		description:
-			"Great session length. Recovery should be quick and manageable.",
-	},
-	{
-		level: "moderate",
-		maxSets: 18,
-		label: "Moderate",
-		color: "bg-sky-500",
-		icon: CheckCircle2,
-		description:
-			"Solid session volume. This is a productive workload for driving growth.",
-	},
-	{
-		level: "high",
-		maxSets: MAX_SETS_PER_SESSION,
-		label: "High",
-		color: "bg-yellow-500",
-		icon: AlertTriangle,
-		description:
-			"High fatigue session. Performance on later exercises may decline. Ensure adequate nutrition and sleep.",
-	},
-	{
-		level: "extreme",
-		maxSets: Infinity,
-		label: "Extreme",
-		color: "bg-destructive",
-		icon: AlertTriangle,
-		description:
-			"Very high fatigue. High risk of 'junk volume' and impaired recovery. Consider moving some exercises to another day.",
-	},
+// Session size bands, by total working sets.
+const FATIGUE_LEVELS: { maxSets: number; label: string; tone: Tone; description: string }[] = [
+	{ maxSets: 12, label: "Light", tone: "growing", description: "Short session; recovery is quick." },
+	{ maxSets: 18, label: "Moderate", tone: "optimal", description: "A productive workload." },
+	{ maxSets: MAX_SETS_PER_SESSION, label: "High", tone: "high", description: "Later exercises may suffer; sleep and eat well." },
+	{ maxSets: Infinity, label: "Very high", tone: "over", description: "Risks junk volume. Consider moving work to another day." },
 ];
 
-const FREQUENCY_STATUS = {
-	suboptimal: {
-		label: "Suboptimal",
-		color: "text-yellow-500",
-		icon: AlertTriangle,
-	},
-	optimal: { label: "Optimal", color: "text-green-500", icon: CheckCircle2 },
-	high: { label: "High", color: "text-sky-500", icon: CheckCircle2 },
-};
-
-// --- COMPONENT ---
-export function FatigueAnalysis({
-	routine,
-	muscleVolumes,
-}: FatigueAnalysisProps) {
+export function FatigueAnalysis({ routine, muscleVolumes }: FatigueAnalysisProps) {
 	const { getExercise } = useExercises();
-	const analysis = useMemo(() => {
-		const sessionAnalyses = routine.days.map((day) => {
-			const totalSets = day.exercises.reduce((acc, curr) => acc + curr.sets, 0);
 
-			const muscleSessionVolumes = new Map<string, number>();
-			day.exercises.forEach((routineEx) => {
-				const exercise = getExercise(routineEx.exerciseId);
-				if (!exercise) return;
-				exercise.muscle_weightings.forEach((mw) => {
-					const volume = routineEx.sets * mw.weighting;
-					muscleSessionVolumes.set(
-						mw.muscle,
-						(muscleSessionVolumes.get(mw.muscle) || 0) + volume
-					);
-				});
-			});
-
-			const highVolumeMuscles = Array.from(muscleSessionVolumes.entries())
-				.filter(([, volume]) => volume > MAX_MUSCLE_SETS_PER_SESSION)
-				.map(([muscle, volume]) => ({ muscle, volume }));
-
-			const fatigueLevel =
-				FATIGUE_THRESHOLDS.find((t) => totalSets <= t.maxSets) ||
-				FATIGUE_THRESHOLDS[FATIGUE_THRESHOLDS.length - 1];
-
-			return { day, totalSets, highVolumeMuscles, fatigueLevel };
-		});
-
-		const frequencyAnalysis = {
-			suboptimal: muscleVolumes.filter(
-				(mv) => mv.frequency === 1 && mv.totalSets > 0
-			),
-			optimal: muscleVolumes.filter(
-				(mv) => mv.frequency >= 2 && mv.frequency <= 3 && mv.totalSets > 0
-			),
-			high: muscleVolumes.filter((mv) => mv.frequency > 3 && mv.totalSets > 0),
-		};
-
-		return { sessionAnalyses, frequencyAnalysis };
-	}, [routine, muscleVolumes, getExercise]);
-
-	const highFatigueSessions = analysis.sessionAnalyses.filter(
-		(s) => s.fatigueLevel.level === "extreme"
-	).length;
-	const junkVolumeRisks = analysis.sessionAnalyses.reduce(
-		(acc, s) => acc + s.highVolumeMuscles.length,
-		0
+	const sessions = useMemo(
+		() =>
+			routine.days.map((day) => {
+				const totalSets = day.exercises.reduce((n, ex) => n + ex.sets, 0);
+				const perMuscle = new Map<string, number>();
+				for (const ex of day.exercises) {
+					for (const w of getExercise(ex.exerciseId)?.muscle_weightings ?? []) {
+						perMuscle.set(w.muscle, (perMuscle.get(w.muscle) ?? 0) + ex.sets * w.weighting);
+					}
+				}
+				const junk = [...perMuscle]
+					.filter(([, v]) => v > MAX_MUSCLE_SETS_PER_SESSION)
+					.map(([muscle, volume]) => ({ muscle, volume }));
+				const level = FATIGUE_LEVELS.find((l) => totalSets <= l.maxSets)!;
+				return { day, totalSets, junk, level };
+			}),
+		[routine, getExercise]
 	);
-	const frequencyWarnings = analysis.frequencyAnalysis.suboptimal.length;
+
+	const trained = muscleVolumes.filter((mv) => mv.totalSets > 0);
+	const once = trained.filter((mv) => mv.frequency === 1);
+	const often = trained.filter((mv) => mv.frequency >= 2);
+	const maxSets = Math.max(MAX_SETS_PER_SESSION, ...sessions.map((s) => s.totalSets));
 
 	return (
-		<TooltipProvider>
-			<div className="space-y-6">
-				{/* At-a-Glance Summary */}
-				<div className="grid gap-4 md:grid-cols-3">
-					<Card>
-						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle className="text-sm font-medium">
-								High Fatigue Sessions
-							</CardTitle>
-							<Zap
-								className={`h-4 w-4 ${
-									highFatigueSessions > 0
-										? "text-destructive"
-										: "text-muted-foreground"
-								}`}
-							/>
-						</CardHeader>
-						<CardContent>
-							<div className="text-2xl font-bold">{highFatigueSessions}</div>
-							<p className="text-xs text-muted-foreground">
-								Sessions over {MAX_SETS_PER_SESSION} sets
-							</p>
-						</CardContent>
-					</Card>
-					<Card>
-						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle className="text-sm font-medium">
-								Junk Volume Risks
-							</CardTitle>
-							<AlertTriangle
-								className={`h-4 w-4 ${
-									junkVolumeRisks > 0
-										? "text-yellow-500"
-										: "text-muted-foreground"
-								}`}
-							/>
-						</CardHeader>
-						<CardContent>
-							<div className="text-2xl font-bold">{junkVolumeRisks}</div>
-							<p className="text-xs text-muted-foreground">
-								Muscles over {MAX_MUSCLE_SETS_PER_SESSION} sets per session
-							</p>
-						</CardContent>
-					</Card>
-					<Card>
-						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle className="text-sm font-medium">
-								Frequency Issues
-							</CardTitle>
-							<Repeat
-								className={`h-4 w-4 ${
-									frequencyWarnings > 0
-										? "text-yellow-500"
-										: "text-muted-foreground"
-								}`}
-							/>
-						</CardHeader>
-						<CardContent>
-							<div className="text-2xl font-bold">{frequencyWarnings}</div>
-							<p className="text-xs text-muted-foreground">
-								Muscles trained only 1x/week
-							</p>
-						</CardContent>
-					</Card>
+		<div className="space-y-4">
+			<Card className="gap-4 p-4 sm:p-5">
+				<div>
+					<h3 className="font-semibold">Sessions</h3>
+					<p className="text-xs text-muted-foreground">
+						Working sets per session. Above {MAX_SETS_PER_SESSION} gets very fatiguing; above{" "}
+						{MAX_MUSCLE_SETS_PER_SESSION} for one muscle in a session risks junk volume.
+					</p>
 				</div>
+				<ul className="space-y-4">
+					{sessions.map(({ day, totalSets, junk, level }) => (
+						<li key={day.id} className="space-y-2">
+							<div className="flex items-center gap-2">
+								<span className="truncate text-sm font-medium">{day.name}</span>
+								<ToneBadge tone={level.tone} className="ml-auto shrink-0">
+									{level.label}
+								</ToneBadge>
+								<span className="tabular w-[4.5rem] shrink-0 text-right text-sm font-semibold">
+									{totalSets}
+									<span className="ml-1 text-xs font-normal text-muted-foreground">sets</span>
+								</span>
+							</div>
+							<div className="relative h-2.5 overflow-hidden rounded-full bg-muted" title={level.description}>
+								<div
+									className={cn("h-full rounded-full transition-[width] duration-500", TONE_CLASSES[level.tone].fill)}
+									style={{ width: `${(totalSets / maxSets) * 100}%` }}
+								/>
+								<div
+									className="absolute inset-y-0 w-px bg-foreground/25"
+									style={{ left: `${(MAX_SETS_PER_SESSION / maxSets) * 100}%` }}
+								/>
+							</div>
+							{junk.length > 0 && (
+								<p className={cn("text-xs", TONE_CLASSES.over.text)}>
+									Junk-volume risk: {junk.map((j) => `${j.muscle} ${j.volume.toFixed(1)} sets`).join(", ")}.
+								</p>
+							)}
+						</li>
+					))}
+				</ul>
+			</Card>
 
-				{/* Session Fatigue Analysis */}
-				<Card>
-					<CardHeader>
-						<CardTitle className="flex items-center gap-2">
-							<Zap className="h-5 w-5" />
-							Session Fatigue Analysis
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						{analysis.sessionAnalyses.map(
-							({ day, totalSets, highVolumeMuscles, fatigueLevel }) => (
-								<div key={day.id} className="p-4 bg-secondary/50 rounded-lg">
-									<div className="flex items-center justify-between mb-2">
-										<span className="font-semibold">{day.name}</span>
-										<div className="flex items-center gap-2">
-											<span className="text-sm font-mono font-bold">
-												{totalSets} sets
-											</span>
-											<Tooltip>
-												<TooltipTrigger asChild>
-													<Badge
-														variant={
-															fatigueLevel.level === "extreme"
-																? "destructive"
-																: "secondary"
-														}
-														className="gap-1 cursor-help"
-													>
-														<fatigueLevel.icon className="h-3 w-3" />
-														{fatigueLevel.label}
-													</Badge>
-												</TooltipTrigger>
-												<TooltipContent>
-													<p className="text-xs max-w-xs">
-														{fatigueLevel.description}
-													</p>
-												</TooltipContent>
-											</Tooltip>
-										</div>
-									</div>
-									{/* *** NEW: FATIGUE METER *** */}
-									<div className="flex w-full h-2 gap-1 rounded-full overflow-hidden bg-muted">
-										{FATIGUE_THRESHOLDS.map((threshold, index) => {
-											const isActive =
-												totalSets >
-												(FATIGUE_THRESHOLDS[index - 1]?.maxSets || 0);
-											return (
-												<div
-													key={threshold.level}
-													className={`w-1/4 h-full ${
-														isActive ? threshold.color : ""
-													}`}
-												/>
-											);
-										})}
-									</div>
-									{highVolumeMuscles.length > 0 && (
-										<Alert variant="destructive" className="mt-3">
-											<AlertTriangle className="h-4 w-4" />
-											<AlertTitle>Junk Volume Warning</AlertTitle>
-											<AlertDescription className="text-xs">
-												High per-session volume for:{" "}
-												{highVolumeMuscles
-													.map((m) => `${m.muscle} (${m.volume.toFixed(1)})`)
-													.join(", ")}
-												. Performance may decline after ~12 sets for a single
-												muscle.
-											</AlertDescription>
-										</Alert>
-									)}
-								</div>
-							)
-						)}
-					</CardContent>
-				</Card>
+			<Card className="gap-4 p-4 sm:p-5">
+				<div>
+					<h3 className="font-semibold">Frequency</h3>
+					<p className="text-xs text-muted-foreground">
+						Most muscles grow better with their weekly volume split over two or more sessions.
+					</p>
+				</div>
+				{once.length > 0 && (
+					<MuscleGroup tone="maintain" title={`Once a week (${once.length})`} muscles={once.map((m) => m.muscle)} />
+				)}
+				{often.length > 0 && (
+					<MuscleGroup
+						tone="optimal"
+						title={`Twice or more (${often.length})`}
+						muscles={often.map((m) => `${m.muscle} ${m.frequency}×`)}
+					/>
+				)}
+			</Card>
+		</div>
+	);
+}
 
-				{/* Frequency Analysis */}
-				<Card>
-					<CardHeader>
-						<CardTitle className="flex items-center gap-2">
-							<Repeat className="h-5 w-5" />
-							Training Frequency
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						{analysis.frequencyAnalysis.suboptimal.length > 0 && (
-							<Alert className="mb-4 border-yellow-500/50 text-yellow-500 [&>svg]:text-yellow-500">
-								<AlertTriangle className="h-4 w-4" />
-								<AlertTitle>Suboptimal Frequency Detected</AlertTitle>
-								<AlertDescription>
-									Training a muscle only once per week is often less effective
-									for growth. Consider splitting the volume for these muscles
-									across 2 or more sessions.
-								</AlertDescription>
-							</Alert>
-						)}
-						{Object.entries(analysis.frequencyAnalysis).map(
-							([status, muscles]) => {
-								if (muscles.length === 0) return null;
-								const statusConfig =
-									FREQUENCY_STATUS[status as keyof typeof FREQUENCY_STATUS];
-								return (
-									<div key={status} className="mb-4 last:mb-0">
-										<h4
-											className={`font-semibold text-sm mb-2 flex items-center gap-2 ${statusConfig.color}`}
-										>
-											<statusConfig.icon className="h-4 w-4" />
-											{statusConfig.label} ({muscles.length})
-										</h4>
-										<div className="flex flex-wrap gap-2">
-											{muscles.map((mv) => (
-												<Badge key={mv.muscle} variant="secondary">
-													{mv.muscle} ({mv.frequency}x)
-												</Badge>
-											))}
-										</div>
-									</div>
-								);
-							}
-						)}
-					</CardContent>
-				</Card>
+function MuscleGroup({ tone, title, muscles }: { tone: Tone; title: string; muscles: string[] }) {
+	return (
+		<div className="space-y-2">
+			<p className={cn("text-xs font-medium", TONE_CLASSES[tone].text)}>{title}</p>
+			<div className="flex flex-wrap gap-1.5">
+				{muscles.map((m) => (
+					<span key={m} className="rounded-md bg-surface px-2 py-1 text-xs">
+						{m}
+					</span>
+				))}
 			</div>
-		</TooltipProvider>
+		</div>
 	);
 }
