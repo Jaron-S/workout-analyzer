@@ -8,6 +8,14 @@ import { SettingsDialog } from "@/components/settings-dialog";
 import { RoutineBuilder } from "@/components/routine-builder";
 import { SavedRoutinesModal } from "@/components/saved-routines-modal";
 import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCoach } from "@/hooks/use-coach";
 import { usePersistedState } from "@/hooks/use-persisted-state";
@@ -157,73 +165,84 @@ export default function Home() {
 		<div className="min-h-screen bg-background">
 			{/* Header */}
 			<header className="border-b border-border bg-card">
-				<div className="container mx-auto px-4 py-4">
-					<div className="flex items-center justify-between">
-						<div className="flex gap-4 items-center">
-							<Dumbbell />
-							<div>
-								<h1 className="text-2xl font-bold text-balance">
-									Workout Routine Analyzer
+				<div className="container mx-auto px-4 py-3 sm:py-4">
+					<div className="flex items-center justify-between gap-3">
+						<div className="flex min-w-0 items-center gap-3 sm:gap-4">
+							<Dumbbell className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
+							<div className="min-w-0">
+								<h1 className="truncate text-lg font-bold sm:text-2xl">
+									<span className="sm:hidden">Workout Analyzer</span>
+									<span className="hidden sm:inline">Workout Routine Analyzer</span>
 								</h1>
-								<p className="text-sm text-muted-foreground">
+								<p className="hidden text-sm text-muted-foreground md:block">
 									Build smarter routines with science-backed feedback
 								</p>
 							</div>
 						</div>
-						<div className="flex flex-wrap items-center justify-end gap-2">
-							<Button variant="outline" size="sm" onClick={handleAskClaude}>
-								<Sparkles className="h-4 w-4 mr-2" />
-								Ask Claude
+						<div className="flex shrink-0 items-center gap-2">
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={handleAskClaude}
+								aria-label="Ask Claude"
+							>
+								<Sparkles className="h-4 w-4 sm:mr-2" />
+								<span className="hidden sm:inline">Ask Claude</span>
 							</Button>
 							<Button
 								variant="outline"
 								size="sm"
 								onClick={handlePushToHevy}
 								disabled={Boolean(coach.draft)}
+								aria-label="Push to Hevy"
 								title={coach.draft ? "Apply or discard Claude's changes first" : undefined}
 							>
-								<Upload className="h-4 w-4 mr-2" />
-								Push to Hevy
+								<Upload className="h-4 w-4 sm:mr-2" />
+								<span className="hidden sm:inline">Push to Hevy</span>
 							</Button>
-							{user ? (
-								<>
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={() => setShowSavedRoutines(true)}
-									>
-										<FolderOpen className="h-4 w-4 mr-2" />
-										My Routines
-									</Button>
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={handleSaveToFirebase}
-									>
-										<Save className="h-4 w-4 mr-2" />
-										Save to Account
-									</Button>
-									<Button variant="outline" size="sm" onClick={handleSignOut}>
-										<LogOut className="h-4 w-4 mr-2" />
-										Sign Out
-									</Button>
-								</>
-							) : (
-								isConfigured && (
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={() => setShowAuth(true)}
-									>
-										<User className="h-4 w-4 mr-2" />
-										Login / Sign Up
-									</Button>
-								)
+							{(user || isConfigured) && (
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button variant="outline" size="sm" aria-label="Account">
+											<User className="h-4 w-4 lg:mr-2" />
+											<span className="hidden lg:inline">
+												{user ? "Account" : "Log in"}
+											</span>
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent align="end" className="w-52">
+										{user ? (
+											<>
+												<DropdownMenuLabel className="truncate font-normal text-muted-foreground">
+													{user.email}
+												</DropdownMenuLabel>
+												<DropdownMenuSeparator />
+												<DropdownMenuItem onSelect={() => setShowSavedRoutines(true)}>
+													<FolderOpen className="h-4 w-4" />
+													My Routines
+												</DropdownMenuItem>
+												<DropdownMenuItem onSelect={handleSaveToFirebase}>
+													<Save className="h-4 w-4" />
+													Save to Account
+												</DropdownMenuItem>
+												<DropdownMenuSeparator />
+												<DropdownMenuItem onSelect={handleSignOut}>
+													<LogOut className="h-4 w-4" />
+													Sign Out
+												</DropdownMenuItem>
+											</>
+										) : (
+											<DropdownMenuItem onSelect={() => setShowAuth(true)}>
+												<User className="h-4 w-4" />
+												Log in / Sign up
+											</DropdownMenuItem>
+										)}
+									</DropdownMenuContent>
+								</DropdownMenu>
 							)}
 							<Button
 								variant="outline"
-								size="icon"
-								className="h-8 w-8"
+								size="sm"
 								onClick={() => setShowSettings(true)}
 								aria-label="Settings"
 								title="Settings"

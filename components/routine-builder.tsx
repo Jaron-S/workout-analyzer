@@ -22,7 +22,7 @@ import {
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Edit2, GripVertical, Plus, Trash2 } from "lucide-react";
+import { Edit2, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 // Firestore rejects undefined fields, and clearing a target sets it to undefined.
@@ -232,9 +232,8 @@ export function RoutineBuilder({
 					const totalSets = day.exercises.reduce((sum, ex) => sum + ex.sets, 0);
 					return (
 						<Card key={day.id} className="p-4 bg-card">
-							<div className="flex items-center justify-between mb-4">
-								<div className="flex items-center gap-2">
-									<GripVertical className="h-5 w-5 text-muted-foreground" />
+							<div className="mb-4 flex items-start justify-between gap-2">
+								<div className="min-w-0">
 									{editingDayId === day.id ? (
 										<Input
 											value={editingDayName}
@@ -247,16 +246,17 @@ export function RoutineBuilder({
 													setEditingDayName("");
 												}
 											}}
-											className="text-lg font-semibold h-auto py-1 w-48"
+											className="text-lg font-semibold h-auto py-1 w-full max-w-48"
 											autoFocus
 										/>
 									) : (
-										<>
-											<h3 className="font-semibold text-lg">{day.name}</h3>
+										<div className="flex min-w-0 items-center gap-1">
+											<h3 className="truncate font-semibold text-lg">{day.name}</h3>
 											<Button
 												size="icon"
 												variant="ghost"
-												className="h-6 w-6"
+												className="h-6 w-6 shrink-0"
+												aria-label={`Rename ${day.name}`}
 												onClick={() => {
 													setEditingDayId(day.id);
 													setEditingDayName(day.name);
@@ -264,20 +264,21 @@ export function RoutineBuilder({
 											>
 												<Edit2 className="h-3 w-3" />
 											</Button>
-										</>
+										</div>
 									)}
-									<span className="text-sm text-muted-foreground">
-										({day.exercises.length} exercises, {totalSets} total sets)
-									</span>
+									<p className="text-sm text-muted-foreground">
+										{day.exercises.length} exercise{day.exercises.length === 1 ? "" : "s"} · {totalSets} set{totalSets === 1 ? "" : "s"}
+									</p>
 								</div>
-								<div className="flex items-center gap-2">
+								<div className="flex shrink-0 items-center gap-1">
 									<Button
 										onClick={() => openLibraryForDay(day.id)}
 										size="sm"
 										variant="ghost"
+										aria-label={`Add exercise to ${day.name}`}
 									>
-										<Plus className="h-4 w-4 mr-1" />
-										Exercise
+										<Plus className="h-4 w-4 sm:mr-1" />
+										<span className="hidden sm:inline">Exercise</span>
 									</Button>
 									{routine.days.length > 1 && (
 										<Button
@@ -285,6 +286,7 @@ export function RoutineBuilder({
 											size="sm"
 											variant="ghost"
 											className="text-destructive"
+											aria-label={`Remove ${day.name}`}
 										>
 											<Trash2 className="h-4 w-4" />
 										</Button>
