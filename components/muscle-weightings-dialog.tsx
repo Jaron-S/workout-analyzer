@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { ALL_MUSCLES } from "@/lib/constants";
-import { getDefaultWeightings } from "@/lib/exercise-catalog";
 import { useExercises } from "@/lib/exercise-context";
 import type { Exercise } from "@/lib/types";
 import { X } from "lucide-react";
@@ -38,7 +37,7 @@ export function MuscleWeightingsDialog({
 	open,
 	onOpenChange,
 }: MuscleWeightingsDialogProps) {
-	const { setMuscleOverride } = useExercises();
+	const { setMuscleOverride, hasMuscleOverride } = useExercises();
 	const [muscles, setMuscles] = useState<Record<string, number>>(() => toRecord(exercise));
 
 	useEffect(() => {
@@ -73,6 +72,8 @@ export function MuscleWeightingsDialog({
 					<DialogDescription>
 						How hard each muscle works in this exercise for you. At 100% a set
 						counts as a full set for that muscle; at 50%, half a set.
+						{exercise.estimatedWeightings &&
+							" These were estimated from Hevy's muscle groups, so check them."}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -127,7 +128,7 @@ export function MuscleWeightingsDialog({
 				</div>
 
 				<DialogFooter className="gap-2 sm:justify-between">
-					{exercise.customWeightings && getDefaultWeightings(exercise.id) ? (
+					{hasMuscleOverride(exercise.id) ? (
 						<Button variant="ghost" onClick={reset}>
 							Reset to default
 						</Button>

@@ -29,6 +29,9 @@ for (const [id, entry] of Object.entries(weightings)) {
 	if (entry.title !== exercise.title) {
 		problem(id, `checked as "${entry.title}" but Hevy now calls it "${exercise.title}"; re-verify, then update title`);
 	}
+	if ("compound" in entry && typeof entry.compound !== "boolean") {
+		problem(id, '"compound" must be true or false');
+	}
 	const values = Object.entries(entry.muscles ?? {});
 	// Cardio and mobility work legitimately count toward no muscle.
 	if (values.length === 0 && !entry.noMuscleVolume) {

@@ -117,8 +117,10 @@ export function SavedRoutinesModal({
 		if (!user) return;
 
 		try {
+			// The copy must not share the original's Hevy routines.
+			const { hevy: _hevy, ...rest } = JSON.parse(JSON.stringify(routine)) as Routine;
 			const copiedRoutine: Routine = {
-				...JSON.parse(JSON.stringify(routine)),
+				...rest,
 				id: crypto.randomUUID(),
 				name: `${routine.name} (Copy)`,
 			};

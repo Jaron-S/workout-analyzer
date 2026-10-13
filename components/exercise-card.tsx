@@ -3,7 +3,8 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import type { Exercise } from "@/lib/types";
+import { ExerciseTargetsPopover } from "@/components/exercise-targets-popover";
+import type { Exercise, RoutineExercise } from "@/lib/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MuscleWeightingsDialog } from "@/components/muscle-weightings-dialog";
@@ -13,18 +14,20 @@ import { useState } from "react";
 interface ExerciseCardProps {
 	id: string;
 	exercise: Exercise;
-	sets: number;
-	onSetsChange: (sets: number) => void;
+	routineExercise: RoutineExercise;
+	onChange: (patch: Partial<RoutineExercise>) => void;
 	onRemove: () => void;
 }
 
 export function ExerciseCard({
 	id,
 	exercise,
-	sets,
-	onSetsChange,
+	routineExercise,
+	onChange,
 	onRemove,
 }: ExerciseCardProps) {
+	const sets = routineExercise.sets;
+	const onSetsChange = (sets: number) => onChange({ sets });
 	const [editingMuscles, setEditingMuscles] = useState(false);
 	const {
 		attributes,
@@ -55,7 +58,7 @@ export function ExerciseCard({
 			style={style}
 			className="p-3 bg-secondary/50 border-border hover:bg-secondary/70 transition-colors"
 		>
-			<div className="flex items-center gap-3">
+			<div className="flex flex-wrap items-center gap-3">
 				<div
 					{...attributes}
 					{...listeners}
@@ -73,7 +76,7 @@ export function ExerciseCard({
 					/>
 				)}
 
-				<div className="flex-1 min-w-0">
+				<div className="flex-1 min-w-[10rem]">
 					<h4 className="font-medium text-sm text-foreground truncate">
 						{exercise.name}
 					</h4>
@@ -94,9 +97,16 @@ export function ExerciseCard({
 							</Badge>
 						)}
 					</div>
+					<div className="mt-1">
+						<ExerciseTargetsPopover
+							exercise={exercise}
+							routineExercise={routineExercise}
+							onChange={onChange}
+						/>
+					</div>
 				</div>
 
-				<div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+				<div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-auto">
 					<Button
 						onClick={decrementSets}
 						size="icon"

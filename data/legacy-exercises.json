@@ -7,7 +7,8 @@
 				"muscle": "Calves",
 				"weighting": 1
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex73",
@@ -17,7 +18,8 @@
 				"muscle": "Abs",
 				"weighting": 1
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex94",
@@ -39,7 +41,8 @@
 				"muscle": "Abs",
 				"weighting": 0.5
 			}
-		]
+		],
+		"compound": true
 	},
 	{
 		"id": "ex100",
@@ -61,7 +64,8 @@
 				"muscle": "Forearms",
 				"weighting": 0.4
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex117",
@@ -71,7 +75,8 @@
 				"muscle": "Quads",
 				"weighting": 1
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex119",
@@ -85,7 +90,8 @@
 				"muscle": "Lower Back",
 				"weighting": 0.4
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex121",
@@ -103,7 +109,8 @@
 				"muscle": "Abs",
 				"weighting": 0.3
 			}
-		]
+		],
+		"compound": true
 	},
 	{
 		"id": "ex122",
@@ -117,7 +124,8 @@
 				"muscle": "Hamstrings",
 				"weighting": 0.2
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex123",
@@ -127,7 +135,8 @@
 				"muscle": "Side Delts",
 				"weighting": 1
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex126",
@@ -141,7 +150,8 @@
 				"muscle": "Side Delts",
 				"weighting": 0.3
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex127",
@@ -155,7 +165,8 @@
 				"muscle": "Abs",
 				"weighting": 0.4
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex132",
@@ -165,7 +176,8 @@
 				"muscle": "Forearms",
 				"weighting": 1
 			}
-		]
+		],
+		"compound": false
 	},
 	{
 		"id": "ex133",
@@ -175,6 +187,7 @@
 				"muscle": "Forearms",
 				"weighting": 1
 			}
-		]
+		],
+		"compound": false
 	}
 ]

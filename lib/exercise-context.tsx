@@ -1,90 +1,57 @@
 "use client";
 
-import { usePersistedState } from "@/hooks/use-persisted-state";
-import { useAuth } from "./auth-context";
+import { useAccountSyncedState } from "@/hooks/use-account-synced-state";
 import { buildCatalog } from "./exercise-catalog";
-import {
-	getMuscleOverridesFromFirebase,
-	saveMuscleOverridesToFirebase,
-} from "./firebase-storage";
+import { getSettingFromFirebase, saveSettingToFirebase } from "./firebase-storage";
+import { customTemplateToExercise } from "./hevy/exercises";
+import { useHevy } from "./hevy-context";
 import { loadMuscleOverrides, saveMuscleOverrides } from "./storage";
 import type { Exercise, MuscleOverrides } from "./types";
 import type React from "react";
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useRef,
-} from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
 
 interface ExerciseContextType {
 	exercises: Exercise[];
 	getExercise: (id: string) => Exercise | undefined;
 	/** Replace an exercise's muscle weightings for this user; null restores the defaults. */
 	setMuscleOverride: (id: string, muscles: Record<string, number> | null) => void;
+	hasMuscleOverride: (id: string) => boolean;
 }
 
 const ExerciseContext = createContext<ExerciseContextType>({
 	exercises: [],
 	getExercise: () => undefined,
 	setMuscleOverride: () => {},
+	hasMuscleOverride: () => false,
 });
 
+const local = { save: saveMuscleOverrides, load: loadMuscleOverrides };
+const remote = {
+	save: (userId: string, value: MuscleOverrides) =>
+		saveSettingToFirebase(userId, "muscleOverrides", value),
+	load: (userId: string) => getSettingFromFirebase<MuscleOverrides>(userId, "muscleOverrides"),
+};
+
 export function ExerciseProvider({ children }: { children: React.ReactNode }) {
-	const { user } = useAuth();
-	const [overrides, setOverrides] = usePersistedState<MuscleOverrides>(
+	const { customTemplates } = useHevy();
+	const [overrides, setOverrides] = useAccountSyncedState<MuscleOverrides>(
 		"muscleOverrides",
 		{},
-		saveMuscleOverrides,
-		loadMuscleOverrides
+		local,
+		remote
 	);
 
-	// JSON of the overrides last read from or written to Firestore, so loading
-	// them does not immediately write them back.
-	const syncedRef = useRef<string | null>(null);
-
-	// On sign-in, the account's overrides win; if it has none yet, upload the
-	// ones made on this device as a guest.
-	useEffect(() => {
-		if (!user) {
-			syncedRef.current = null;
-			return;
-		}
-		let cancelled = false;
-		getMuscleOverridesFromFirebase(user.uid)
-			.then((remote) => {
-				if (cancelled) return;
-				if (remote) {
-					syncedRef.current = JSON.stringify(remote);
-					setOverrides(remote);
-				} else {
-					syncedRef.current = "";
-				}
-			})
-			.catch((error) => console.error("Failed to load muscle overrides:", error));
-		return () => {
-			cancelled = true;
-		};
-	}, [user, setOverrides]);
-
-	useEffect(() => {
-		if (!user || syncedRef.current === null) return;
-		const json = JSON.stringify(overrides);
-		if (json === syncedRef.current) return;
-		syncedRef.current = json;
-		saveMuscleOverridesToFirebase(user.uid, overrides).catch((error) =>
-			console.error("Failed to save muscle overrides:", error)
-		);
-	}, [user, overrides]);
-
-	const exercises = useMemo(() => buildCatalog(overrides), [overrides]);
-	const byId = useMemo(
-		() => new Map(exercises.map((e) => [e.id, e])),
-		[exercises]
+	const customExercises = useMemo(
+		() => customTemplates.map(customTemplateToExercise),
+		[customTemplates]
 	);
+	const exercises = useMemo(
+		() => buildCatalog(overrides, customExercises),
+		[overrides, customExercises]
+	);
+	const byId = useMemo(() => new Map(exercises.map((e) => [e.id, e])), [exercises]);
 	const getExercise = useCallback((id: string) => byId.get(id), [byId]);
+	const hasMuscleOverride = useCallback((id: string) => id in overrides, [overrides]);
 
 	const setMuscleOverride = useCallback(
 		(id: string, muscles: Record<string, number> | null) => {
@@ -99,7 +66,9 @@ export function ExerciseProvider({ children }: { children: React.ReactNode }) {
 	);
 
 	return (
-		<ExerciseContext.Provider value={{ exercises, getExercise, setMuscleOverride }}>
+		<ExerciseContext.Provider
+			value={{ exercises, getExercise, setMuscleOverride, hasMuscleOverride }}
+		>
 			{children}
 		</ExerciseContext.Provider>
 	);

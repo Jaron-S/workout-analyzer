@@ -2,12 +2,15 @@
 
 import { AnalysisPanel } from "@/components/analysis-panel";
 import { AuthModal } from "@/components/auth-modal";
+import { HevyPushDialog } from "@/components/hevy-push-dialog";
+import { SettingsDialog } from "@/components/settings-dialog";
 import { RoutineBuilder } from "@/components/routine-builder";
 import { SavedRoutinesModal } from "@/components/saved-routines-modal";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import { useAuth } from "@/lib/auth-context";
+import { useHevy } from "@/lib/hevy-context";
 import {
 	savePrioritiesToFirebase,
 	saveRoutineToFirebase,
@@ -25,6 +28,8 @@ import {
 	FolderOpen,
 	LogOut,
 	Save,
+	Settings,
+	Upload,
 	User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -44,6 +49,9 @@ export default function Home() {
 	const { user, signOut, isConfigured } = useAuth();
 	const [showAuth, setShowAuth] = useState(false);
 	const [showSavedRoutines, setShowSavedRoutines] = useState(false);
+	const [showSettings, setShowSettings] = useState(false);
+	const [showPush, setShowPush] = useState(false);
+	const { client: hevyClient } = useHevy();
 
 	const [routine, setRoutine] = usePersistedState<Routine>(
 		"routine",
@@ -95,6 +103,17 @@ export default function Home() {
 		}
 	};
 
+	const handlePushToHevy = () => {
+		if (hevyClient) {
+			setShowPush(true);
+		} else {
+			toast("Connect Hevy first", {
+				description: "Add your Hevy API key in Settings to push routines.",
+			});
+			setShowSettings(true);
+		}
+	};
+
 	const handleSignOut = async () => {
 		try {
 			await signOut();
@@ -128,7 +147,11 @@ export default function Home() {
 								</p>
 							</div>
 						</div>
-						<div className="flex items-center gap-2">
+						<div className="flex flex-wrap items-center justify-end gap-2">
+							<Button variant="outline" size="sm" onClick={handlePushToHevy}>
+								<Upload className="h-4 w-4 mr-2" />
+								Push to Hevy
+							</Button>
 							{user ? (
 								<>
 									<Button
@@ -164,6 +187,16 @@ export default function Home() {
 									</Button>
 								)
 							)}
+							<Button
+								variant="outline"
+								size="icon"
+								className="h-8 w-8"
+								onClick={() => setShowSettings(true)}
+								aria-label="Settings"
+								title="Settings"
+							>
+								<Settings className="h-4 w-4" />
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -216,6 +249,13 @@ export default function Home() {
 			</div>
 
 			<AuthModal open={showAuth} onOpenChange={setShowAuth} />
+			<SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
+			<HevyPushDialog
+				open={showPush}
+				onOpenChange={setShowPush}
+				routine={routine}
+				setRoutine={setRoutine}
+			/>
 			<SavedRoutinesModal
 				open={showSavedRoutines}
 				onOpenChange={setShowSavedRoutines}

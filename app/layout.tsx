@@ -1,6 +1,8 @@
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth-context";
 import { ExerciseProvider } from "@/lib/exercise-context";
+import { HevyProvider } from "@/lib/hevy-context";
+import { SettingsProvider } from "@/lib/settings-context";
 import { Analytics } from "@vercel/analytics/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -23,12 +25,16 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
 				<AuthProvider>
-					<ExerciseProvider>
-						<Suspense fallback={null}>
-							{children}
-							<Toaster />
-						</Suspense>
-					</ExerciseProvider>
+					<SettingsProvider>
+						<HevyProvider>
+							<ExerciseProvider>
+								<Suspense fallback={null}>
+									{children}
+									<Toaster />
+								</Suspense>
+							</ExerciseProvider>
+						</HevyProvider>
+					</SettingsProvider>
 				</AuthProvider>
 				<Analytics />
 			</body>

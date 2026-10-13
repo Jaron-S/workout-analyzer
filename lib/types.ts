@@ -16,6 +16,12 @@ export interface Exercise {
   customWeightings?: boolean
   /** True for old app exercises that are not (yet) linked to a Hevy exercise. */
   legacy?: boolean
+  /** Multi-joint lift; picks which training defaults (reps, rest) apply. */
+  compound?: boolean
+  /** One of the user's own Hevy custom exercises. */
+  hevyCustom?: boolean
+  /** Weightings guessed from Hevy's muscle groups, not curated or set by the user. */
+  estimatedWeightings?: boolean
 }
 
 /** Per-user muscle weightings, keyed by exercise ID, replacing the defaults. */
@@ -39,9 +45,20 @@ export interface PriorityPreset {
   tiers: Partial<Record<PriorityTier, string[]>>
 }
 
+export interface RepRange {
+  min: number
+  max: number
+}
+
+/** Optional per-exercise targets; anything left out uses the user's training defaults. */
 export interface RoutineExercise {
   exerciseId: string
   sets: number
+  reps?: RepRange
+  restSeconds?: number
+  /** For timed exercises such as planks. */
+  durationSeconds?: number
+  notes?: string
 }
 
 export interface WorkoutDay {
@@ -50,10 +67,27 @@ export interface WorkoutDay {
   exercises: RoutineExercise[]
 }
 
+/** Where a routine was last pushed in Hevy: a folder, and one Hevy routine per day. */
+export interface HevyLink {
+  folderId: number | null
+  dayRoutineIds: Record<string, string>
+  pushedAt: string
+}
+
 export interface Routine {
   id: string
   name: string
   days: WorkoutDay[]
+  hevy?: HevyLink
+}
+
+export type WeightUnit = "lb" | "kg"
+
+export interface TrainingDefaults {
+  weightUnit: WeightUnit
+  reps: { compound: RepRange; isolation: RepRange }
+  restSeconds: { compound: number; isolation: number }
+  durationSeconds: number
 }
 
 export interface MuscleVolume {

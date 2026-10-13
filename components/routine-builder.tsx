@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useExercises } from "@/lib/exercise-context";
-import type { Routine } from "@/lib/types";
+import type { Routine, RoutineExercise } from "@/lib/types";
 import {
 	closestCenter,
 	DndContext,
@@ -24,6 +24,10 @@ import {
 } from "@dnd-kit/sortable";
 import { Edit2, GripVertical, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
+
+// Firestore rejects undefined fields, and clearing a target sets it to undefined.
+const withoutUndefined = <T extends object>(value: T): T =>
+	Object.fromEntries(Object.entries(value).filter(([, v]) => v !== undefined)) as T;
 
 interface RoutineBuilderProps {
 	routine: Routine;
@@ -91,10 +95,10 @@ export function RoutineBuilder({
 		});
 	};
 
-	const updateExerciseSets = (
+	const updateExercise = (
 		dayId: string,
 		exerciseIndex: number,
-		sets: number
+		patch: Partial<RoutineExercise>
 	) => {
 		onRoutineChange({
 			...routine,
@@ -103,7 +107,7 @@ export function RoutineBuilder({
 					? {
 							...day,
 							exercises: day.exercises.map((ex, idx) =>
-								idx === exerciseIndex ? { ...ex, sets } : ex
+								idx === exerciseIndex ? withoutUndefined({ ...ex, ...patch }) : ex
 							),
 					  }
 					: day
@@ -320,9 +324,9 @@ export function RoutineBuilder({
 														key={`${day.id}-${exIndex}`}
 														id={`${day.id}-${exIndex}`}
 														exercise={exercise}
-														sets={routineEx.sets}
-														onSetsChange={(sets) =>
-															updateExerciseSets(day.id, exIndex, sets)
+														routineExercise={routineEx}
+														onChange={(patch) =>
+															updateExercise(day.id, exIndex, patch)
 														}
 														onRemove={() => removeExercise(day.id, exIndex)}
 													/>
