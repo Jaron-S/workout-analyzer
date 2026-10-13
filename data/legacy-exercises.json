@@ -1,0 +1,180 @@
+[
+	{
+		"id": "ex57",
+		"name": "Donkey Calf Raises",
+		"muscle_weightings": [
+			{
+				"muscle": "Calves",
+				"weighting": 1
+			}
+		]
+	},
+	{
+		"id": "ex73",
+		"name": "Windshield Wipers",
+		"muscle_weightings": [
+			{
+				"muscle": "Abs",
+				"weighting": 1
+			}
+		]
+	},
+	{
+		"id": "ex94",
+		"name": "Man Makers",
+		"muscle_weightings": [
+			{
+				"muscle": "Front Delts",
+				"weighting": 1
+			},
+			{
+				"muscle": "Chest",
+				"weighting": 0.7
+			},
+			{
+				"muscle": "Quads",
+				"weighting": 0.6
+			},
+			{
+				"muscle": "Abs",
+				"weighting": 0.5
+			}
+		]
+	},
+	{
+		"id": "ex100",
+		"name": "Barbell Kayaking Rotations",
+		"muscle_weightings": [
+			{
+				"muscle": "Abs",
+				"weighting": 1
+			},
+			{
+				"muscle": "Front Delts",
+				"weighting": 0.5
+			},
+			{
+				"muscle": "Middle Back",
+				"weighting": 0.5
+			},
+			{
+				"muscle": "Forearms",
+				"weighting": 0.4
+			}
+		]
+	},
+	{
+		"id": "ex117",
+		"name": "Reverse Nordic Curl",
+		"muscle_weightings": [
+			{
+				"muscle": "Quads",
+				"weighting": 1
+			}
+		]
+	},
+	{
+		"id": "ex119",
+		"name": "Candlestick",
+		"muscle_weightings": [
+			{
+				"muscle": "Abs",
+				"weighting": 1
+			},
+			{
+				"muscle": "Lower Back",
+				"weighting": 0.4
+			}
+		]
+	},
+	{
+		"id": "ex121",
+		"name": "Jefferson Curl",
+		"muscle_weightings": [
+			{
+				"muscle": "Lower Back",
+				"weighting": 0.8
+			},
+			{
+				"muscle": "Hamstrings",
+				"weighting": 0.5
+			},
+			{
+				"muscle": "Abs",
+				"weighting": 0.3
+			}
+		]
+	},
+	{
+		"id": "ex122",
+		"name": "Dumbbell Kneeling Hip Raise",
+		"muscle_weightings": [
+			{
+				"muscle": "Glutes",
+				"weighting": 1
+			},
+			{
+				"muscle": "Hamstrings",
+				"weighting": 0.2
+			}
+		]
+	},
+	{
+		"id": "ex123",
+		"name": "Super ROM Lateral Raise",
+		"muscle_weightings": [
+			{
+				"muscle": "Side Delts",
+				"weighting": 1
+			}
+		]
+	},
+	{
+		"id": "ex126",
+		"name": "Lying Side Raise",
+		"muscle_weightings": [
+			{
+				"muscle": "Rear Delts",
+				"weighting": 1
+			},
+			{
+				"muscle": "Side Delts",
+				"weighting": 0.3
+			}
+		]
+	},
+	{
+		"id": "ex127",
+		"name": "Copenhagen Hip Adduction",
+		"muscle_weightings": [
+			{
+				"muscle": "Adductors",
+				"weighting": 1
+			},
+			{
+				"muscle": "Abs",
+				"weighting": 0.4
+			}
+		]
+	},
+	{
+		"id": "ex132",
+		"name": "Dumbbell Preacher Wrist Curl",
+		"muscle_weightings": [
+			{
+				"muscle": "Forearms",
+				"weighting": 1
+			}
+		]
+	},
+	{
+		"id": "ex133",
+		"name": "Barbell Preacher Wrist Curl",
+		"muscle_weightings": [
+			{
+				"muscle": "Forearms",
+				"weighting": 1
+			}
+		]
+	}
+]

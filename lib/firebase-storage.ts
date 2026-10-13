@@ -7,7 +7,8 @@ import {
 	setDoc,
 } from "firebase/firestore";
 import { db } from "./firebase-config";
-import type { PriorityTier, Routine } from "./types";
+import { migrateRoutine } from "./exercise-catalog";
+import type { MuscleOverrides, PriorityTier, Routine } from "./types";
 
 export async function saveRoutineToFirebase(userId: string, routine: Routine) {
 	if (!db) throw new Error("Firebase not configured");
@@ -27,7 +28,7 @@ export async function getRoutinesFromFirebase(
 	const routinesRef = collection(db, "users", userId, "routines");
 	const snapshot = await getDocs(routinesRef);
 
-	return snapshot.docs.map((doc) => doc.data() as Routine);
+	return snapshot.docs.map((doc) => migrateRoutine(doc.data() as Routine));
 }
 
 export async function deleteRoutineFromFirebase(
@@ -67,4 +68,28 @@ export async function getPrioritiesFromFirebase(
 	return snapshot.exists()
 		? (snapshot.data().priorities as Partial<Record<PriorityTier, string[]>>)
 		: {};
+}
+
+export async function saveMuscleOverridesToFirebase(
+	userId: string,
+	overrides: MuscleOverrides
+) {
+	if (!db) throw new Error("Firebase not configured");
+
+	const overridesRef = doc(db, "users", userId, "settings", "muscleOverrides");
+	await setDoc(overridesRef, {
+		overrides,
+		updatedAt: new Date().toISOString(),
+	});
+}
+
+export async function getMuscleOverridesFromFirebase(
+	userId: string
+): Promise<MuscleOverrides | null> {
+	if (!db) throw new Error("Firebase not configured");
+
+	const overridesRef = doc(db, "users", userId, "settings", "muscleOverrides");
+	const snapshot = await getDoc(overridesRef);
+
+	return snapshot.exists() ? (snapshot.data().overrides as MuscleOverrides) : null;
 }

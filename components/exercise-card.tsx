@@ -6,7 +6,9 @@ import { Card } from "@/components/ui/card";
 import type { Exercise } from "@/lib/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Minus, Plus, X } from "lucide-react";
+import { MuscleWeightingsDialog } from "@/components/muscle-weightings-dialog";
+import { GripVertical, Minus, Plus, SlidersHorizontal, X } from "lucide-react";
+import { useState } from "react";
 
 interface ExerciseCardProps {
 	id: string;
@@ -23,6 +25,7 @@ export function ExerciseCard({
 	onSetsChange,
 	onRemove,
 }: ExerciseCardProps) {
+	const [editingMuscles, setEditingMuscles] = useState(false);
 	const {
 		attributes,
 		listeners,
@@ -61,6 +64,15 @@ export function ExerciseCard({
 					<GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0" />
 				</div>
 
+				{exercise.thumbnailUrl && (
+					<img
+						src={exercise.thumbnailUrl}
+						alt=""
+						loading="lazy"
+						className="h-10 w-10 rounded-md bg-white object-contain flex-shrink-0"
+					/>
+				)}
+
 				<div className="flex-1 min-w-0">
 					<h4 className="font-medium text-sm text-foreground truncate">
 						{exercise.name}
@@ -71,6 +83,16 @@ export function ExerciseCard({
 								{mw.muscle}
 							</Badge>
 						))}
+						{exercise.customWeightings && (
+							<Badge variant="secondary" className="text-xs">
+								Your weightings
+							</Badge>
+						)}
+						{exercise.legacy && (
+							<Badge variant="secondary" className="text-xs">
+								Not linked to Hevy
+							</Badge>
+						)}
 					</div>
 				</div>
 
@@ -101,6 +123,17 @@ export function ExerciseCard({
 					</Button>
 
 					<Button
+						onClick={() => setEditingMuscles(true)}
+						size="icon"
+						variant="ghost"
+						className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground"
+						aria-label="Edit muscle weightings"
+						title="Edit muscle weightings"
+					>
+						<SlidersHorizontal className="h-4 w-4" />
+					</Button>
+
+					<Button
 						onClick={onRemove}
 						size="icon"
 						variant="ghost"
@@ -110,6 +143,12 @@ export function ExerciseCard({
 					</Button>
 				</div>
 			</div>
+
+			<MuscleWeightingsDialog
+				exercise={exercise}
+				open={editingMuscles}
+				onOpenChange={setEditingMuscles}
+			/>
 		</Card>
 	);
 }

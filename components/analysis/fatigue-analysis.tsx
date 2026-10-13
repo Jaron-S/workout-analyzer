@@ -9,11 +9,11 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import exercises from "@/data/exercises.json";
 import {
 	MAX_MUSCLE_SETS_PER_SESSION,
 	MAX_SETS_PER_SESSION,
 } from "@/lib/constants";
+import { useExercises } from "@/lib/exercise-context";
 import type { MuscleVolume, Routine } from "@/lib/types";
 import { getTotalSessionSets } from "@/lib/volume-calculator";
 import { AlertTriangle, CheckCircle2, Repeat, Zap } from "lucide-react";
@@ -80,13 +80,14 @@ export function FatigueAnalysis({
 	routine,
 	muscleVolumes,
 }: FatigueAnalysisProps) {
+	const { getExercise } = useExercises();
 	const analysis = useMemo(() => {
 		const sessionAnalyses = routine.days.map((day) => {
 			const totalSets = day.exercises.reduce((acc, curr) => acc + curr.sets, 0);
 
 			const muscleSessionVolumes = new Map<string, number>();
 			day.exercises.forEach((routineEx) => {
-				const exercise = exercises.find((ex) => ex.id === routineEx.exerciseId);
+				const exercise = getExercise(routineEx.exerciseId);
 				if (!exercise) return;
 				exercise.muscle_weightings.forEach((mw) => {
 					const volume = routineEx.sets * mw.weighting;
@@ -119,7 +120,7 @@ export function FatigueAnalysis({
 		};
 
 		return { sessionAnalyses, frequencyAnalysis };
-	}, [routine, muscleVolumes]);
+	}, [routine, muscleVolumes, getExercise]);
 
 	const highFatigueSessions = analysis.sessionAnalyses.filter(
 		(s) => s.fatigueLevel.level === "extreme"

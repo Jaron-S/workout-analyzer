@@ -4,11 +4,22 @@ export interface MuscleWeighting {
 }
 
 export interface Exercise {
+  /** Hevy exercise template ID, or a legacy "exN" ID for old exercises Hevy has no built-in for. */
   id: string
   name: string
   muscle_weightings: MuscleWeighting[]
-  movement_pattern: string
+  /** Hevy exercise type, e.g. "weight_reps" or "duration". Absent on legacy exercises. */
+  type?: string
+  equipment?: string
+  thumbnailUrl?: string | null
+  /** True when the user has replaced the default muscle weightings. */
+  customWeightings?: boolean
+  /** True for old app exercises that are not (yet) linked to a Hevy exercise. */
+  legacy?: boolean
 }
+
+/** Per-user muscle weightings, keyed by exercise ID, replacing the defaults. */
+export type MuscleOverrides = Record<string, Record<string, number>>
 
 export interface VolumeLandmark {
   mv: number

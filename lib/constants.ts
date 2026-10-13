@@ -15,6 +15,9 @@ export const ALL_MUSCLES = [
 	"Forearms",
 	"Abs",
 	"Traps",
+	"Adductors",
+	"Abductors",
+	"Neck",
 ] as const;
 
 export const PRIORITY_TIERS = ["S", "A", "B", "C", "D", "F"] as const;

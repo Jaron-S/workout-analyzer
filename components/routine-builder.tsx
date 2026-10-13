@@ -5,7 +5,7 @@ import { ExerciseLibraryModal } from "@/components/exercise-library-modal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import exercises from "@/data/exercises.json";
+import { useExercises } from "@/lib/exercise-context";
 import type { Routine } from "@/lib/types";
 import {
 	closestCenter,
@@ -34,6 +34,7 @@ export function RoutineBuilder({
 	routine,
 	onRoutineChange,
 }: RoutineBuilderProps) {
+	const { getExercise } = useExercises();
 	const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 	const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
 	const [editingRoutineName, setEditingRoutineName] = useState(false);
@@ -311,9 +312,7 @@ export function RoutineBuilder({
 									>
 										<div className="space-y-2">
 											{day.exercises.map((routineEx, exIndex) => {
-												const exercise = exercises.find(
-													(ex) => ex.id === routineEx.exerciseId
-												);
+												const exercise = getExercise(routineEx.exerciseId);
 												if (!exercise) return null;
 
 												return (

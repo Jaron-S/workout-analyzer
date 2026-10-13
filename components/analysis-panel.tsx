@@ -5,8 +5,8 @@ import { PriorityAnalysis } from "@/components/analysis/priority-analysis";
 import { VolumeAnalysis } from "@/components/analysis/volume-analysis";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import exercises from "@/data/exercises.json";
 import { usePersistedState } from "@/hooks/use-persisted-state";
+import { useExercises } from "@/lib/exercise-context";
 import type { PriorityTier, Routine } from "@/lib/types";
 import { calculateMuscleVolumes } from "@/lib/volume-calculator";
 import { useCallback, useMemo } from "react";
@@ -27,9 +27,10 @@ export function AnalysisPanel({
 	priorities,
 	onPrioritiesChange,
 }: AnalysisPanelProps) {
+	const { exercises } = useExercises();
 	const muscleVolumes = useMemo(() => {
 		return calculateMuscleVolumes(routine, exercises);
-	}, [routine]);
+	}, [routine, exercises]);
 
 	// 3. Define helper functions for saving and loading the active tab
 	const saveTab = useCallback((value: string) => {
