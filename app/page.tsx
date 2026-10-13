@@ -2,15 +2,18 @@
 
 import { AnalysisPanel } from "@/components/analysis-panel";
 import { AuthModal } from "@/components/auth-modal";
+import { CoachPanel } from "@/components/coach-panel";
 import { HevyPushDialog } from "@/components/hevy-push-dialog";
 import { SettingsDialog } from "@/components/settings-dialog";
 import { RoutineBuilder } from "@/components/routine-builder";
 import { SavedRoutinesModal } from "@/components/saved-routines-modal";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCoach } from "@/hooks/use-coach";
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import { useAuth } from "@/lib/auth-context";
 import { useHevy } from "@/lib/hevy-context";
+import { useSettings } from "@/lib/settings-context";
 import {
 	savePrioritiesToFirebase,
 	saveRoutineToFirebase,
@@ -29,6 +32,7 @@ import {
 	LogOut,
 	Save,
 	Settings,
+	Sparkles,
 	Upload,
 	User,
 } from "lucide-react";
@@ -51,7 +55,9 @@ export default function Home() {
 	const [showSavedRoutines, setShowSavedRoutines] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const [showPush, setShowPush] = useState(false);
+	const [showCoach, setShowCoach] = useState(false);
 	const { client: hevyClient } = useHevy();
+	const { claudeApiKey } = useSettings();
 
 	const [routine, setRoutine] = usePersistedState<Routine>(
 		"routine",
@@ -63,6 +69,23 @@ export default function Home() {
 	const [priorities, setPriorities] = usePersistedState<
 		Partial<Record<PriorityTier, string[]>>
 	>("priorities", {}, savePriorities, loadPriorities);
+
+	const coach = useCoach({ routine, setRoutine, priorities });
+	// While Claude's changes await review, the builder and analysis show the
+	// draft, and hand edits go to the draft too.
+	const shownRoutine = coach.draft ?? routine;
+	const setShownRoutine = coach.draft ? coach.setDraft : setRoutine;
+
+	const handleAskClaude = () => {
+		if (claudeApiKey) {
+			setShowCoach(true);
+		} else {
+			toast("Add an Anthropic API key", {
+				description: "Claude uses your own key, which you can add in Settings.",
+			});
+			setShowSettings(true);
+		}
+	};
 
 	// Show toast on first load if data was restored
 	useEffect(() => {
@@ -148,7 +171,17 @@ export default function Home() {
 							</div>
 						</div>
 						<div className="flex flex-wrap items-center justify-end gap-2">
-							<Button variant="outline" size="sm" onClick={handlePushToHevy}>
+							<Button variant="outline" size="sm" onClick={handleAskClaude}>
+								<Sparkles className="h-4 w-4 mr-2" />
+								Ask Claude
+							</Button>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={handlePushToHevy}
+								disabled={Boolean(coach.draft)}
+								title={coach.draft ? "Apply or discard Claude's changes first" : undefined}
+							>
 								<Upload className="h-4 w-4 mr-2" />
 								Push to Hevy
 							</Button>
@@ -202,14 +235,36 @@ export default function Home() {
 				</div>
 			</header>
 
+			{coach.draft && (
+				<div className="border-b border-primary/40 bg-primary/10">
+					<div className="container mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-sm">
+						<span>
+							Previewing {coach.pendingChanges.length} change
+							{coach.pendingChanges.length === 1 ? "" : "s"} from Claude.
+						</span>
+						<div className="flex gap-2">
+							<Button size="sm" variant="outline" onClick={() => setShowCoach(true)}>
+								Review
+							</Button>
+							<Button size="sm" variant="outline" onClick={coach.discard}>
+								Discard
+							</Button>
+							<Button size="sm" onClick={coach.apply}>
+								Apply
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
+
 			{/* Desktop: Two-panel layout */}
 			<div className="hidden lg:grid lg:grid-cols-2 lg:gap-0 h-[calc(100vh-73px)]">
 				<div className="border-r border-border overflow-y-auto p-6 xl:p-8">
-					<RoutineBuilder routine={routine} onRoutineChange={setRoutine} />
+					<RoutineBuilder routine={shownRoutine} onRoutineChange={setShownRoutine} />
 				</div>
 				<div className="overflow-y-auto bg-card/50 p-6 xl:p-8">
 					<AnalysisPanel
-						routine={routine}
+						routine={shownRoutine}
 						priorities={priorities}
 						onPrioritiesChange={setPriorities}
 					/>
@@ -233,14 +288,14 @@ export default function Home() {
 						value="builder"
 						className="m-0 min-h-[calc(100vh-129px)] p-4 sm:p-6"
 					>
-						<RoutineBuilder routine={routine} onRoutineChange={setRoutine} />
+						<RoutineBuilder routine={shownRoutine} onRoutineChange={setShownRoutine} />
 					</TabsContent>
 					<TabsContent
 						value="analysis"
 						className="m-0 min-h-[calc(100vh-129px)] p-4 sm:p-6"
 					>
 						<AnalysisPanel
-							routine={routine}
+							routine={shownRoutine}
 							priorities={priorities}
 							onPrioritiesChange={setPriorities}
 						/>
@@ -250,6 +305,7 @@ export default function Home() {
 
 			<AuthModal open={showAuth} onOpenChange={setShowAuth} />
 			<SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
+			<CoachPanel coach={coach} open={showCoach} onOpenChange={setShowCoach} />
 			<HevyPushDialog
 				open={showPush}
 				onOpenChange={setShowPush}

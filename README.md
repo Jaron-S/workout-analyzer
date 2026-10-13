@@ -22,6 +22,9 @@ This project was built to demonstrate proficiency in architecting complex, state
   * **Personalized Goal Setting:** A unique drag-and-drop interface allows you to create your own S-F tier list of muscle groups, which directly drives the app's coaching feedback.
   * **Secure User Accounts:** Full authentication powered by **Firebase Auth**, with user data securely stored and synced across devices using **Firestore**.
   * **Seamless Guest Mode:** The entire application is fully functional without an account, with all data persisted in `localStorage` for a frictionless user experience.
+  * **Hevy Exercise Library:** Routines are built from [Hevy](https://www.hevyapp.com/)'s exercise library (451 built-in exercises, plus your own custom exercises once you connect Hevy), each with curated muscle weightings you can override to match how an exercise feels for you.
+  * **Push to Hevy:** Connect your Hevy API key (Hevy Pro) and push a routine as a Hevy folder with one routine per training day, including rep ranges, rest times and notes. Pushing again updates the same routines in place.
+  * **Claude Coach:** Add your own Anthropic API key and ask Claude to build or adjust your routine. Claude edits a draft using the same analysis the app shows; you review its changes and apply, discard or undo them.
 
 -----
 
@@ -64,6 +67,25 @@ The goal was to present complex scientific training data in a way that was immed
   * **Solution:** Each visualization was refined through multiple iterations. The "Fatigue Meter" evolved from a simple progress bar into a more effective segmented bar to show the crossing of thresholds. The "Priority Analysis" bar was redesigned from a progress indicator into a "Target Zone" visual to better represent the goal of landing within a specific range. This iterative process was crucial for achieving the app's goal of providing clear, at-a-glance coaching.
 
 -----
+
+## Hevy and Claude
+
+Both integrations run entirely in your browser with your own keys, which are stored only in that browser (never in your account or on a server).
+
+  * **Hevy:** Settings → Hevy. API keys are a Hevy Pro feature; get yours at [hevy.com/settings?developer](https://hevy.com/settings?developer). Hevy's API cannot delete routines, folders or custom exercises, so anything pushed has to be removed in the Hevy app. The app asks before creating a custom exercise for that reason.
+  * **Claude:** Settings → Claude. Create a key at [console.anthropic.com](https://console.anthropic.com/settings/keys); usage is billed to that Anthropic account. The coach uses Claude Opus 5.5.
+
+### Maintaining the exercise library
+
+`data/hevy-exercises.json` is a snapshot of Hevy's built-in exercises and `data/exercise-weightings.json` holds the muscle weightings for each one, keyed by Hevy ID.
+
+```bash
+npm run sync:hevy          # refresh the snapshot (needs HEVY_API_KEY in .env.local); reports added, removed and renamed exercises
+npm run check:exercises    # validate the weightings; also runs at the start of every build
+npm test                   # unit tests
+```
+
+Each weighting entry records the title it was checked against, so if Hevy renames an exercise the check fails until its weightings are re-verified.
 
 ## Getting Started
 

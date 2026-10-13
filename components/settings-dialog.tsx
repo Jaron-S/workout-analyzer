@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { COACH_MODEL, createCoachClient } from "@/lib/coach/agent";
 import { useExercises } from "@/lib/exercise-context";
 import { useHevy } from "@/lib/hevy-context";
 import { useSettings } from "@/lib/settings-context";
@@ -37,11 +38,13 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 				<DialogHeader>
 					<DialogTitle>Settings</DialogTitle>
 					<DialogDescription>
-						Connect Hevy and set the defaults used when an exercise has no reps or
-						rest of its own.
+						Connect Hevy and Claude, and set the defaults used when an exercise has
+						no reps or rest of its own.
 					</DialogDescription>
 				</DialogHeader>
 				<HevySection />
+				<Separator />
+				<ClaudeSection />
 				<Separator />
 				<DefaultsSection />
 			</DialogContent>
@@ -178,6 +181,78 @@ function HevySection() {
 						</Button>
 					</div>
 				</div>
+			)}
+		</section>
+	);
+}
+
+function ClaudeSection() {
+	const { claudeApiKey, setClaudeApiKey } = useSettings();
+	const [keyInput, setKeyInput] = useState("");
+	const [checking, setChecking] = useState(false);
+
+	const handleSave = async () => {
+		setChecking(true);
+		try {
+			// A cheap call that fails fast on a bad key or a model the key can't use.
+			await createCoachClient(keyInput.trim()).models.retrieve(COACH_MODEL);
+			setClaudeApiKey(keyInput.trim());
+			setKeyInput("");
+			toast.success("Claude is ready");
+		} catch (e) {
+			toast.error("Couldn't use that key", {
+				description: e instanceof Error ? e.message : String(e),
+			});
+		} finally {
+			setChecking(false);
+		}
+	};
+
+	return (
+		<section className="space-y-3">
+			<div className="flex items-center justify-between">
+				<h3 className="font-semibold">Claude</h3>
+				{claudeApiKey && (
+					<Button variant="ghost" size="sm" onClick={() => setClaudeApiKey("")}>
+						Remove key
+					</Button>
+				)}
+			</div>
+			{claudeApiKey ? (
+				<p className="text-sm text-muted-foreground">
+					Claude can build and edit your routines. Usage is billed to your Anthropic
+					account.
+				</p>
+			) : (
+				<>
+					<p className="text-sm text-muted-foreground">
+						Paste an Anthropic API key to let Claude build and edit routines. Create
+						one at{" "}
+						<a
+							href="https://console.anthropic.com/settings/keys"
+							target="_blank"
+							rel="noreferrer"
+							className="underline"
+						>
+							console.anthropic.com
+						</a>
+						; usage is billed to that account. The key is stored only in this browser.
+					</p>
+					<div className="flex gap-2">
+						<Input
+							type="password"
+							placeholder="Anthropic API key"
+							value={keyInput}
+							onChange={(e) => setKeyInput(e.target.value)}
+							onKeyDown={(e) => e.key === "Enter" && keyInput && handleSave()}
+							autoComplete="off"
+						/>
+						<Button onClick={handleSave} disabled={!keyInput || checking}>
+							{checking && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+							Save
+						</Button>
+					</div>
+				</>
 			)}
 		</section>
 	);

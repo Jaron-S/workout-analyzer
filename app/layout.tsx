@@ -3,7 +3,6 @@ import { AuthProvider } from "@/lib/auth-context";
 import { ExerciseProvider } from "@/lib/exercise-context";
 import { HevyProvider } from "@/lib/hevy-context";
 import { SettingsProvider } from "@/lib/settings-context";
-import { Analytics } from "@vercel/analytics/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -36,7 +35,6 @@ export default function RootLayout({
 						</HevyProvider>
 					</SettingsProvider>
 				</AuthProvider>
-				<Analytics />
 			</body>
 		</html>
 	);
