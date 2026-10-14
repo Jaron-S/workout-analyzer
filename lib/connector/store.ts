@@ -49,6 +49,16 @@ export class UserStore {
 		return (await this.listRoutines())[0] ?? null;
 	}
 
+	async getRoutine(id: string): Promise<Routine | null> {
+		const doc = await this.fs.get(routinePath(this.uid, id));
+		return doc ? toRoutine(doc.data) : null;
+	}
+
+	/** Makes this the routine open in the app (the app follows live). */
+	setCurrentRoutine(id: string) {
+		return this.saveSetting(SETTINGS.currentRoutine, id);
+	}
+
 	saveRoutine(routine: Routine) {
 		return this.fs.set(routinePath(this.uid, routine.id), { ...routine, updatedAt: new Date().toISOString() });
 	}

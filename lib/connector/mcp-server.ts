@@ -16,6 +16,8 @@ import type { MuscleOverrides, PriorityTier, Routine, TrainingDefaults } from ".
 export interface ConnectorStore {
 	currentRoutine(): Promise<Routine | null>;
 	listRoutines(): Promise<(Routine & { updatedAt?: string })[]>;
+	getRoutine(id: string): Promise<Routine | null>;
+	setCurrentRoutine(id: string): Promise<void>;
 	saveRoutine(routine: Routine): Promise<void>;
 	priorities(): Promise<Partial<Record<PriorityTier, string[]>>>;
 	trainingDefaults(): Promise<TrainingDefaults>;
@@ -34,6 +36,7 @@ ${APP_MODEL}
 
 How to work:
 - Start with get_routine to see the routine open in Setsmith, the user's settings, and any changes already waiting.
+- Edits apply to the routine open in Setsmith. To work on another saved routine, use list_routines then switch_routine; to start a new one, create_routine. Both open that routine in the app too. Only switch or create when the user asks or clearly wants a separate routine, and apply or discard waiting changes first.
 - Find exercise ids with search_exercises; never guess one. Leave reps and rest at the user's defaults unless an exercise genuinely needs different ones.
 - Edits collect in a draft. Make the changes you recommend, then run analyze_routine and adjust if volume or session fatigue is off for the user's priorities.
 - Then show the user the change list (get_routine includes it) and ask whether to apply it. Call apply_changes only after they clearly agree, never in the same turn as you first show the changes, and never describe the changes as done before it succeeds. They can also review and apply the draft in the Setsmith app, where it appears automatically.
@@ -57,6 +60,34 @@ const CONNECTOR_TOOLS = [
 		description: "All routines saved in the user's account, newest first. Edits always apply to the routine open in Setsmith.",
 		inputSchema: { type: "object" as const, properties: {} },
 		annotations: { readOnlyHint: true },
+	},
+	{
+		name: "create_routine",
+		description:
+			"Starts a new, empty routine with the given name and day names, saves it to the user's account and opens it in Setsmith, so the following edits build it. The routine that was open stays saved.",
+		inputSchema: {
+			type: "object" as const,
+			properties: {
+				name: { type: "string", minLength: 1, maxLength: 80 },
+				day_names: {
+					type: "array",
+					items: { type: "string", minLength: 1, maxLength: 60 },
+					minItems: 1,
+					maxItems: 7,
+					description: 'One per training day, e.g. ["Upper A", "Lower A", "Upper B", "Lower B"]. Default: Day 1 to Day 3.',
+				},
+			},
+			required: ["name"],
+		},
+	},
+	{
+		name: "switch_routine",
+		description: "Opens another saved routine (id from list_routines) in Setsmith, so the following edits apply to it.",
+		inputSchema: {
+			type: "object" as const,
+			properties: { routine_id: { type: "string" } },
+			required: ["routine_id"],
+		},
 	},
 	{
 		name: "apply_changes",
@@ -136,8 +167,43 @@ async function callTool(store: ConnectorStore, name: string, args: Record<string
 		if (all.length === 0) return text(NO_ROUTINE);
 		return text(
 			all
-				.map((r) => `${r.id === routine?.id ? "* " : "  "}${r.name}: ${r.days.length} days${r.id === routine?.id ? " (open in Setsmith)" : ""}`)
+				.map(
+					(r) =>
+						`${r.id === routine?.id ? "* " : "  "}${r.name} [${r.id}]: ${r.days.length} days, ${r.days.reduce((n, d) => n + d.exercises.reduce((m, e) => m + e.sets, 0), 0)} sets${r.id === routine?.id ? " (open in Setsmith)" : ""}`
+				)
 				.join("\n")
+		);
+	}
+
+	if (name === "create_routine" || name === "switch_routine") {
+		if (draft) {
+			return text(
+				`"${routine!.name}" has ${draft.changes.length} waiting change${draft.changes.length === 1 ? "" : "s"}. Ask the user whether to apply or discard them first.`,
+				true
+			);
+		}
+		let target: Routine | null;
+		if (name === "create_routine") {
+			const title = typeof args.name === "string" ? args.name.trim().slice(0, 80) : "";
+			if (!title) return text("Give the routine a name.", true);
+			const dayNames =
+				Array.isArray(args.day_names) && args.day_names.length
+					? args.day_names.slice(0, 7).map((d, i) => (typeof d === "string" && d.trim() ? d.trim().slice(0, 60) : `Day ${i + 1}`))
+					: ["Day 1", "Day 2", "Day 3"];
+			const stamp = Date.now().toString(36);
+			target = {
+				id: `routine-${stamp}`,
+				name: title,
+				days: dayNames.map((dayName, i) => ({ id: `day-${stamp}-${i}`, name: dayName, exercises: [] })),
+			};
+			await store.saveRoutine(target);
+		} else {
+			target = typeof args.routine_id === "string" ? await store.getRoutine(args.routine_id) : null;
+			if (!target) return text("No saved routine has that id. Use list_routines to see them.", true);
+		}
+		await store.setCurrentRoutine(target.id);
+		return text(
+			`${name === "create_routine" ? "Created and opened" : "Opened"} "${target.name}" in Setsmith${routine && routine.id !== target.id ? `; "${routine.name}" stays saved` : ""}.\n\n${describeRoutine(target, ctx)}`
 		);
 	}
 

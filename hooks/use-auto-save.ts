@@ -1,7 +1,6 @@
 "use client";
 
-import { SETTINGS } from "@/lib/claude-sync";
-import { savePrioritiesToFirebase, saveRoutineToFirebase, saveSettingToFirebase } from "@/lib/firebase-storage";
+import { savePrioritiesToFirebase, saveRoutineToFirebase } from "@/lib/firebase-storage";
 import { saveSyncedRoutine } from "@/lib/storage";
 import type { PriorityTier, Routine } from "@/lib/types";
 import type { User } from "firebase/auth";
@@ -22,21 +21,10 @@ export function useAutoSave(
 ): { status: SaveStatus; retry: () => void } {
 	const [status, setStatus] = useState<SaveStatus>("idle");
 	const lastSaved = useRef<{ routine: string; priorities: string } | null>(null);
-	const lastOpenId = useRef<string | null>(null);
 	const [attempt, setAttempt] = useState(0);
-
-	// Tell the Claude connector which routine is open, so it edits the same one.
-	useEffect(() => {
-		if (!user || lastOpenId.current === routine.id) return;
-		lastOpenId.current = routine.id;
-		saveSettingToFirebase(user.uid, SETTINGS.currentRoutine, routine.id).catch((error) =>
-			console.error("Failed to record the open routine:", error)
-		);
-	}, [user, routine.id]);
 
 	useEffect(() => {
 		if (!user) {
-			lastOpenId.current = null;
 			lastSaved.current = null;
 			setStatus("idle");
 			return;

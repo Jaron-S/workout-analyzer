@@ -16,13 +16,16 @@ const routine = (): Routine => ({
 /** The user's account in memory. */
 function memoryStore(initial: Routine | null = routine()) {
 	const state = {
+		current: initial?.id ?? null as string | null,
 		routines: new Map<string, Routine>(initial ? [[initial.id, initial]] : []),
 		draft: null as ClaudeDraft | null,
 		undo: null as ClaudeUndo | null,
 	};
 	const store: ConnectorStore = {
-		currentRoutine: async () => state.routines.get("r1") ?? null,
+		currentRoutine: async () => (state.current ? state.routines.get(state.current) ?? null : null),
 		listRoutines: async () => [...state.routines.values()],
+		getRoutine: async (id) => state.routines.get(id) ?? null,
+		setCurrentRoutine: async (id) => void (state.current = id),
 		saveRoutine: async (r) => void state.routines.set(r.id, structuredClone(r)),
 		priorities: async () => ({ S: ["Side Delts"] }),
 		trainingDefaults: async () => DEFAULT_TRAINING_DEFAULTS,
@@ -55,9 +58,9 @@ describe("Setsmith MCP server", () => {
 		const names = (await client.listTools()).tools.map((t) => t.name).sort();
 		expect(names).toEqual(
 			[
-				"add_day", "add_exercise", "analyze_routine", "apply_changes", "discard_changes", "get_routine", "list_routines",
-				"move_exercise", "remove_day", "remove_exercise", "search_exercises", "set_routine_name", "undo_last_change",
-				"update_day", "update_exercise",
+				"add_day", "add_exercise", "analyze_routine", "apply_changes", "create_routine", "discard_changes", "get_routine",
+				"list_routines", "move_exercise", "remove_day", "remove_exercise", "search_exercises", "set_routine_name",
+				"switch_routine", "undo_last_change", "update_day", "update_exercise",
 			].sort()
 		);
 		expect(client.getInstructions()).toMatch(/apply_changes only after they clearly agree/);
@@ -101,6 +104,41 @@ describe("Setsmith MCP server", () => {
 		const bad = await call("add_exercise", { day_id: "nope", exercise_id: "422B08F1", sets: 3 });
 		expect(bad).toMatchObject({ isError: true });
 		expect(bad.text).toMatch(/No day with id "nope"/);
+	});
+
+	it("creates and switches routines, opening them in the app", async () => {
+		const { store, state } = memoryStore();
+		const { call } = await connect(store);
+
+		// Waiting changes block switching, so they aren't silently orphaned.
+		await call("add_day", { name: "Extra" });
+		expect(await call("create_routine", { name: "PPL" })).toMatchObject({ isError: true });
+		await call("discard_changes");
+
+		const created = await call("create_routine", { name: "PPL", day_names: ["Push", "Pull", "Legs"] });
+		expect(created.text).toMatch(/Created and opened "PPL" in Setsmith; "Upper\/Lower" stays saved/);
+		const ppl = [...state.routines.values()].find((r) => r.name === "PPL")!;
+		expect(state.current).toBe(ppl.id);
+		expect(ppl.days.map((d) => d.name)).toEqual(["Push", "Pull", "Legs"]);
+
+		// Edits now build the new routine.
+		await call("add_exercise", { day_id: ppl.days[0].id, exercise_id: "79D0BB3A", sets: 3 });
+		expect(state.draft!.routineId).toBe(ppl.id);
+		await call("apply_changes");
+		expect(state.routines.get(ppl.id)!.days[0].exercises).toHaveLength(1);
+		expect(state.routines.get("r1")!.days[0].exercises).toHaveLength(1);
+
+		expect((await call("list_routines")).text).toMatch(/\* PPL \[routine-[^\]]+\]: 3 days, 3 sets \(open in Setsmith\)/);
+		expect((await call("switch_routine", { routine_id: "r1" })).text).toMatch(/Opened "Upper\/Lower"/);
+		expect(state.current).toBe("r1");
+		expect(await call("switch_routine", { routine_id: "nope" })).toMatchObject({ isError: true });
+	});
+
+	it("can create the first routine in an empty account", async () => {
+		const { store, state } = memoryStore(null);
+		const { call } = await connect(store);
+		expect((await call("create_routine", { name: "First" })).text).toMatch(/Created and opened "First"/);
+		expect(state.routines.get(state.current!)!.days).toHaveLength(3);
 	});
 
 	it("explains what to do when the account has no routine", async () => {

@@ -2,12 +2,13 @@
 
 import { SETTINGS, type ClaudeDraft } from "@/lib/claude-sync";
 import { db } from "@/lib/firebase-config";
-import { isOwnRoutineWrite } from "@/lib/firebase-storage";
-import { saveSyncedRoutine, stableJson, syncedRoutineJson } from "@/lib/storage";
+import { isOwnRoutineWrite, saveRoutineToFirebase, saveSettingToFirebase } from "@/lib/firebase-storage";
+import { saveSyncedRoutine, stableJson, syncedRoutineAt, syncedRoutineJson } from "@/lib/storage";
 import type { Routine } from "@/lib/types";
 import type { User } from "firebase/auth";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 import type { Coach } from "./use-coach";
 
 const strip = ({ updatedAt: _u, ...routine }: Record<string, unknown>) => routine as unknown as Routine;
@@ -17,12 +18,63 @@ const strip = ({ updatedAt: _u, ...routine }: Record<string, unknown>) => routin
  * - a draft Claude makes through the connector shows for review, and goes
  *   away if it's applied or discarded in the chat;
  * - the routine updates when it's saved elsewhere (Claude applying changes,
- *   or another device), but never from this browser's own saves.
+ *   or another device), but never from this browser's own saves;
+ * - the account records which routine is open, and the app follows when
+ *   Claude creates or switches routines.
  */
 export function useClaudeSync(user: User | null, routine: Routine, setRoutine: (r: Routine) => void, coach: Coach) {
 	// Read through refs so the listeners don't resubscribe on every change.
 	const latest = useRef({ routine, setRoutine, coach });
 	latest.current = { routine, setRoutine, coach };
+
+	// Which routine is open. The account's record is read before this browser
+	// writes it, so signing in can't overwrite a switch Claude made meanwhile.
+	const pointerRead = useRef(false);
+
+	useEffect(() => {
+		pointerRead.current = false;
+		if (!user || !db) return;
+		const firestore = db;
+		const pointerRef = doc(firestore, "users", user.uid, "settings", SETTINGS.currentRoutine);
+		const recordOpen = (id: string) =>
+			saveSettingToFirebase(user.uid, SETTINGS.currentRoutine, id).catch((e) => console.error("Failed to record the open routine:", e));
+
+		return onSnapshot(pointerRef, async (snap) => {
+			const first = !pointerRead.current;
+			pointerRead.current = true;
+			const { routine: local, setRoutine, coach } = latest.current;
+			const id = snap.exists() ? (snap.data().value as string) : null;
+			if (id === local.id) return;
+			// On load, follow only a switch made after this browser last synced;
+			// otherwise this browser's routine is the newer choice.
+			const switchedAt = snap.exists() ? (snap.data().updatedAt as string | undefined) : undefined;
+			const follow = id && (!first || (switchedAt ?? "") > (syncedRoutineAt(local.id) ?? ""));
+			if (!follow) {
+				await recordOpen(local.id);
+				return;
+			}
+			const next = await getDoc(doc(firestore, "users", user.uid, "routines", id));
+			if (!next.exists()) {
+				await recordOpen(local.id);
+				return;
+			}
+			// Keep the routine being left: unsynced edits are saved first.
+			if (syncedRoutineJson(local.id) !== stableJson(local)) await saveRoutineToFirebase(user.uid, local);
+			const routine = strip(next.data());
+			coach.discard();
+			setRoutine(routine);
+			saveSyncedRoutine(routine);
+			if (!first) toast(`Claude opened "${routine.name}"`, { description: `"${local.name}" is saved in My routines.` });
+		});
+	}, [user]);
+
+	// After that, opening a routine here updates the record.
+	useEffect(() => {
+		if (!user || !pointerRead.current) return;
+		saveSettingToFirebase(user.uid, SETTINGS.currentRoutine, routine.id).catch((e) =>
+			console.error("Failed to record the open routine:", e)
+		);
+	}, [user, routine.id]);
 
 	useEffect(() => {
 		if (!user || !db) return;

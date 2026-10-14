@@ -148,11 +148,17 @@ export function stableJson(value: unknown): string {
 // The routine as last saved to or loaded from the account, per routine id:
 // local edits since then haven't reached the account yet.
 const SYNCED_KEY = "workout-analyzer-synced-routine"
+type Synced = { id: string; json: string; at?: string }
 export const saveSyncedRoutine = (routine: Routine) =>
-  saveJson(SYNCED_KEY, { id: routine.id, json: stableJson(routine) }, "synced routine")
+  saveJson(SYNCED_KEY, { id: routine.id, json: stableJson(routine), at: new Date().toISOString() }, "synced routine")
 export const syncedRoutineJson = (id: string) => {
-  const synced = loadJson<{ id: string; json: string }>(SYNCED_KEY, "synced routine")
+  const synced = loadJson<Synced>(SYNCED_KEY, "synced routine")
   return synced?.id === id ? synced.json : null
+}
+/** When this browser last synced the routine with the account (ISO), if ever. */
+export const syncedRoutineAt = (id: string) => {
+  const synced = loadJson<Synced>(SYNCED_KEY, "synced routine")
+  return synced?.id === id ? (synced.at ?? null) : null
 }
 
 export function clearAllData(): void {
