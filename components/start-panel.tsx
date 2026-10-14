@@ -3,24 +3,37 @@
 import { LogoMark } from "@/components/brand";
 import { TEMPLATES, routineFromTemplate } from "@/lib/templates";
 import type { Routine } from "@/lib/types";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Sparkles } from "lucide-react";
 
 /** Shown while the routine has no exercises: start from a template or ask Claude. */
 export function StartPanel({
 	onUseTemplate,
 	onAskClaude,
+	onImport,
 }: {
 	onUseTemplate: (routine: Routine) => void;
 	onAskClaude: () => void;
+	onImport: () => void;
 }) {
 	return (
 		<section className="relative overflow-hidden rounded-2xl border bg-card p-4 @md:p-6">
 			<LogoMark className="pointer-events-none absolute -right-6 -top-6 h-36 w-36 text-primary/10" />
 			<h2 className="text-lg font-semibold tracking-tight @md:text-xl">Forge your training week</h2>
 			<p className="mt-1 max-w-md text-sm text-muted-foreground">
-				Start from a proven split, have Claude build one around your goals, or add exercises to the days below.
+				Import the routine you already run, start from a proven split, or have Claude build one around your goals.
 			</p>
-			<div className="mt-4 grid gap-2 @lg:grid-cols-3">
+			<button
+				type="button"
+				onClick={onImport}
+				className="mt-4 flex w-full items-center gap-3 rounded-xl bg-surface p-3 text-left ring-1 ring-border transition hover:ring-primary/60"
+			>
+				<Download className="h-5 w-5 shrink-0 text-brand-text" />
+				<span className="min-w-0">
+					<span className="block text-sm font-medium">Import your routine</span>
+					<span className="block text-xs text-muted-foreground">From Hevy, or paste it from your notes or a spreadsheet.</span>
+				</span>
+			</button>
+			<div className="mt-2 grid gap-2 @lg:grid-cols-3">
 				{TEMPLATES.map((t) => {
 					const sets = t.days.reduce((n, [, exs]) => n + exs.reduce((m, [, s]) => m + s, 0), 0);
 					return (

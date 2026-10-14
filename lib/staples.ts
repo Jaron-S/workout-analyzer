@@ -26,3 +26,6 @@ export const STAPLES: Record<string, string[]> = {
 
 /** Every staple id, for search to favour. */
 export const STAPLE_IDS = new Set(Object.values(STAPLES).flat());
+
+/** Each staple's position in its muscle's list (0 = the go-to choice). */
+export const STAPLE_RANK = new Map(Object.values(STAPLES).flatMap((ids) => ids.map((id, i) => [id, i] as const)));

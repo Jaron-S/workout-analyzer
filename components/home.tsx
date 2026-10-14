@@ -6,6 +6,7 @@ import { Wordmark } from "@/components/brand";
 import { CoachPanel } from "@/components/coach-panel";
 import { CommandMenu } from "@/components/command-menu";
 import { HevyPushDialog } from "@/components/hevy-push-dialog";
+import { ImportDialog } from "@/components/import-dialog";
 import { RoutineBuilder } from "@/components/routine-builder";
 import { SavedRoutinesModal } from "@/components/saved-routines-modal";
 import { SettingsDialog } from "@/components/settings-dialog";
@@ -91,6 +92,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 	const [showCoach, setShowCoach] = useState(false);
 	const [showShare, setShowShare] = useState(false);
 	const [showCommands, setShowCommands] = useState(false);
+	const [showImport, setShowImport] = useState(false);
 	const [shared, setShared] = useState<Routine | null>(null);
 
 	const [routine, setRoutine] = usePersistedState<Routine>("routine", DEFAULT_ROUTINE, saveRoutine, loadRoutine);
@@ -126,15 +128,20 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 		router.replace("/", { scroll: false });
 	};
 
-	const importShared = () => {
-		if (!shared) return;
+	/** Replaces the open routine, with undo. Signed-in users keep the old one in My routines. */
+	const importRoutine = (imported: Routine) => {
 		const previous = routine;
 		coach.discard();
-		setRoutine(shared);
-		closeShared();
-		toast.success(`Imported "${shared.name}"`, {
+		setRoutine(imported);
+		toast.success(`Imported "${imported.name}"`, {
 			action: { label: "Undo", onClick: () => setRoutine(previous) },
 		});
+	};
+
+	const importShared = () => {
+		if (!shared) return;
+		importRoutine(shared);
+		closeShared();
 	};
 
 	const needsKey = (has: boolean, open: () => void, title: string, description: string) => () => {
@@ -275,12 +282,15 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 						view !== "builder" && "max-md:hidden"
 					)}
 				>
-					{isEmpty && !coach.draft && <StartPanel onUseTemplate={setRoutine} onAskClaude={askClaude} />}
+					{isEmpty && !coach.draft && (
+						<StartPanel onUseTemplate={setRoutine} onAskClaude={askClaude} onImport={() => setShowImport(true)} />
+					)}
 					<RoutineBuilder
 						routine={shownRoutine}
 						onRoutineChange={setShownRoutine}
 						baseRoutine={coach.draft ? routine : undefined}
 						suggestions={suggestions}
+						onImport={() => setShowImport(true)}
 					/>
 				</section>
 				<section
@@ -310,6 +320,12 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 			<SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
 			<CoachPanel coach={coach} open={showCoach} onOpenChange={setShowCoach} />
 			<ShareDialog open={showShare} onOpenChange={setShowShare} routine={routine} />
+			<ImportDialog
+				open={showImport}
+				onOpenChange={setShowImport}
+				onImport={importRoutine}
+				onConnectHevy={() => setShowSettings(true)}
+			/>
 			<HevyPushDialog open={showPush} onOpenChange={setShowPush} routine={routine} setRoutine={setRoutine} />
 			<SavedRoutinesModal
 				open={showSavedRoutines}
@@ -325,6 +341,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 					askClaude,
 					pushToHevy,
 					share: () => setShowShare(true),
+					importRoutine: () => setShowImport(true),
 					openSettings: () => setShowSettings(true),
 					showView: setView,
 					addExercise: (dayId, exerciseId) => addExercise(dayId, exerciseId),

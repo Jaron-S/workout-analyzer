@@ -43,9 +43,11 @@ export function ZoneBadge({ zone, className }: { zone: VolumeZone; className?: s
 }
 
 /**
- * Weekly sets against a muscle's landmarks: the track runs past MRV, the
- * MEV to MAV range is shaded with the MAV sweet spot stronger, ticks mark MV
- * and MRV, and the fill shows the current volume in its status colour.
+ * Weekly sets against a muscle's landmarks. The MEV to MAV range is shaded
+ * on the track, the MAV sweet spot stronger, with ticks at MV and MRV. The
+ * current volume is a frosted-glass fill, tinted by status, so the ranges
+ * stay visible through it: at a glance you can see how many sets you could
+ * move and still land in range. A solid edge marks the exact value.
  */
 export function VolumeBar({
 	sets,
@@ -64,25 +66,34 @@ export function VolumeBar({
 	const max = Math.max(landmarks.mrv * 1.15, sets * 1.05);
 	const pct = (n: number) => `${Math.min(100, (n / max) * 100)}%`;
 	const [bandMin, bandMax] = target ?? [landmarks.mev, landmarks.mav_max];
+	const t = TONE_CLASSES[tone];
 	return (
-		<div className={cn("relative h-2.5 w-full overflow-hidden rounded-full bg-muted", className)}>
+		<div className={cn("relative h-3.5 w-full overflow-hidden rounded-full bg-muted", className)}>
 			<div
-				className="absolute inset-y-0 bg-status-optimal/15"
+				className={cn("absolute inset-y-0", target ? "bg-status-optimal/40" : "bg-status-optimal/20")}
 				style={{ left: pct(bandMin), width: `calc(${pct(bandMax)} - ${pct(bandMin)})` }}
 			/>
 			{!target && (
 				<div
-					className="absolute inset-y-0 bg-status-optimal/25"
+					className="absolute inset-y-0 bg-status-optimal/45"
 					style={{ left: pct(landmarks.mav_min), width: `calc(${pct(landmarks.mav_max)} - ${pct(landmarks.mav_min)})` }}
 				/>
 			)}
-			<div
-				className={cn("absolute inset-y-0 left-0 rounded-full transition-[width] duration-500 ease-out", TONE_CLASSES[tone].fill)}
-				style={{ width: pct(sets) }}
-			/>
 			{[landmarks.mv, landmarks.mrv].map((n) => (
-				<div key={n} className="absolute inset-y-0 w-px bg-foreground/25" style={{ left: pct(n) }} />
+				<div key={n} className="absolute inset-y-0 w-px bg-foreground/30" style={{ left: pct(n) }} />
 			))}
+			{sets > 0 && (
+				<div
+					className={cn(
+						"absolute inset-y-0 left-0 rounded-l-full border-r-[3px] backdrop-blur-[2px] transition-[width] duration-500 ease-out",
+						"bg-gradient-to-b from-white/30 to-white/5 shadow-[inset_0_1px_0_rgb(255_255_255/0.35),inset_0_0_0_1px_rgb(255_255_255/0.12)] dark:from-white/12 dark:to-white/[0.02]",
+						t.edge
+					)}
+					style={{ width: pct(sets) }}
+				>
+					<div className={cn("absolute inset-0", t.glass)} />
+				</div>
+			)}
 		</div>
 	);
 }
@@ -91,11 +102,11 @@ export function VolumeLegend({ className }: { className?: string }) {
 	return (
 		<div className={cn("flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-muted-foreground", className)}>
 			<span className="inline-flex items-center gap-1.5">
-				<span className="h-2 w-4 rounded-sm bg-status-optimal/25" />
+				<span className="h-2 w-4 rounded-sm bg-status-optimal/45" />
 				Sweet spot (MAV)
 			</span>
 			<span className="inline-flex items-center gap-1.5">
-				<span className="h-2 w-4 rounded-sm bg-status-optimal/12" />
+				<span className="h-2 w-4 rounded-sm bg-status-optimal/20" />
 				Productive (MEV+)
 			</span>
 			<span className="inline-flex items-center gap-1.5">

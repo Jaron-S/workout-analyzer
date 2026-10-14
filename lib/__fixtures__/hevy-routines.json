@@ -1,0 +1,581 @@
+[
+ {
+  "id": "e4c3b986-507b-49de-859e-0e28f2844f15",
+  "title": "Lower Body",
+  "folder_id": 222899,
+  "exercises": [
+   {
+    "index": 0,
+    "title": "Spinning",
+    "notes": null,
+    "exercise_template_id": "213AB238",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": null,
+      "distance_meters": null,
+      "duration_seconds": 600,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 120
+   },
+   {
+    "index": 1,
+    "title": "Bulgarian Split Squat (Dumbbell)",
+    "notes": null,
+    "exercise_template_id": "B5D3A742",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 43.091326396385774,
+      "reps": 7,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 43.091326396385774,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 43.091326396385774,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 3,
+      "type": "normal",
+      "weight_kg": 43.091326396385774,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 150
+   },
+   {
+    "index": 2,
+    "title": "Romanian Deadlift (Barbell)",
+    "notes": null,
+    "exercise_template_id": "2B4B7310",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 70.30690096252415,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 70.30690096252415,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 70.30690096252415,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 150
+   },
+   {
+    "index": 3,
+    "title": "Hip Thrust (Barbell)",
+    "notes": null,
+    "exercise_template_id": "D57C2EC7",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 54.43114913227677,
+      "reps": 10,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 54.43114913227677,
+      "reps": 10,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 54.43114913227677,
+      "reps": 10,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 150
+   },
+   {
+    "index": 4,
+    "title": "Standing Calf Raise (Barbell)",
+    "notes": null,
+    "exercise_template_id": "E53CCBE5",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 61.235042773811365,
+      "reps": 17,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 61.235042773811365,
+      "reps": 15,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 61.235042773811365,
+      "reps": 14,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 3,
+      "type": "normal",
+      "weight_kg": 61.235042773811365,
+      "reps": 11,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 90
+   },
+   {
+    "index": 5,
+    "title": "Seated Incline Curl (Dumbbell)",
+    "notes": null,
+    "exercise_template_id": "8BAB2735",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 11.339822735890994,
+      "reps": 10,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 11.339822735890994,
+      "reps": 9,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 11.339822735890994,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 3,
+      "type": "normal",
+      "weight_kg": 11.339822735890994,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 90
+   },
+   {
+    "index": 6,
+    "title": "Modified Candlestick",
+    "notes": null,
+    "exercise_template_id": "2d9f55b8-02a9-4fa8-ab27-c67bc8d0a7cc",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 12,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 7,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 90
+   },
+   {
+    "index": 7,
+    "title": "Downregulation Breathing",
+    "notes": null,
+    "exercise_template_id": "3ee041f1-0bf8-4b06-8151-91e31d68d84f",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": null,
+      "distance_meters": null,
+      "duration_seconds": 180,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 120
+   }
+  ]
+ },
+ {
+  "id": "88eb0899-83c5-4957-99fb-123157aff9a4",
+  "title": "Upper Body B",
+  "folder_id": 222899,
+  "exercises": [
+   {
+    "index": 0,
+    "title": "Spinning",
+    "notes": null,
+    "exercise_template_id": "213AB238",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": null,
+      "distance_meters": null,
+      "duration_seconds": 600,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 120
+   },
+   {
+    "index": 1,
+    "title": "Bench Press (Barbell)",
+    "notes": null,
+    "exercise_template_id": "79D0BB3A",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 60.10106050022227,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 60.10106050022227,
+      "reps": 7,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 60.10106050022227,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 3,
+      "type": "normal",
+      "weight_kg": 60.10106050022227,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 150
+   },
+   {
+    "index": 2,
+    "title": "Dumbbell Row",
+    "notes": null,
+    "exercise_template_id": "F1E57334",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 26.081592292549285,
+      "reps": 11,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 26.081592292549285,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 26.081592292549285,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 3,
+      "type": "normal",
+      "weight_kg": 26.081592292549285,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 120
+   },
+   {
+    "index": 3,
+    "title": "Pull Up",
+    "notes": null,
+    "exercise_template_id": "1B2B1E7C",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 5,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 5,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 4,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 150
+   },
+   {
+    "index": 4,
+    "title": "Pullover (Dumbbell)",
+    "notes": null,
+    "exercise_template_id": "67280085",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 15.87575183024739,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 15.87575183024739,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 15.87575183024739,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 120
+   },
+   {
+    "index": 5,
+    "title": "Triceps Dip",
+    "notes": null,
+    "exercise_template_id": "28BB4A95",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 8,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 7,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": 6,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 120
+   },
+   {
+    "index": 6,
+    "title": "Lateral Raise (Dumbbell)",
+    "notes": null,
+    "exercise_template_id": "422B08F1",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": 6.8038936415345965,
+      "reps": 11,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 1,
+      "type": "normal",
+      "weight_kg": 6.8038936415345965,
+      "reps": 11,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     },
+     {
+      "index": 2,
+      "type": "normal",
+      "weight_kg": 6.8038936415345965,
+      "reps": 9,
+      "distance_meters": null,
+      "duration_seconds": null,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 60
+   },
+   {
+    "index": 7,
+    "title": "Downregulation Breathing",
+    "notes": null,
+    "exercise_template_id": "3ee041f1-0bf8-4b06-8151-91e31d68d84f",
+    "superset_id": null,
+    "sets": [
+     {
+      "index": 0,
+      "type": "normal",
+      "weight_kg": null,
+      "reps": null,
+      "distance_meters": null,
+      "duration_seconds": 197,
+      "custom_metric": null
+     }
+    ],
+    "rest_seconds": 0
+   }
+  ]
+ }
+]

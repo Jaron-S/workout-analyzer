@@ -34,7 +34,7 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Copy, GripVertical, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
+import { Copy, Download, GripVertical, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
 // Firestore rejects undefined fields, and clearing a target sets it to undefined.
@@ -51,6 +51,7 @@ interface RoutineBuilderProps {
 	/** The applied routine while a draft is shown, to highlight what the draft changes. */
 	baseRoutine?: Routine;
 	suggestions?: Suggestion[];
+	onImport?: () => void;
 }
 
 function useDragSensors() {
@@ -63,7 +64,7 @@ function useDragSensors() {
 	);
 }
 
-export function RoutineBuilder({ routine, onRoutineChange, baseRoutine, suggestions }: RoutineBuilderProps) {
+export function RoutineBuilder({ routine, onRoutineChange, baseRoutine, suggestions, onImport }: RoutineBuilderProps) {
 	const [library, setLibrary] = useState<LibraryMode | null>(null);
 	const [editingName, setEditingName] = useState<string | null>(null);
 	const sensors = useDragSensors();
@@ -140,10 +141,18 @@ export function RoutineBuilder({ routine, onRoutineChange, baseRoutine, suggesti
 						{routine.days.length} day{routine.days.length === 1 ? "" : "s"} · {weeklySets} sets a week
 					</p>
 				</div>
-				<Button onClick={addDay} size="sm" variant="outline" className="shrink-0">
-					<Plus className="h-4 w-4" />
-					Day
-				</Button>
+				<div className="flex shrink-0 gap-2">
+					{onImport && (
+						<Button onClick={onImport} size="sm" variant="ghost" aria-label="Import a routine">
+							<Download className="h-4 w-4" />
+							<span className="hidden @md:inline">Import</span>
+						</Button>
+					)}
+					<Button onClick={addDay} size="sm" variant="outline">
+						<Plus className="h-4 w-4" />
+						Day
+					</Button>
+				</div>
 			</div>
 
 			<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDayDragEnd}>

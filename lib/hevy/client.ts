@@ -125,6 +125,9 @@ export function createHevyClient(apiKey: string, fetchImpl: typeof fetch = fetch
 
 		getRoutines: () => getAllPages<HevyRoutine>("/v1/routines", "routines", 10),
 
+		getRoutineFolders: () =>
+			getAllPages<{ id: number; index: number; title: string }>("/v1/routine_folders", "routine_folders", 10),
+
 		/** Resolves to null when the folder no longer exists. */
 		getRoutineFolder: async (folderId: number) => {
 			try {
