@@ -3,11 +3,11 @@
 		"id": "preset1",
 		"name": "Aesthetic Blueprint (Male)",
 		"tiers": {
-			"S": ["Lats", "Side Delts"],
-			"A": ["Biceps", "Triceps", "Forearms"],
-			"B": ["Chest", "Glutes", "Abs"],
-			"C": ["Middle Back", "Rear Delts", "Quads", "Hamstrings"],
-			"D": ["Front Delts", "Traps", "Calves", "Lower Back"]
+			"S": ["Lats"],
+			"A": ["Biceps", "Triceps", "Forearms", "Side Delts"],
+			"B": ["Chest", "Glutes", "Abs", "Middle Back"],
+			"C": ["Quads", "Hamstrings", "Rear Delts"],
+			"D": ["Front Delts", "Lower Back", "Calves", "Traps", "Neck"]
 		}
 	},
 	{
