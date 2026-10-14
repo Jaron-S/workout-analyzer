@@ -32,9 +32,12 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAutoSave, type SaveStatus } from "@/hooks/use-auto-save";
+import { useClaudeSync } from "@/hooks/use-claude-sync";
 import { useCoach } from "@/hooks/use-coach";
 import { usePersistedState } from "@/hooks/use-persisted-state";
 import { useAuth } from "@/lib/auth-context";
+import { SETTINGS } from "@/lib/claude-sync";
+import { deleteSettingFromFirebase } from "@/lib/firebase-storage";
 import { useExercises } from "@/lib/exercise-context";
 import { useHevy } from "@/lib/hevy-context";
 import { analyzePriorities } from "@/lib/priority-analysis";
@@ -103,7 +106,26 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 		loadPriorities
 	);
 
-	const coach = useCoach({ routine, setRoutine, priorities });
+	const coachState = useCoach({ routine, setRoutine, priorities });
+	useClaudeSync(user, routine, setRoutine, coachState);
+	// A draft from Claude in claude.ai is also removed from the account once
+	// it's applied or discarded here, so the chat knows it's been handled.
+	const finishConnectorDraft = () => {
+		if (user && coachState.draftSource === "connector") {
+			deleteSettingFromFirebase(user.uid, SETTINGS.draft).catch((error) => console.error("Failed to clear Claude's draft:", error));
+		}
+	};
+	const coach = {
+		...coachState,
+		apply: () => {
+			finishConnectorDraft();
+			coachState.apply();
+		},
+		discard: () => {
+			finishConnectorDraft();
+			coachState.discard();
+		},
+	};
 	// While Claude's changes await review, the builder and analysis show the
 	// draft, and hand edits go to the draft too.
 	const shownRoutine = coach.draft ?? routine;

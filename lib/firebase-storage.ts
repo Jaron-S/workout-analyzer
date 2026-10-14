@@ -10,14 +10,18 @@ import { db } from "./firebase-config";
 import { migrateRoutine } from "./exercise-catalog";
 import type { PriorityTier, Routine } from "./types";
 
+// The updatedAt stamps of routines this browser saved, so a live listener
+// can tell its own writes from the connector's or another device's.
+const ownWrites = new Set<string>();
+export const isOwnRoutineWrite = (updatedAt: unknown) => typeof updatedAt === "string" && ownWrites.has(updatedAt);
+
 export async function saveRoutineToFirebase(userId: string, routine: Routine) {
 	if (!db) throw new Error("Firebase not configured");
 
+	const updatedAt = new Date().toISOString();
+	ownWrites.add(updatedAt);
 	const routineRef = doc(db, "users", userId, "routines", routine.id);
-	await setDoc(routineRef, {
-		...routine,
-		updatedAt: new Date().toISOString(),
-	});
+	await setDoc(routineRef, { ...routine, updatedAt });
 }
 
 export async function getRoutinesFromFirebase(
@@ -95,4 +99,9 @@ export async function getSettingFromFirebase<T>(
 	const snapshot = await getDoc(settingRef);
 
 	return snapshot.exists() ? (snapshot.data().value as T) : null;
+}
+
+export async function deleteSettingFromFirebase(userId: string, name: string): Promise<void> {
+	if (!db) throw new Error("Firebase not configured");
+	await deleteDoc(doc(db, "users", userId, "settings", name));
 }

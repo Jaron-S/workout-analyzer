@@ -60,6 +60,8 @@ export function useCoach({
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [history, setHistory] = useState<Anthropic.Beta.BetaMessageParam[]>([]);
 	const [draft, setDraft] = useState<Routine | null>(null);
+	// Where the draft came from: this chat, or Claude in claude.ai via the connector.
+	const [draftSource, setDraftSource] = useState<"chat" | "connector" | null>(null);
 	const [pendingChanges, setPendingChanges] = useState<string[]>([]);
 	const [undoRoutine, setUndoRoutine] = useState<Routine | null>(null);
 	const [busy, setBusy] = useState(false);
@@ -104,6 +106,7 @@ export function useCoach({
 					onToolCall: (name) => setActivity(TOOL_ACTIVITY[name] ?? "Editing the routine"),
 					onChange: (next, change) => {
 						setDraft(next);
+						setDraftSource((s) => s ?? "chat");
 						setPendingChanges((prev) => [...prev, change]);
 						updateLast((m) => ({ ...m, changes: [...(m.changes ?? []), change] }));
 					},
@@ -137,12 +140,21 @@ export function useCoach({
 		setUndoRoutine(routine);
 		setRoutine(draft);
 		setDraft(null);
+		setDraftSource(null);
 		setPendingChanges([]);
 	}, [draft, routine, setRoutine]);
 
 	const discard = useCallback(() => {
 		setDraft(null);
+		setDraftSource(null);
 		setPendingChanges([]);
+	}, []);
+
+	/** Shows a draft made elsewhere (Claude in claude.ai) for review. */
+	const showDraft = useCallback((next: Routine, changes: string[]) => {
+		setDraft(next);
+		setDraftSource("connector");
+		setPendingChanges(changes);
 	}, []);
 
 	const undo = useCallback(() => {
@@ -156,6 +168,7 @@ export function useCoach({
 		setMessages([]);
 		setHistory([]);
 		setDraft(null);
+		setDraftSource(null);
 		setPendingChanges([]);
 		setUndoRoutine(null);
 	}, []);
@@ -166,6 +179,8 @@ export function useCoach({
 		busy,
 		activity,
 		draft,
+		draftSource,
+		showDraft,
 		/** Lets the user keep editing the draft by hand before applying it. */
 		setDraft,
 		pendingChanges,

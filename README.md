@@ -14,7 +14,9 @@
       * **Fatigue:** session size, junk-volume risk and training frequency.
   * **Hevy exercise library:** Hevy's 451 built-in exercises plus your own custom exercises once you connect Hevy, each with curated muscle weightings you can override to match how an exercise feels for you.
   * **Push to Hevy:** push a routine as a Hevy folder with one routine per day, including rep ranges, rest and notes. Pushing again updates the same routines in place.
-  * **Claude coach:** with your own Anthropic API key, ask Claude to build or change your routine. Its edits appear inline as a draft you apply, discard or undo.
+  * **Claude connector:** use Setsmith from claude.ai or the Claude apps on your own Claude plan. Claude reads your routine and its analysis and drafts changes; the draft appears live in Setsmith, and applies when you agree in the chat or tap Apply.
+  * **Claude in the app:** or chat with Claude inside Setsmith using your own Anthropic API key. Its edits appear inline as a draft you apply, discard or undo.
+  * **Import:** bring in a routine from Hevy (each Hevy routine becomes a day, linked so pushing back updates it) or paste one from your notes.
   * **Share:** a link that carries the whole routine and previews as an image of it on Reddit, Discord and elsewhere; recipients can import it in one tap. Or download the image.
   * **Templates, command menu (Cmd/Ctrl+K), light and dark themes.**
   * **Accounts optional:** everything works as a guest in the browser; signing in (Firebase) auto-saves to your account and syncs devices.
@@ -63,10 +65,11 @@ The goal was to present complex scientific training data in a way that was immed
 
 ## Hevy and Claude
 
-Both integrations run entirely in your browser with your own keys, which are stored only in that browser (never in your account or on a server).
+Hevy and the in-app Claude run entirely in your browser with your own keys, which are stored only in that browser (never in your account or on a server).
 
   * **Hevy:** Settings → Hevy. API keys are a Hevy Pro feature; get yours at [hevy.com/settings?developer](https://hevy.com/settings?developer). Hevy's API cannot delete routines, folders or custom exercises, so anything pushed has to be removed in the Hevy app. The app asks before creating a custom exercise for that reason.
-  * **Claude:** Settings → Claude. Create a key at [console.anthropic.com](https://console.anthropic.com/settings/keys); usage is billed to that Anthropic account. The coach uses Claude Opus 5.5.
+  * **Claude connector:** sign in to Setsmith, then in Claude open Settings → Connectors → Add custom connector and use `https://<your-site>/api/mcp`. Claude sends you to Setsmith to allow access. It works on routines saved to your account. The server needs `SETSMITH_CONNECTOR_SECRET` (32+ random characters), which encrypts its OAuth tokens; nothing else is stored.
+  * **Claude in the app:** Settings → Claude in Setsmith. Create a key at [console.anthropic.com](https://console.anthropic.com/settings/keys); usage is billed to that Anthropic account. The coach uses Claude Opus 5.5.
 
 ### Maintaining the exercise library
 

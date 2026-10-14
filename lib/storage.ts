@@ -132,6 +132,29 @@ export const saveHevyCustomExercises = (templates: HevyExerciseTemplate[]) =>
 export const loadHevyCustomExercises = () =>
   loadJson<HevyExerciseTemplate[]>(HEVY_CUSTOM_EXERCISES_KEY, "Hevy custom exercises")
 
+/** JSON with sorted keys, so equal routines compare equal whatever their key order. */
+export function stableJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .filter((k) => (value as Record<string, unknown>)[k] !== undefined)
+      .map((k) => `${JSON.stringify(k)}:${stableJson((value as Record<string, unknown>)[k])}`)
+      .join(",")}}`
+  }
+  return JSON.stringify(value)
+}
+
+// The routine as last saved to or loaded from the account, per routine id:
+// local edits since then haven't reached the account yet.
+const SYNCED_KEY = "workout-analyzer-synced-routine"
+export const saveSyncedRoutine = (routine: Routine) =>
+  saveJson(SYNCED_KEY, { id: routine.id, json: stableJson(routine) }, "synced routine")
+export const syncedRoutineJson = (id: string) => {
+  const synced = loadJson<{ id: string; json: string }>(SYNCED_KEY, "synced routine")
+  return synced?.id === id ? synced.json : null
+}
+
 export function clearAllData(): void {
   if (typeof window === "undefined") return
   try {

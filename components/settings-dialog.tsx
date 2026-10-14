@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { COACH_MODEL, createCoachClient } from "@/lib/coach/agent";
+import { useAuth } from "@/lib/auth-context";
 import { useExercises } from "@/lib/exercise-context";
 import { useHevy } from "@/lib/hevy-context";
 import { useSettings } from "@/lib/settings-context";
@@ -46,6 +47,8 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 				<AppearanceSection />
 				<Separator />
 				<HevySection />
+				<Separator />
+				<ConnectorSection />
 				<Separator />
 				<ClaudeSection />
 				<Separator />
@@ -212,6 +215,43 @@ function AppearanceSection() {
 	);
 }
 
+/** Using Setsmith from claude.ai or the Claude apps, on the user's own Claude plan. */
+function ConnectorSection() {
+	const { user, isConfigured } = useAuth();
+	const [copied, setCopied] = useState(false);
+	const url = typeof window === "undefined" ? "" : `${window.location.origin}/api/mcp`;
+	if (!isConfigured) return null;
+	return (
+		<section className="space-y-3">
+			<h3 className="font-semibold">Claude connector</h3>
+			<p className="text-sm text-muted-foreground">
+				Use Setsmith from claude.ai or the Claude apps with your own Claude plan; no API key or extra cost. Claude can
+				read your routine and its analysis, draft changes, and apply them when you say so.
+			</p>
+			{!user && <p className="text-sm text-status-maintain">Sign in first: the connector works with routines saved to your account.</p>}
+			<div className="flex gap-2">
+				<Input readOnly value={url} onFocus={(e) => e.target.select()} className="text-xs" aria-label="Connector URL" />
+				<Button
+					variant="outline"
+					className="shrink-0"
+					onClick={async () => {
+						await navigator.clipboard.writeText(url);
+						setCopied(true);
+						setTimeout(() => setCopied(false), 2000);
+					}}
+				>
+					{copied ? "Copied" : "Copy"}
+				</Button>
+			</div>
+			<ol className="list-decimal space-y-1 pl-5 text-sm text-muted-foreground">
+				<li>In Claude, open Settings → Connectors and choose Add custom connector.</li>
+				<li>Name it Setsmith and paste the URL above.</li>
+				<li>Choose Connect, then sign in here and allow access.</li>
+			</ol>
+		</section>
+	);
+}
+
 function ClaudeSection() {
 	const { claudeApiKey, setClaudeApiKey } = useSettings();
 	const [keyInput, setKeyInput] = useState("");
@@ -237,7 +277,7 @@ function ClaudeSection() {
 	return (
 		<section className="space-y-3">
 			<div className="flex items-center justify-between">
-				<h3 className="font-semibold">Claude</h3>
+				<h3 className="font-semibold">Claude in Setsmith</h3>
 				{claudeApiKey && (
 					<Button variant="ghost" size="sm" onClick={() => setClaudeApiKey("")}>
 						Remove key
@@ -252,7 +292,7 @@ function ClaudeSection() {
 			) : (
 				<>
 					<p className="text-sm text-muted-foreground">
-						Paste an Anthropic API key to let Claude build and edit routines. Create
+						Or chat with Claude right here using an Anthropic API key (billed per use). Create
 						one at{" "}
 						<a
 							href="https://console.anthropic.com/settings/keys"
