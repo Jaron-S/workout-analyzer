@@ -22,13 +22,13 @@ const LANDMARKS = volumeLandmarks as VolumeLandmarks;
 interface AnalysisPanelProps {
 	routine: Routine;
 	priorities: Partial<Record<PriorityTier, string[]>>;
-	onPrioritiesChange: (priorities: Partial<Record<PriorityTier, string[]>>) => void;
+	onEditPriorities: () => void;
 	onAddExercise: (dayId: string, exerciseId: string, sets: number) => void;
 }
 
 const TAB_STORAGE_KEY = "analysisPanelTab";
 
-export function AnalysisPanel({ routine, priorities, onPrioritiesChange, onAddExercise }: AnalysisPanelProps) {
+export function AnalysisPanel({ routine, priorities, onEditPriorities, onAddExercise }: AnalysisPanelProps) {
 	const { exercises } = useExercises();
 	const muscleVolumes = useMemo(() => calculateMuscleVolumes(routine, exercises), [routine, exercises]);
 	const priorityResults = useMemo(() => analyzePriorities(muscleVolumes, priorities), [muscleVolumes, priorities]);
@@ -129,8 +129,7 @@ export function AnalysisPanel({ routine, priorities, onPrioritiesChange, onAddEx
 					<PriorityAnalysis
 						routine={routine}
 						results={priorityResults}
-						priorities={priorities}
-						onPrioritiesChange={onPrioritiesChange}
+						onEditPriorities={onEditPriorities}
 						onAddExercise={onAddExercise}
 					/>
 				</TabsContent>

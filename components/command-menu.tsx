@@ -14,7 +14,7 @@ import {
 import { useExercises } from "@/lib/exercise-context";
 import { searchExercises } from "@/lib/search";
 import type { Exercise, Routine } from "@/lib/types";
-import { BarChart3, CalendarPlus, Download, Dumbbell, Monitor, Moon, Settings, Share2, Sparkles, Sun, Upload } from "lucide-react";
+import { BarChart3, CalendarPlus, Download, Dumbbell, Monitor, Moon, Settings, Share2, SlidersHorizontal, Sparkles, Sun, Upload } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -24,6 +24,7 @@ export interface CommandActions {
 	share: () => void;
 	importRoutine: () => void;
 	openSettings: () => void;
+	editPriorities: () => void;
 	showView: (view: "builder" | "analysis") => void;
 	addExercise: (dayId: string, exerciseId: string) => void;
 }
@@ -149,6 +150,10 @@ export function CommandMenu({
 							<CommandItem onSelect={() => run(() => actions.showView("analysis"))}>
 								<BarChart3 />
 								Show analysis
+							</CommandItem>
+							<CommandItem onSelect={() => run(actions.editPriorities)}>
+								<SlidersHorizontal />
+								Muscle priorities
 							</CommandItem>
 							<CommandItem onSelect={() => run(actions.openSettings)}>
 								<Settings />

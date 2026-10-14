@@ -1,6 +1,5 @@
 "use client";
 
-import { PrioritySettings } from "@/components/priority-settings";
 import { TierBadge, ToneBadge, VolumeBar } from "@/components/status";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,18 +10,17 @@ import { TIER_ORDER, TONE_CLASSES } from "@/lib/design";
 import { useExercises } from "@/lib/exercise-context";
 import { STATUS_TONE, type PriorityResult, type PriorityStatus } from "@/lib/priority-analysis";
 import { buildSuggestions } from "@/lib/suggestions";
-import type { PriorityTier, Routine, VolumeLandmarks } from "@/lib/types";
+import type { Routine, VolumeLandmarks } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Lightbulb, Plus, SlidersHorizontal, Target } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 const LANDMARKS = volumeLandmarks as VolumeLandmarks;
 
 interface PriorityAnalysisProps {
 	routine: Routine;
 	results: PriorityResult[];
-	priorities: Partial<Record<PriorityTier, string[]>>;
-	onPrioritiesChange: (priorities: Partial<Record<PriorityTier, string[]>>) => void;
+	onEditPriorities: () => void;
 	onAddExercise: (dayId: string, exerciseId: string, sets: number) => void;
 }
 
@@ -36,9 +34,8 @@ const STATUS_LABEL: Record<PriorityStatus, string> = {
 	optimal: "On target",
 };
 
-export function PriorityAnalysis({ routine, results, priorities, onPrioritiesChange, onAddExercise }: PriorityAnalysisProps) {
+export function PriorityAnalysis({ routine, results, onEditPriorities, onAddExercise }: PriorityAnalysisProps) {
 	const { exercises, getExercise } = useExercises();
-	const [showSettings, setShowSettings] = useState(false);
 	const save = useCallback((value: SortOption) => {
 		try {
 			window.localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(value));
@@ -75,15 +72,6 @@ export function PriorityAnalysis({ routine, results, priorities, onPrioritiesCha
 		}
 	}, [results, sortBy]);
 
-	const settings = (
-		<PrioritySettings
-			open={showSettings}
-			onOpenChange={setShowSettings}
-			priorities={priorities}
-			onPrioritiesChange={onPrioritiesChange}
-		/>
-	);
-
 	if (results.length === 0) {
 		return (
 			<Card className="items-center gap-3 p-8 text-center">
@@ -95,10 +83,9 @@ export function PriorityAnalysis({ routine, results, priorities, onPrioritiesCha
 					Put muscles into tiers from S (most important) to F. Setsmith then checks every one against the volume its tier
 					calls for and suggests what to add.
 				</p>
-				<Button onClick={() => setShowSettings(true)} className="mt-2">
+				<Button onClick={onEditPriorities} className="mt-2">
 					Set priorities
 				</Button>
-				{settings}
 			</Card>
 		);
 	}
@@ -159,6 +146,14 @@ export function PriorityAnalysis({ routine, results, priorities, onPrioritiesCha
 					<div>
 						<h3 className="font-semibold">Your priorities</h3>
 						<p className="text-xs text-muted-foreground">Each muscle against the range its tier calls for</p>
+						<button
+							type="button"
+							onClick={onEditPriorities}
+							className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-brand-text hover:underline"
+						>
+							<SlidersHorizontal className="h-3.5 w-3.5" />
+							Edit priorities
+						</button>
 					</div>
 					<div className="flex shrink-0 items-center gap-2">
 						<Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
@@ -172,9 +167,6 @@ export function PriorityAnalysis({ routine, results, priorities, onPrioritiesCha
 								<SelectItem value="volume-low">Least volume</SelectItem>
 							</SelectContent>
 						</Select>
-						<Button variant="outline" size="sm" onClick={() => setShowSettings(true)} aria-label="Edit priorities">
-							<SlidersHorizontal className="h-4 w-4" />
-						</Button>
 					</div>
 				</div>
 				<ul className="space-y-4">
@@ -207,7 +199,6 @@ export function PriorityAnalysis({ routine, results, priorities, onPrioritiesCha
 					})}
 				</ul>
 			</Card>
-			{settings}
 		</div>
 	);
 }

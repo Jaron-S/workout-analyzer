@@ -6,6 +6,7 @@ import { Wordmark } from "@/components/brand";
 import { CoachPanel } from "@/components/coach-panel";
 import { CommandMenu } from "@/components/command-menu";
 import { HevyPushDialog } from "@/components/hevy-push-dialog";
+import { PrioritySettings } from "@/components/priority-settings";
 import { ImportDialog } from "@/components/import-dialog";
 import { RoutineBuilder } from "@/components/routine-builder";
 import { SavedRoutinesModal } from "@/components/saved-routines-modal";
@@ -59,6 +60,7 @@ import {
 	LogOut,
 	Settings,
 	Share2,
+	SlidersHorizontal,
 	Sparkles,
 	Upload,
 	User,
@@ -91,6 +93,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 	const [showAuth, setShowAuth] = useState(false);
 	const [showSavedRoutines, setShowSavedRoutines] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const [showPriorities, setShowPriorities] = useState(false);
 	const [showPush, setShowPush] = useState(false);
 	const [showCoach, setShowCoach] = useState(false);
 	const [showShare, setShowShare] = useState(false);
@@ -259,16 +262,28 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 												<FolderOpen className="h-4 w-4" />
 												My routines
 											</DropdownMenuItem>
+											<DropdownMenuItem onSelect={() => setShowPriorities(true)}>
+												<SlidersHorizontal className="h-4 w-4" />
+												Muscle priorities
+											</DropdownMenuItem>
+											<DropdownMenuSeparator />
 											<DropdownMenuItem onSelect={handleSignOut}>
 												<LogOut className="h-4 w-4" />
 												Sign out
 											</DropdownMenuItem>
 										</>
 									) : (
-										<DropdownMenuItem onSelect={() => setShowAuth(true)}>
-											<User className="h-4 w-4" />
-											Log in or sign up
-										</DropdownMenuItem>
+										<>
+											<DropdownMenuItem onSelect={() => setShowPriorities(true)}>
+												<SlidersHorizontal className="h-4 w-4" />
+												Muscle priorities
+											</DropdownMenuItem>
+											<DropdownMenuSeparator />
+											<DropdownMenuItem onSelect={() => setShowAuth(true)}>
+												<User className="h-4 w-4" />
+												Log in or sign up
+											</DropdownMenuItem>
+										</>
 									)}
 								</DropdownMenuContent>
 							</DropdownMenu>
@@ -324,7 +339,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 					<AnalysisPanel
 						routine={shownRoutine}
 						priorities={priorities}
-						onPrioritiesChange={setPriorities}
+						onEditPriorities={() => setShowPriorities(true)}
 						onAddExercise={addExercise}
 					/>
 				</section>
@@ -340,6 +355,12 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 
 			<AuthModal open={showAuth} onOpenChange={setShowAuth} />
 			<SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
+			<PrioritySettings
+				open={showPriorities}
+				onOpenChange={setShowPriorities}
+				priorities={priorities}
+				onPrioritiesChange={setPriorities}
+			/>
 			<CoachPanel coach={coach} open={showCoach} onOpenChange={setShowCoach} />
 			<ShareDialog open={showShare} onOpenChange={setShowShare} routine={routine} />
 			<ImportDialog
@@ -365,6 +386,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 					share: () => setShowShare(true),
 					importRoutine: () => setShowImport(true),
 					openSettings: () => setShowSettings(true),
+					editPriorities: () => setShowPriorities(true),
 					showView: setView,
 					addExercise: (dayId, exerciseId) => addExercise(dayId, exerciseId),
 				}}
