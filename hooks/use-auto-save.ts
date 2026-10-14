@@ -1,7 +1,7 @@
 "use client";
 
 import { savePrioritiesToFirebase, saveRoutineToFirebase } from "@/lib/firebase-storage";
-import { saveSyncedRoutine } from "@/lib/storage";
+import { saveSyncedRoutine, stableJson, syncedRoutineJson } from "@/lib/storage";
 import type { PriorityTier, Routine } from "@/lib/types";
 import type { User } from "firebase/auth";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -37,7 +37,10 @@ export function useAutoSave(
 		const timer = setTimeout(async () => {
 			setStatus("saving");
 			try {
-				if (prev?.routine !== routineJson) {
+				// Only upload a routine that differs from what the account already
+				// has: re-uploading an unchanged copy on load could overwrite a newer
+				// change made elsewhere (Claude, another device) moments before.
+				if (prev?.routine !== routineJson && syncedRoutineJson(routine.id) !== stableJson(routine)) {
 					await saveRoutineToFirebase(user.uid, routine);
 					saveSyncedRoutine(routine);
 				}
