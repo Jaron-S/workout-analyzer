@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
-import type { Routine } from "../types";
-import { coachToolSchemas, describeRoutine, runCoachTool, type CoachContext } from "./tools";
+import type { ExercisePreferences, Routine } from "../types";
+import { coachToolSchemas, describePreferences, describeRoutine, runCoachTool, type CoachContext } from "./tools";
 
 export const COACH_MODEL = "claude-opus-5-5";
 
@@ -10,7 +10,9 @@ export const APP_MODEL = `How the app models training:
 - Each exercise has muscle weightings: a set counts fully for its main muscle and partly for others (e.g. bench press: Chest 100%, Front Delts 40%, Triceps 30%). Users can override weightings to match how exercises feel for their body.
 - Weekly volume per muscle is compared with landmarks: MV (maintenance), MEV (minimum effective), MAV (the productive range) and MRV (maximum recoverable).
 - The user ranks muscles into priority tiers S (most important) to F (least). Higher tiers should land in or near MAV; low tiers can sit at maintenance.
-- Exercises come from the Hevy app's library, so routines can be pushed to Hevy.`;
+- Exercises come from the Hevy app's library, so routines can be pushed to Hevy.
+- Exercises are ranked per muscle from S+ (best) to F, from Jeff Nippard's tier lists. Some tiers only hold for a variation (deficit push-ups, lean-in lateral raises), and some ranked exercises aren't in Hevy. Users mark favourites and exercises to avoid, with their reason.
+- Choose exercises from S+ to A, and the user's favourites; use exercise_rankings to pick and exercise_details for form cues. Never add an exercise the user avoids unless they ask for it, and let their reason rule out similar exercises (a bad back with squats rules out other heavy spinal loading). When the user says they like or dislike an exercise, save it with set_exercise_preference. Add a short form cue to an exercise's notes only when the user wants cues in Hevy.`;
 
 // Fixed text, so with the tools it forms a cacheable prefix. Anything that
 // changes (the routine, priorities, defaults) goes in the user turn instead.
@@ -37,6 +39,8 @@ export interface CoachTurnOptions {
 	/** Called after each tool that changes the draft. */
 	onChange: (routine: Routine, change: string) => void;
 	onToolCall?: (name: string) => void;
+	/** Called when Claude saves the user's exercise preferences. */
+	onPreferences?: (preferences: ExercisePreferences) => void;
 	signal?: AbortSignal;
 }
 
@@ -67,6 +71,7 @@ function contextBlock(routine: Routine, ctx: CoachContext): string {
 		"<settings>",
 		`Defaults: compound ${d.reps.compound.min}-${d.reps.compound.max} reps, ${d.restSeconds.compound}s rest; isolation ${d.reps.isolation.min}-${d.reps.isolation.max} reps, ${d.restSeconds.isolation}s rest; timed ${d.durationSeconds}s per set. Weight unit: ${d.weightUnit}.`,
 		`Priority tiers: ${tiers.length ? tiers.join("; ") : "not set"}.`,
+		describePreferences(ctx),
 		"</settings>",
 	].join("\n");
 }
@@ -81,7 +86,8 @@ const TOOLS: Anthropic.Beta.BetaTool[] = coachToolSchemas().map((t) => ({
 
 /** One user message, run until Claude stops calling tools. */
 export async function runCoachTurn(options: CoachTurnOptions): Promise<CoachTurnResult> {
-	const { client, ctx, onText, onChange, onToolCall, signal } = options;
+	const { client, onText, onChange, onToolCall, onPreferences, signal } = options;
+	let ctx = options.ctx;
 	let routine = options.routine;
 	const changes: string[] = [];
 	const history: Anthropic.Beta.BetaMessageParam[] = [
@@ -155,6 +161,10 @@ export async function runCoachTurn(options: CoachTurnOptions): Promise<CoachTurn
 		const results: Anthropic.Beta.BetaToolResultBlockParam[] = toolUses.map((use) => {
 			onToolCall?.(use.name);
 			const outcome = runCoachTool(use.name, use.input, routine, ctx);
+			if (outcome.preferences && !outcome.isError) {
+				ctx = { ...ctx, preferences: outcome.preferences };
+				onPreferences?.(outcome.preferences);
+			}
 			if (outcome.change && !outcome.isError) {
 				routine = outcome.routine;
 				changes.push(outcome.change);

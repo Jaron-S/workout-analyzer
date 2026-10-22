@@ -1,4 +1,5 @@
 import { TIER_CLASSES, TONE_CLASSES, ZONES, type Tone, type VolumeZone } from "@/lib/design";
+import type { ExerciseTier } from "@/lib/exercise-rankings";
 import type { PriorityTier, VolumeLandmark } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +12,23 @@ export function TierBadge({ tier, className }: { tier: PriorityTier; className?:
 				className
 			)}
 			title={`${tier}-tier priority`}
+		>
+			{tier}
+		</span>
+	);
+}
+
+/** An exercise's tier for a muscle; S+ looks like S with a ring. */
+export function ExerciseTierBadge({ tier, muscle, className }: { tier: ExerciseTier; muscle?: string; className?: string }) {
+	return (
+		<span
+			className={cn(
+				"inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-md px-1 text-[11px] font-bold leading-none",
+				TIER_CLASSES[tier === "S+" ? "S" : tier],
+				tier === "S+" && "ring-2 ring-primary/35",
+				className
+			)}
+			title={`${tier} tier${muscle ? ` for ${muscle}` : ""}`}
 		>
 			{tier}
 		</span>

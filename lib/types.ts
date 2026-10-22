@@ -24,6 +24,16 @@ export interface Exercise {
   estimatedWeightings?: boolean
 }
 
+/** How a user feels about an exercise: picked first, or never suggested. */
+export interface ExercisePreference {
+  pref: "favourite" | "avoid"
+  /** Why, in the user's words (e.g. "hard on my back"); Claude reads it. */
+  note?: string
+}
+
+/** Per-user exercise preferences, keyed by exercise ID. */
+export type ExercisePreferences = Record<string, ExercisePreference>
+
 /** Per-user muscle weightings, keyed by exercise ID, replacing the defaults. */
 export type MuscleOverrides = Record<string, Record<string, number>>
 

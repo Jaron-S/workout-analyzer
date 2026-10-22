@@ -1,7 +1,9 @@
 "use client";
 
+import { ExerciseInfoDialog } from "@/components/exercise-info-dialog";
 import { ExerciseTargetsPopover } from "@/components/exercise-targets-popover";
 import { MuscleWeightingsDialog } from "@/components/muscle-weightings-dialog";
+import { ExerciseTierBadge } from "@/components/status";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -10,12 +12,13 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useExercises } from "@/lib/exercise-context";
 import type { ExerciseChange } from "@/lib/routine-diff";
 import type { Exercise, RoutineExercise } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { ArrowLeftRight, GripVertical, Minus, MoreHorizontal, Plus, SlidersHorizontal, Trash2 } from "lucide-react";
+import { ArrowLeftRight, Ban, GripVertical, Heart, Info, Minus, MoreHorizontal, Plus, SlidersHorizontal, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 const MAX_SETS = 10;
@@ -53,6 +56,11 @@ const musclesLine = (exercise: Exercise) =>
 
 export function ExerciseCard({ id, exercise, routineExercise, change, onChange, onReplace, onRemove }: ExerciseCardProps) {
 	const [editingMuscles, setEditingMuscles] = useState(false);
+	const [showInfo, setShowInfo] = useState(false);
+	const { rankings, preferences, setPreference } = useExercises();
+	const preference = preferences[exercise.id]?.pref;
+	const primary = exercise.muscle_weightings[0]?.muscle;
+	const rank = (primary && rankings.forMuscle(exercise.id, primary)) || rankings.best(exercise.id);
 	const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id });
 	const sets = routineExercise.sets;
 
@@ -80,7 +88,13 @@ export function ExerciseCard({ id, exercise, routineExercise, change, onChange, 
 
 			<div className="min-w-0 flex-1">
 				<p className="line-clamp-2 text-sm font-medium leading-snug @md:line-clamp-1">
+					{rank && (
+						<ExerciseTierBadge tier={rank.tier} muscle={rank.muscle} className="mr-1.5 h-4 min-w-4 align-[1px] text-[10px]" />
+					)}
 					{exercise.name}
+					{preference === "favourite" && (
+						<Heart className="ml-1 inline h-3 w-3 fill-brand-text align-[-1px] text-brand-text" aria-label="Favourite" />
+					)}
 					{change && (
 						<span className={cn("ml-1.5 text-[11px] font-semibold", change === "added" ? "text-status-optimal" : "text-status-growing")}>
 							{change === "added" ? "New" : "Changed"}
@@ -91,8 +105,9 @@ export function ExerciseCard({ id, exercise, routineExercise, change, onChange, 
 					<ExerciseTargetsPopover exercise={exercise} routineExercise={routineExercise} onChange={onChange} />
 					<span className="hidden min-w-0 shrink-[999] truncate @sm:inline">· {musclesLine(exercise)}</span>
 				</div>
-				{(exercise.customWeightings || exercise.legacy || exercise.estimatedWeightings) && (
+				{(exercise.customWeightings || exercise.legacy || exercise.estimatedWeightings || preference === "avoid") && (
 					<p className="mt-0.5 flex gap-2 text-[11px]">
+						{preference === "avoid" && <span className="text-status-under">You avoid this</span>}
 						{exercise.customWeightings && <span className="text-brand-text">Your weightings</span>}
 						{exercise.estimatedWeightings && !exercise.customWeightings && (
 							<span className="text-muted-foreground">Estimated muscles</span>
@@ -135,6 +150,28 @@ export function ExerciseCard({ id, exercise, routineExercise, change, onChange, 
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
+					<DropdownMenuItem onSelect={() => setShowInfo(true)}>
+						<Info className="h-4 w-4" />
+						Tier and form cues
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onSelect={() => setPreference(exercise.id, preference === "favourite" ? null : { pref: "favourite" })}
+					>
+						<Heart className="h-4 w-4" />
+						{preference === "favourite" ? "Remove favourite" : "Favourite"}
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onSelect={() => {
+							if (preference === "avoid") return setPreference(exercise.id, null);
+							// Opens the details too, to say why.
+							setPreference(exercise.id, { pref: "avoid" });
+							setShowInfo(true);
+						}}
+					>
+						<Ban className="h-4 w-4" />
+						{preference === "avoid" ? "Stop avoiding" : "Avoid…"}
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
 					<DropdownMenuItem onSelect={() => setEditingMuscles(true)}>
 						<SlidersHorizontal className="h-4 w-4" />
 						Muscle weightings
@@ -152,6 +189,12 @@ export function ExerciseCard({ id, exercise, routineExercise, change, onChange, 
 			</DropdownMenu>
 
 			<MuscleWeightingsDialog exercise={exercise} open={editingMuscles} onOpenChange={setEditingMuscles} />
+			<ExerciseInfoDialog
+				exercise={exercise}
+				open={showInfo}
+				onOpenChange={setShowInfo}
+				onAddCue={(cue) => onChange({ notes: routineExercise.notes ? `${routineExercise.notes}\n${cue}` : cue })}
+			/>
 		</li>
 	);
 }

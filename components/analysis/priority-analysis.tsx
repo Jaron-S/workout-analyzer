@@ -1,6 +1,6 @@
 "use client";
 
-import { TierBadge, ToneBadge, VolumeBar } from "@/components/status";
+import { ExerciseTierBadge, TierBadge, ToneBadge, VolumeBar } from "@/components/status";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -35,7 +35,7 @@ const STATUS_LABEL: Record<PriorityStatus, string> = {
 };
 
 export function PriorityAnalysis({ routine, results, onEditPriorities, onAddExercise }: PriorityAnalysisProps) {
-	const { exercises, getExercise } = useExercises();
+	const { exercises, getExercise, preferences, rankings } = useExercises();
 	const save = useCallback((value: SortOption) => {
 		try {
 			window.localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(value));
@@ -52,8 +52,8 @@ export function PriorityAnalysis({ routine, results, onEditPriorities, onAddExer
 	const [sortBy, setSortBy] = usePersistedState<SortOption>(SORT_STORAGE_KEY, "status", save, load);
 
 	const suggestions = useMemo(
-		() => buildSuggestions(results, routine, exercises, getExercise),
-		[results, routine, exercises, getExercise]
+		() => buildSuggestions(results, routine, exercises, getExercise, preferences),
+		[results, routine, exercises, getExercise, preferences]
 	);
 
 	const sorted = useMemo(() => {
@@ -108,6 +108,7 @@ export function PriorityAnalysis({ routine, results, onEditPriorities, onAddExer
 					<ul className="divide-y divide-border">
 						{suggestions.map((s) => {
 							const best = s.exercises[0];
+							const rank = rankings.forMuscle(best.id, s.muscle);
 							return (
 								<li key={s.muscle} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
 									{best.thumbnailUrl ? (
@@ -123,9 +124,12 @@ export function PriorityAnalysis({ routine, results, onEditPriorities, onAddExer
 												+{Math.round(s.result.setsToTarget)} set{Math.round(s.result.setsToTarget) === 1 ? "" : "s"}
 											</span>
 										</p>
-										<p className="truncate text-xs text-muted-foreground">
+										<p className="flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
+											{rank && <ExerciseTierBadge tier={rank.tier} muscle={s.muscle} className="h-4 min-w-4 text-[10px]" />}
+											<span className="truncate">
 											{s.sets} × {best.name}
 											{s.dayId && ` on ${days.get(s.dayId)}`}
+											</span>
 										</p>
 									</div>
 									{s.dayId && (

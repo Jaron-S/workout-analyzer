@@ -2,10 +2,10 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { CallToolRequestSchema, ListToolsRequestSchema, type CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { ClaudeDraft, ClaudeUndo } from "../claude-sync";
 import { APP_MODEL } from "../coach/agent";
-import { analyzeRoutine, coachToolSchemas, describeRoutine, runCoachTool, type CoachContext } from "../coach/tools";
+import { analyzeRoutine, coachToolSchemas, describePreferences, describeRoutine, runCoachTool, type CoachContext } from "../coach/tools";
 import { buildCatalog } from "../exercise-catalog";
 import { diffRoutine } from "../routine-diff";
-import type { MuscleOverrides, PriorityTier, Routine, TrainingDefaults } from "../types";
+import type { ExercisePreferences, MuscleOverrides, PriorityTier, Routine, TrainingDefaults } from "../types";
 
 // The Setsmith connector for claude.ai and the Claude apps. Claude edits a
 // draft of the routine open in the app, using the same tools as the in-app
@@ -22,6 +22,8 @@ export interface ConnectorStore {
 	priorities(): Promise<Partial<Record<PriorityTier, string[]>>>;
 	trainingDefaults(): Promise<TrainingDefaults>;
 	muscleOverrides(): Promise<MuscleOverrides>;
+	exercisePreferences(): Promise<ExercisePreferences>;
+	saveExercisePreferences(preferences: ExercisePreferences): Promise<void>;
 	draft(): Promise<ClaudeDraft | null>;
 	saveDraft(draft: ClaudeDraft): Promise<void>;
 	clearDraft(): Promise<void>;
@@ -43,7 +45,7 @@ How to work:
 - discard_changes throws the draft away; undo_last_change reverses the last applied change.
 - Exercises only in the user's Hevy account (custom exercises) show by id; leave them as they are.`;
 
-const READ_ONLY = new Set(["search_exercises", "analyze_routine"]);
+const READ_ONLY = new Set(["search_exercises", "analyze_routine", "exercise_rankings", "exercise_details"]);
 
 const text = (t: string, isError = false): CallToolResult => ({ content: [{ type: "text", text: t }], ...(isError ? { isError: true } : {}) });
 
@@ -51,7 +53,7 @@ const CONNECTOR_TOOLS = [
 	{
 		name: "get_routine",
 		description:
-			"The routine open in Setsmith (or the draft, if changes are waiting), the user's training defaults and priority tiers, and the list of waiting changes.",
+			"The routine open in Setsmith (or the draft, if changes are waiting), the user's training defaults, priority tiers and exercise preferences, and the list of waiting changes.",
 		inputSchema: { type: "object" as const, properties: {} },
 		annotations: { readOnlyHint: true },
 	},
@@ -141,16 +143,17 @@ export function createSetsmithServer(store: ConnectorStore): Server {
 }
 
 async function loadContext(store: ConnectorStore) {
-	const [routine, draft, priorities, defaults, overrides] = await Promise.all([
+	const [routine, draft, priorities, defaults, overrides, preferences] = await Promise.all([
 		store.currentRoutine(),
 		store.draft(),
 		store.priorities(),
 		store.trainingDefaults(),
 		store.muscleOverrides(),
+		store.exercisePreferences(),
 	]);
 	const exercises = buildCatalog(overrides);
 	const byId = new Map(exercises.map((e) => [e.id, e]));
-	const ctx: CoachContext = { exercises, getExercise: (id) => byId.get(id), defaults, priorities };
+	const ctx: CoachContext = { exercises, getExercise: (id) => byId.get(id), defaults, priorities, preferences };
 	// A draft for another routine is stale: the user has switched routines since.
 	const liveDraft = draft && routine && draft.routineId === routine.id ? draft : null;
 	return { routine, draft: liveDraft, ctx };
@@ -223,6 +226,7 @@ async function callTool(store: ConnectorStore, name: string, args: Record<string
 					"",
 					`Defaults: compound ${d.reps.compound.min}-${d.reps.compound.max} reps, ${d.restSeconds.compound}s rest; isolation ${d.reps.isolation.min}-${d.reps.isolation.max} reps, ${d.restSeconds.isolation}s rest; timed ${d.durationSeconds}s per set. Weight unit: ${d.weightUnit}.`,
 					`Priority tiers: ${tiers.length ? tiers.join("; ") : "not set"}.`,
+					describePreferences(ctx),
 					...(draft ? ["", `Waiting changes (${draft.changes.length}):`, ...draft.changes.map((c) => `- ${c}`)] : []),
 				].join("\n")
 			);
@@ -255,6 +259,10 @@ async function callTool(store: ConnectorStore, name: string, args: Record<string
 
 	// The coach's tools: read-only ones see the draft; edits extend it.
 	const outcome = runCoachTool(name, args, working, ctx);
+	if (outcome.preferences && !outcome.isError) {
+		await store.saveExercisePreferences(outcome.preferences);
+		return text(outcome.result);
+	}
 	if (outcome.isError || !outcome.change) return text(outcome.result, outcome.isError);
 	const next: ClaudeDraft = {
 		routineId: routine.id,

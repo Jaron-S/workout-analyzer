@@ -1,17 +1,18 @@
 "use client";
 
 import { Thumb } from "@/components/exercise-card";
-import { TierBadge } from "@/components/status";
+import { ExerciseTierBadge, TierBadge } from "@/components/status";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ALL_MUSCLES } from "@/lib/constants";
 import { useExercises } from "@/lib/exercise-context";
+import { browseOrder } from "@/lib/exercise-rankings";
 import { searchExercises } from "@/lib/search";
 import type { Suggestion } from "@/lib/suggestions";
 import type { Exercise } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Search } from "lucide-react";
+import { Ban, Heart, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
 interface ExerciseLibraryModalProps {
@@ -29,7 +30,7 @@ const formatEquipment = (equipment: string) =>
 	equipment === "none" ? "Bodyweight" : equipment.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
 export function ExerciseLibraryModal({ open, onOpenChange, onSelectExercise, title, suggestions = [] }: ExerciseLibraryModalProps) {
-	const { exercises } = useExercises();
+	const { exercises, rankings, preferences } = useExercises();
 	const [query, setQuery] = useState("");
 	const [muscle, setMuscle] = useState<string | null>(null);
 	const [equipment, setEquipment] = useState(ALL_EQUIPMENT);
@@ -39,18 +40,20 @@ export function ExerciseLibraryModal({ open, onOpenChange, onSelectExercise, tit
 		[exercises]
 	);
 
-	const filtered = useMemo(
-		() =>
-			searchExercises(exercises, query).filter(
-				(ex) =>
-					// Legacy exercises only exist so old routines keep working.
-					!ex.legacy &&
-					// Main muscle only, so "Chest" doesn't list every triceps exercise.
-					(!muscle || ex.muscle_weightings[0]?.muscle === muscle) &&
-					(equipment === ALL_EQUIPMENT || ex.equipment === equipment)
-			),
-		[exercises, query, muscle, equipment]
-	);
+	const filtered = useMemo(() => {
+		const matches = searchExercises(exercises, query).filter(
+			(ex) =>
+				// Legacy exercises only exist so old routines keep working.
+				!ex.legacy &&
+				// Main muscle only, so "Chest" doesn't list every triceps exercise.
+				(!muscle || ex.muscle_weightings[0]?.muscle === muscle) &&
+				(equipment === ALL_EQUIPMENT || ex.equipment === equipment)
+		);
+		if (!muscle || query) return matches;
+		// Browsing a muscle: best picks first (favourites, then by tier), avoided last.
+		const order = (ex: Exercise) => browseOrder(ex, muscle, rankings, preferences);
+		return [...matches].sort((a, b) => order(a) - order(b));
+	}, [exercises, query, muscle, equipment, rankings, preferences]);
 
 	const browsing = !query && !muscle && equipment === ALL_EQUIPMENT;
 
@@ -141,7 +144,7 @@ export function ExerciseLibraryModal({ open, onOpenChange, onSelectExercise, tit
 						</section>
 					)}
 					{filtered.map((ex) => (
-						<ExerciseOption key={ex.id} exercise={ex} onSelect={select} />
+						<ExerciseOption key={ex.id} exercise={ex} onSelect={select} muscle={muscle} />
 					))}
 					{filtered.length === 0 && (
 						<p className="py-12 text-center text-sm text-muted-foreground">No exercises match. Try fewer words.</p>
@@ -156,22 +159,34 @@ function ExerciseOption({
 	exercise,
 	onSelect,
 	note,
+	muscle,
 }: {
 	exercise: Exercise;
 	onSelect: (id: string) => void;
 	note?: React.ReactNode;
+	/** The muscle being browsed, whose tier to show. */
+	muscle?: string | null;
 }) {
+	const { rankings, preferences } = useExercises();
+	const preference = preferences[exercise.id]?.pref;
+	const rank = muscle ? rankings.forMuscle(exercise.id, muscle) : rankings.forMuscle(exercise.id, exercise.muscle_weightings[0]?.muscle ?? "") ?? rankings.best(exercise.id);
 	return (
 		<button
 			type="button"
 			onClick={() => onSelect(exercise.id)}
-			className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
+			className={cn(
+				"flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none",
+				preference === "avoid" && "opacity-55"
+			)}
 		>
 			<Thumb exercise={exercise} className="h-11 w-11" />
 			<div className="min-w-0 flex-1">
-				<p className="truncate text-sm font-medium">
-					{exercise.name}
-					{exercise.hevyCustom && <span className="ml-1.5 text-[11px] font-normal text-brand-text">Custom</span>}
+				<p className="flex min-w-0 items-center gap-1.5 text-sm font-medium">
+					{rank && <ExerciseTierBadge tier={rank.tier} muscle={rank.muscle} className="h-4 min-w-4 text-[10px]" />}
+					<span className="truncate">{exercise.name}</span>
+					{preference === "favourite" && <Heart className="h-3 w-3 shrink-0 fill-brand-text text-brand-text" aria-label="Favourite" />}
+					{preference === "avoid" && <Ban className="h-3 w-3 shrink-0 text-status-under" aria-label="Avoided" />}
+					{exercise.hevyCustom && <span className="shrink-0 text-[11px] font-normal text-brand-text">Custom</span>}
 				</p>
 				<p className="truncate text-xs text-muted-foreground">
 					{note ??

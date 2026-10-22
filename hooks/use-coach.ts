@@ -20,6 +20,9 @@ const TOOL_ACTIVITY: Record<string, string> = {
 	search_exercises: "Searching exercises",
 	analyze_routine: "Checking the analysis",
 	get_routine: "Reading the routine",
+	exercise_rankings: "Checking exercise rankings",
+	exercise_details: "Reading form cues",
+	set_exercise_preference: "Saving your preference",
 };
 
 function describeError(error: unknown): string {
@@ -56,7 +59,7 @@ export function useCoach({
 	priorities: Partial<Record<PriorityTier, string[]>>;
 }) {
 	const { claudeApiKey, defaults } = useSettings();
-	const { exercises, getExercise } = useExercises();
+	const { exercises, getExercise, preferences, setPreferences } = useExercises();
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [history, setHistory] = useState<Anthropic.Beta.BetaMessageParam[]>([]);
 	const [draft, setDraft] = useState<Routine | null>(null);
@@ -79,7 +82,7 @@ export function useCoach({
 	const send = useCallback(
 		async (text: string) => {
 			if (!client || busy || !text.trim()) return;
-			const ctx: CoachContext = { exercises, getExercise, defaults, priorities };
+			const ctx: CoachContext = { exercises, getExercise, defaults, priorities, preferences };
 			const controller = new AbortController();
 			abortRef.current = controller;
 			setBusy(true);
@@ -104,6 +107,7 @@ export function useCoach({
 						updateLast((m) => ({ ...m, text: m.text + delta }));
 					},
 					onToolCall: (name) => setActivity(TOOL_ACTIVITY[name] ?? "Editing the routine"),
+					onPreferences: setPreferences,
 					onChange: (next, change) => {
 						setDraft(next);
 						setDraftSource((s) => s ?? "chat");
@@ -130,7 +134,7 @@ export function useCoach({
 				abortRef.current = null;
 			}
 		},
-		[client, busy, exercises, getExercise, defaults, priorities, history, draft, routine]
+		[client, busy, exercises, getExercise, defaults, priorities, preferences, setPreferences, history, draft, routine]
 	);
 
 	const stop = useCallback(() => abortRef.current?.abort(), []);

@@ -46,6 +46,15 @@ for (const [id, entry] of Object.entries(weightings)) {
 	}
 }
 
+// The tier lists must point at exercises Hevy still has.
+const TIERS = new Set(["S+", "S", "A", "B", "C", "D", "F"]);
+for (const entry of read("../data/exercise-rankings.json").rankings) {
+	const where = `rankings "${entry.name}"`;
+	if (!TIERS.has(entry.tier)) problems.push(`${where}: unknown tier "${entry.tier}"`);
+	for (const m of entry.muscles) if (!muscles.has(m)) problems.push(`${where}: unknown muscle "${m}"`);
+	for (const id of entry.hevyIds) if (!byId.has(id)) problems.push(`${where}: ${id} is not in the Hevy catalogue`);
+}
+
 if (problems.length) {
 	console.error(`${problems.length} exercise weighting problem(s):\n`);
 	for (const p of problems) console.error(`  ${p}`);

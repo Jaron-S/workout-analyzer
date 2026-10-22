@@ -2,11 +2,12 @@
 // for: a few exercises that train them directly, and the day to add them to.
 
 import { TIER_ORDER } from "./design";
+import { pickOrder, rankingsFor } from "./exercise-rankings";
 import { STAPLES } from "./staples";
 
 export { STAPLES };
 import type { PriorityResult } from "./priority-analysis";
-import type { Exercise, Routine } from "./types";
+import type { Exercise, ExercisePreferences, Routine } from "./types";
 
 export interface Suggestion {
 	muscle: string;
@@ -19,29 +20,46 @@ export interface Suggestion {
 }
 
 const MAX_SETS_PER_SUGGESTION = 4;
+const MIN_RANKED_WEIGHTING = 0.75;
 const SUGGESTED_TIERS = new Set(["S", "A", "B"]);
 
 // Loaded equipment first: easier to progress for hypertrophy than bodyweight.
 const EQUIPMENT_RANK: Record<string, number> = { machine: 0, dumbbell: 0, barbell: 1, plate: 2, kettlebell: 2, resistance_band: 3 };
 
-/** Exercises whose main muscle this is: staples, then the user's own, then the rest. */
-export function exercisesFor(muscle: string, exercises: Exercise[], exclude: Set<string>): Exercise[] {
-	const staples = STAPLES[muscle] ?? [];
-	const rank = (e: Exercise) => {
-		const staple = staples.indexOf(e.id);
-		if (staple !== -1) return staple;
-		if (e.hevyCustom) return 100;
-		return 200 + (EQUIPMENT_RANK[e.equipment ?? ""] ?? 5) * 10 + (e.type === "weight_reps" ? 0 : 5);
-	};
+/**
+ * Exercises to pick for a muscle, best first: the user's favourites, then by
+ * tier, staples and equipment (see pickOrder). Candidates train the muscle
+ * as their main one, or are ranked for it and count nearly in full
+ * (Romanian deadlifts for glutes).
+ */
+export function exercisesFor(
+	muscle: string,
+	exercises: Exercise[],
+	exclude: Set<string>,
+	preferences: ExercisePreferences = {}
+): Exercise[] {
+	const rankings = rankingsFor(exercises);
+	const tieBreak = (e: Exercise) => (EQUIPMENT_RANK[e.equipment ?? ""] ?? 5) * 10 + (e.type === "weight_reps" ? 0 : 5);
 	return exercises
 		.filter(
 			(e) =>
 				!e.legacy &&
 				!exclude.has(e.id) &&
-				e.muscle_weightings[0]?.muscle === muscle &&
-				e.muscle_weightings[0].weighting === 1
+				((e.muscle_weightings[0]?.muscle === muscle && e.muscle_weightings[0].weighting === 1) ||
+					// Ranked for it, and a set counts nearly in full (not Y-raises for side delts).
+					(rankings.forMuscle(e.id, muscle) !== undefined &&
+						(e.muscle_weightings.find((w) => w.muscle === muscle)?.weighting ?? 0) >= MIN_RANKED_WEIGHTING))
 		)
-		.sort((a, b) => rank(a) - rank(b) || a.name.length - b.name.length || a.name.localeCompare(b.name));
+		.map((e) => ({ e, order: pickOrder(e, muscle, rankings, preferences) }))
+		.filter((x): x is { e: Exercise; order: number } => x.order !== null)
+		.sort(
+			(a, b) =>
+				a.order - b.order ||
+				tieBreak(a.e) - tieBreak(b.e) ||
+				a.e.name.length - b.e.name.length ||
+				a.e.name.localeCompare(b.e.name)
+		)
+		.map(({ e }) => e);
 }
 
 /**
@@ -67,6 +85,7 @@ export function buildSuggestions(
 	routine: Routine,
 	exercises: Exercise[],
 	getExercise: (id: string) => Exercise | undefined,
+	preferences: ExercisePreferences = {},
 	perMuscle = 3
 ): Suggestion[] {
 	const inRoutine = new Set(routine.days.flatMap((d) => d.exercises.map((e) => e.exerciseId)));
@@ -77,7 +96,7 @@ export function buildSuggestions(
 			muscle: result.muscle,
 			result,
 			sets: Math.min(MAX_SETS_PER_SUGGESTION, Math.max(2, Math.round(result.setsToTarget))),
-			exercises: exercisesFor(result.muscle, exercises, inRoutine).slice(0, perMuscle),
+			exercises: exercisesFor(result.muscle, exercises, inRoutine, preferences).slice(0, perMuscle),
 			dayId: bestDayFor(result.muscle, routine, getExercise),
 		}))
 		.filter((s) => s.exercises.length > 0);

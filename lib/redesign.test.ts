@@ -114,7 +114,11 @@ describe("suggestions", () => {
 		expect(first.muscle).toBe("Side Delts");
 		// Already in the routine, so not suggested again.
 		expect(first.exercises.map((e) => e.id)).not.toContain("422B08F1");
-		expect(first.exercises.every((e) => e.muscle_weightings[0].muscle === "Side Delts")).toBe(true);
+		for (const e of first.exercises) {
+			expect(e.muscle_weightings.find((w) => w.muscle === "Side Delts")?.weighting ?? 0).toBeGreaterThanOrEqual(0.75);
+		}
+		// Ranked best first: cable lateral raises are S+.
+		expect(first.exercises[0].id).toBe("BE289E45");
 		expect(first.dayId).toBe("d2");
 		expect(first.sets).toBeLessThanOrEqual(4);
 	});

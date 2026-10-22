@@ -1,0 +1,1219 @@
+{
+	"source": "Jeff Nippard's exercise tier lists (YouTube), mapped to Hevy's exercises. See data/exercise-rankings.source.md.",
+	"rankings": [
+		{
+			"name": "Machine Chest Press",
+			"tier": "S+",
+			"muscles": ["Chest"],
+			"hevyIds": ["7EB3F7C3", "24706DCD"],
+			"cues": {
+				"setup": "Set the seat height so the handles align with your mid-to-lower chest level. Adjust the starting position to allow a deep stretch at the bottom without putting uncomfortable stress on the shoulder joint.",
+				"execution": "Keep your shoulder blades retracted and depressed against the backrest throughout the set. Drive through the handles while focusing on squeezing the pecs together. Advantage: Allows safe, highly stable pushing to failure without needing a spotter."
+			}
+		},
+		{
+			"name": "Seated Cable Pec Fly",
+			"tier": "S",
+			"muscles": ["Chest"],
+			"hevyIds": ["6B4C797E"],
+			"cues": {
+				"setup": "Perform seated with a backrest to eliminate balancing and maximize torso stability. Set the pulleys around shoulder or upper-chest height.",
+				"execution": "Keep a slight, fixed bend in your elbows throughout the movement. On the eccentric phase, let the cables stretch your pecs back as far as comfortable. On the concentric phase, focus on bringing your upper arms/biceps together across your chest rather than just touching your hands."
+			}
+		},
+		{
+			"name": "Incline Bench Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["50DFDFAB"]
+		},
+		{
+			"name": "Flat Bench Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["79D0BB3A"]
+		},
+		{
+			"name": "Incline Dumbbell Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["07B38369"],
+			"cues": {
+				"setup": "Set the bench flat or at a low incline (~15–30 degrees).",
+				"execution": "Lower the dumbbells deep past your ribcage to get a full PEC stretch (a key advantage over barbells). Keep your elbows tucked at roughly 45–60 degrees relative to your torso to protect the shoulders."
+			}
+		},
+		{
+			"name": "Flat Dumbbell Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["3601968B"],
+			"cues": {
+				"setup": "Set the bench flat or at a low incline (~15–30 degrees).",
+				"execution": "Lower the dumbbells deep past your ribcage to get a full PEC stretch (a key advantage over barbells). Keep your elbows tucked at roughly 45–60 degrees relative to your torso to protect the shoulders."
+			}
+		},
+		{
+			"name": "Smith Machine Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["0FBF7195"]
+		},
+		{
+			"name": "Incline Smith Machine Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["3A6FA3D1"]
+		},
+		{
+			"name": "Dips",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["6FCD7755", "29472BE1", "E9E4089F"],
+			"cues": {
+				"setup": "Lean slightly forward to bias the chest rather than staying completely upright.",
+				"execution": "Lower your body under control until you achieve a deep stretch in the pecs at the bottom. Press up smoothly through your palms. Use a dip belt to progressively overload as strength increases."
+			}
+		},
+		{
+			"name": "Deficit Push-Ups",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["392887AA"],
+			"variation": true,
+			"cues": {
+				"setup": "Place hands on yoga blocks, handles, or weight plates to elevate your hands above the floor.",
+				"execution": "Lower your chest past the level of your hands to overcome the depth limitation of standard floor push-ups and get a full PEC stretch. Pause for 2–3 seconds in the bottom stretched position for maximum stimulus."
+			}
+		},
+		{
+			"name": "Cable Crossovers",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["651F844C", "293483AD", "8372BBCC"]
+		},
+		{
+			"name": "Pec Deck Machine",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["9DCE2D64", "78683336"]
+		},
+		{
+			"name": "Dumbbell Flyes (Lengthened Partials)",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["12017185"],
+			"variation": true,
+			"cues": {
+				"execution": "Focus exclusively on the bottom half of the range of motion where the PEC is under high stretch and mechanical tension. Avoid bringing the dumbbells all the way to the top where tension drops to zero."
+			}
+		},
+		{
+			"name": "Cable Press-Around",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": []
+		},
+		{
+			"name": "Dumbbell Guillotine Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": [],
+			"cues": {
+				"execution": "Flare your elbows out wide and lower dumbbells towards the upper chest/neck area to maximize PEC stretch. Start light to assess shoulder tolerance. (Safer alternative to the barbell version)."
+			}
+		},
+		{
+			"name": "Decline Bench Press",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["DA0F0470"]
+		},
+		{
+			"name": "Decline Dumbbell Press",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["18487FA7"]
+		},
+		{
+			"name": "Banded Push-Ups",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["392887AA"],
+			"variation": true
+		},
+		{
+			"name": "Floor Press",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["D53F2886", "756EE329"]
+		},
+		{
+			"name": "Bodyweight Push-Ups",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["392887AA"]
+		},
+		{
+			"name": "Dumbbell Pullover",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["67280085"]
+		},
+		{
+			"name": "Plyometric Push-Ups",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["10D76E8F"]
+		},
+		{
+			"name": "Hex Press",
+			"tier": "F",
+			"muscles": ["Chest"],
+			"hevyIds": ["BE89C631"]
+		},
+		{
+			"name": "Plate Press",
+			"tier": "F",
+			"muscles": ["Chest"],
+			"hevyIds": ["982734D4", "9373FSD1"],
+			"note": "F-Tier Hell"
+		},
+		{
+			"name": "One-Arm Dumbbell Press",
+			"tier": "F",
+			"muscles": ["Chest"],
+			"hevyIds": []
+		},
+		{
+			"name": "Cross-Body Standing Dumbbell Fly",
+			"tier": "F",
+			"muscles": ["Chest"],
+			"hevyIds": []
+		},
+		{
+			"name": "Barbell Guillotine Press",
+			"tier": "F",
+			"muscles": ["Chest"],
+			"hevyIds": [],
+			"note": "Safety Hazard"
+		},
+		{
+			"name": "Chest-Supported Row",
+			"tier": "S+",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["914F3A96", "6A8D3193", "AA1EB7D8", "91FAFBA3", "1DF4A847", "DF3BDB9C", "7E93E23F"],
+			"cues": {
+				"setup": "Set up on a chest-supported row machine or brace your chest firmly against an incline bench (e.g., Helms Row).",
+				"execution": "Eliminates momentum and lower back fatigue. Drive your elbows back past your torso to hit both the lats and upper/mid back with maximum stability. Focus on pulling through the elbows rather than yanking with the hands."
+			}
+		},
+		{
+			"name": "Wide-Grip Lat Pulldown",
+			"tier": "S",
+			"muscles": ["Lats"],
+			"hevyIds": ["6A6C31A5", "473CF5B8"],
+			"cues": {
+				"setup": "Sit down and secure your thighs firmly under the pads to ensure stability.",
+				"execution": "Lean back slightly (10–15 degrees). Pull the bar down toward your upper chest, focusing on pulling your elbows down into your sides. Neutral grip offers slightly higher lat bias, while wide grip engages mid-traps and upper back alongside the lats."
+			}
+		},
+		{
+			"name": "Neutral-Grip Lat Pulldown",
+			"tier": "S",
+			"muscles": ["Lats"],
+			"hevyIds": ["4E5257DE"],
+			"cues": {
+				"setup": "Sit down and secure your thighs firmly under the pads to ensure stability.",
+				"execution": "Lean back slightly (10–15 degrees). Pull the bar down toward your upper chest, focusing on pulling your elbows down into your sides. Neutral grip offers slightly higher lat bias, while wide grip engages mid-traps and upper back alongside the lats."
+			}
+		},
+		{
+			"name": "Half-Kneeling One-Arm Lat Pulldown",
+			"tier": "S",
+			"muscles": ["Lats"],
+			"hevyIds": ["2EE45F81"],
+			"cues": {
+				"setup": "Kneel on one knee facing a single cable stack. Brace against your front knee or an incline bench for stability.",
+				"execution": "Pull the cable unilaterally, driving the elbow straight down into your hip. Great for isolating each lat independently and fixing side-to-side muscular imbalances."
+			}
+		},
+		{
+			"name": "Meadows Row",
+			"tier": "S",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["C732C341"],
+			"cues": {
+				"setup": "Set up at a landmine station or barbell corner, standing perpendicular to the bar. Stagger your stance and brace your opposite arm firmly against your front thigh/knee.",
+				"execution": "Grip the fat end of the barbell sleeve. Drive your elbow up and out to smash the upper/mid-back and traps with high tension and a deep bottom stretch."
+			}
+		},
+		{
+			"name": "Cable Row (Close-Grip & Wide-Grip)",
+			"tier": "S",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["0393F233", "F1D60854", "C3BCABB3", "D0C4A899"],
+			"cues": {
+				"setup": "Sit tall on the cable row bench with feet planted firmly.",
+				"execution": "Lean forward at the hips during the eccentric phase to achieve a deep stretch in the lats. Pull your elbows back to your sides, driving thoracic extension as you complete the concentric contraction."
+			}
+		},
+		{
+			"name": "Wide-Grip Pull-Up",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["1B2B1E7C", "7C50F118", "729237D1", "2C37EC5E"]
+		},
+		{
+			"name": "Neutral-Grip Pull-Up",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["1B2B1E7C", "729237D1", "2C37EC5E"]
+		},
+		{
+			"name": "Cross-Body Lat Pull-Around",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": []
+		},
+		{
+			"name": "Deficit Pendlay Row",
+			"tier": "A",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["018ADC12"],
+			"variation": true,
+			"cues": {
+				"setup": "Stand on bumper plates or a low platform over the barbell. Bend over until your torso is parallel to the floor.",
+				"execution": "The deficit allows a deeper stretch off the floor. Explosively pull the bar to your lower sternum/upper abdomen, then lower under control to a complete dead stop."
+			}
+		},
+		{
+			"name": "One-Arm Dumbbell Row",
+			"tier": "A",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["F1E57334"]
+		},
+		{
+			"name": "Kroc Row",
+			"tier": "A",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["F1E57334"],
+			"variation": true
+		},
+		{
+			"name": "Seated/Floor Cable Face Pulls",
+			"tier": "A",
+			"muscles": ["Middle Back"],
+			"hevyIds": ["BE640BA0"],
+			"variation": true
+		},
+		{
+			"name": "Cable Lat Pullover (Lat Prayer)",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["D2387AB1", "9273BA17"],
+			"cues": {
+				"setup": "Use a rope or straight bar on a high pulley. Step back and hinge forward at the hips.",
+				"execution": "Keep a slight fixed bend in your elbows. Sweep your hands downward in an arc towards your thighs by driving strictly with your elbows. Incline your torso forward at the top to maximize the overhead lat stretch."
+			}
+		},
+		{
+			"name": "Dumbbell Lat Pullover (Lengthened Partials)",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["67280085"],
+			"variation": true
+		},
+		{
+			"name": "Chin-Up",
+			"tier": "B",
+			"muscles": ["Lats"],
+			"hevyIds": ["29083183", "023943F1", "D23C609B"]
+		},
+		{
+			"name": "Barbell Row",
+			"tier": "B",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["55E6546F"]
+		},
+		{
+			"name": "Pendlay Row",
+			"tier": "B",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["018ADC12"]
+		},
+		{
+			"name": "T-Bar Row (Freestanding)",
+			"tier": "B",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["08A2974E", "D7D7FCCE"]
+		},
+		{
+			"name": "Standard Rope Face Pull",
+			"tier": "B",
+			"muscles": ["Middle Back"],
+			"hevyIds": ["BE640BA0"]
+		},
+		{
+			"name": "Deadlift",
+			"tier": "C",
+			"muscles": ["Lower Back"],
+			"hevyIds": ["C6272009"]
+		},
+		{
+			"name": "Yates Row",
+			"tier": "C",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": []
+		},
+		{
+			"name": "Inverted Row",
+			"tier": "C",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["425805F4"]
+		},
+		{
+			"name": "Rack Pull (Standard)",
+			"tier": "D",
+			"muscles": ["Traps", "Lower Back"],
+			"hevyIds": ["FE389074"]
+		},
+		{
+			"name": "Renegade Rows",
+			"tier": "F",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["1B89CA1B"],
+			"note": "F-Tier Hell"
+		},
+		{
+			"name": "Combo Rows (Row + Curl / Press / Kickback)",
+			"tier": "F",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": []
+		},
+		{
+			"name": "Above-the-Knee Rack Pull",
+			"tier": "F",
+			"muscles": ["Traps", "Lower Back"],
+			"hevyIds": ["FE389074"],
+			"note": "Equipment Hazard / Ego Lifting",
+			"variation": true
+		},
+		{
+			"name": "Walking Lunge",
+			"tier": "S+",
+			"muscles": ["Glutes"],
+			"hevyIds": ["32HKJ34K", "A733CC5B"],
+			"cues": {
+				"setup": "Stand tall holding dumbbells at your sides or a barbell across your back. Take long strides forward.",
+				"execution": "Lean your torso slightly forward (~30 degrees) as you descend into each lunge to stretch the glutes deeply. Drive up and forward through your front heel/hips rather than pushing solely with your quads."
+			}
+		},
+		{
+			"name": "Machine Hip Abduction",
+			"tier": "S",
+			"muscles": ["Glutes", "Abductors"],
+			"hevyIds": ["F4B4C6EE"],
+			"note": "Upper Glute #1 Choice",
+			"cues": {
+				"setup": "Sit on the machine and add a foam pad inside the leg pads if extra range of motion is desired.",
+				"execution": "Lean your torso forward about 30 degrees to align the resistance with upper glute (glute medius/minimus) fibers. Press outward under control and control the eccentric return for a deep stretch. High reps (15–20) or heavier loads work well."
+			}
+		},
+		{
+			"name": "Deficit/Front-Foot-Elevated Lunge",
+			"tier": "S",
+			"muscles": ["Glutes"],
+			"hevyIds": ["C284D923", "FFDA283B", "818BA121"],
+			"variation": true,
+			"cues": {
+				"setup": "Elevate your front foot on a small platform or box (2–4 inches).",
+				"execution": "The deficit provides extra depth and stretch at the bottom of the movement. Keep a slight forward torso lean (~30 degrees) and drive through the hip."
+			}
+		},
+		{
+			"name": "45-Degree Back Extension",
+			"tier": "S",
+			"muscles": ["Glutes"],
+			"hevyIds": ["4F5866F8", "091737FA"],
+			"cues": {
+				"setup": "Set the pad height just below your hip crease to allow full hip flexion.",
+				"execution": "Round your upper back slightly (thoracic flexion) and turn your toes slightly outward to reduce spinal erector engagement and isolate the glutes. Extend at the hips to pull yourself up, squeezing the glutes hard at top lockout."
+			}
+		},
+		{
+			"name": "Machine Hip Thrust / Glute Drive",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["68CE0B9B"],
+			"note": "Mid Glute #1 Choice",
+			"cues": {
+				"setup": "Strap the belt comfortably across your hips below the iliac spine.",
+				"execution": "Superior to barbell hip thrusts due to setup ease, comfort, and stability. Drive hips straight up, locking out at the top while keeping chin tucked and ribs down to maximize mid-glute tension."
+			}
+		},
+		{
+			"name": "Single-Leg Dumbbell Hip Thrust",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["D1CD146F", "487B3755"]
+		},
+		{
+			"name": "Romanian Deadlift",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["2B4B7310", "72CFFAD5", "0B9B92BA"],
+			"note": "Lower Glute #1 Choice",
+			"cues": {
+				"setup": "Hold a barbell or dumbbells with a shoulder-width stance.",
+				"execution": "Push your hips back as far as possible (hip hinge) with a slight knee bend until you feel a deep stretch in your lower glutes and hamstrings. Drive your hips forward to lockout."
+			}
+		},
+		{
+			"name": "Barbell Squat",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["D04AC939"]
+		},
+		{
+			"name": "Smith Machine Squat",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["DDCC3821"]
+		},
+		{
+			"name": "Bulgarian Split Squat",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["B5D3A742", "0F24286A"],
+			"cues": {
+				"setup": "For split squats, place front foot far enough forward to allow a deep hip stretch. For step-ups, set box height at or slightly above knee level and hold a handle/rack for stability.",
+				"execution": "Lean torso forward slightly and focus on driving through the lead hip rather than extending purely through the front knee."
+			}
+		},
+		{
+			"name": "Smith Machine Lunge",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": []
+		},
+		{
+			"name": "Cable Glute Kickbacks",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["ACB2751D"]
+		},
+		{
+			"name": "Step-Ups",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["128A2381", "BF6ECE89"],
+			"cues": {
+				"setup": "For split squats, place front foot far enough forward to allow a deep hip stretch. For step-ups, set box height at or slightly above knee level and hold a handle/rack for stability.",
+				"execution": "Lean torso forward slightly and focus on driving through the lead hip rather than extending purely through the front knee."
+			}
+		},
+		{
+			"name": "Barbell Hip Thrust",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["D57C2EC7", "92B8C7E1", "DA5430FC", "291ABA92"]
+		},
+		{
+			"name": "Glute Bridge",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["CDA23948", "49C922A1"]
+		},
+		{
+			"name": "Cable Hip Abduction",
+			"tier": "B",
+			"muscles": ["Glutes", "Abductors"],
+			"hevyIds": ["C469EA70"]
+		},
+		{
+			"name": "Curtsy Lunge",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["D39EC9EB"]
+		},
+		{
+			"name": "Conventional Deadlift",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["C6272009"]
+		},
+		{
+			"name": "Sumo Deadlift",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["D20D7BBE"]
+		},
+		{
+			"name": "Cable Pull-Through",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["8C331CD8"]
+		},
+		{
+			"name": "Frog Pumps",
+			"tier": "C",
+			"muscles": ["Glutes"],
+			"hevyIds": ["F6948F17"]
+		},
+		{
+			"name": "Lateral Banded Walk",
+			"tier": "C",
+			"muscles": ["Glutes", "Abductors"],
+			"hevyIds": ["EC02979E"]
+		},
+		{
+			"name": "Donkey Kicks",
+			"tier": "F",
+			"muscles": ["Glutes"],
+			"hevyIds": ["987234AB"],
+			"note": "F-Tier Hell / Worst of the Worst"
+		},
+		{
+			"name": "Fire Hydrants",
+			"tier": "D",
+			"muscles": ["Glutes", "Abductors"],
+			"hevyIds": ["2AF8B552"]
+		},
+		{
+			"name": "Kettlebell Swings",
+			"tier": "D",
+			"muscles": ["Glutes"],
+			"hevyIds": ["F8A0FCCA"]
+		},
+		{
+			"name": "Face-Away Bayesian Cable Curl",
+			"tier": "S+",
+			"muscles": ["Biceps"],
+			"hevyIds": ["2DBCA395"],
+			"cues": {
+				"setup": "Set the cable pulley around hand/waist height. Face away from the cable stack, take 1–2 steps forward so your arms are positioned behind your torso, placing the long head of the bicep into a maximum pre-stretch.",
+				"execution": "Curl both arms simultaneously while keeping your elbows set back behind your body. Drive through your pinkies to emphasize supination. Excellent movement for building the biceps peak."
+			}
+		},
+		{
+			"name": "45-Degree Preacher Curl (Dumbbell or EZ-Bar)",
+			"tier": "S",
+			"muscles": ["Biceps"],
+			"hevyIds": ["FAB6EB2F", "4F942934"],
+			"cues": {
+				"setup": "Adjust the preacher bench to a standard ~45-degree angle. Ensure your armpits sit comfortably against the top pad with upper arms fully flush.",
+				"execution": "Lower the weight all the way down to full elbow extension to capitalize on high tension in the stretched position. Lock elbows in place to prevent momentum or shoulder involvement."
+			}
+		},
+		{
+			"name": "Machine Preacher Curl",
+			"tier": "S",
+			"muscles": ["Biceps"],
+			"hevyIds": ["1E9A6B8E"],
+			"cues": {
+				"setup": "Adjust the preacher bench to a standard ~45-degree angle. Ensure your armpits sit comfortably against the top pad with upper arms fully flush.",
+				"execution": "Lower the weight all the way down to full elbow extension to capitalize on high tension in the stretched position. Lock elbows in place to prevent momentum or shoulder involvement."
+			}
+		},
+		{
+			"name": "Hammer Grip Preacher Curl",
+			"tier": "S",
+			"muscles": ["Biceps"],
+			"hevyIds": [],
+			"cues": {
+				"setup": "Position upper arms on a 45-degree preacher bench holding dumbbells with a neutral (palms facing inward, thumbs pointing up) grip.",
+				"execution": "Lower under control to a complete stretch. Taking away supination shifts high tension to the underlying brachialis, which pushes the biceps up to accentuate the peak."
+			}
+		},
+		{
+			"name": "EZ-Bar Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["01A35BF9"],
+			"cues": {
+				"setup": "Use a shoulder-width grip on the outer curves of the EZ-bar to reduce wrist strain. For dumbbells, perform both arms simultaneously rather than alternating to maintain constant muscle tension.",
+				"execution": "Focus on supination by driving through your pinkies as you curl upward. Keep elbows relatively fixed at your sides to prevent shoulder takeover."
+			}
+		},
+		{
+			"name": "Standing Dumbbell Curl (Simultaneous)",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["37FCC2BB"],
+			"cues": {
+				"setup": "Use a shoulder-width grip on the outer curves of the EZ-bar to reduce wrist strain. For dumbbells, perform both arms simultaneously rather than alternating to maintain constant muscle tension.",
+				"execution": "Focus on supination by driving through your pinkies as you curl upward. Keep elbows relatively fixed at your sides to prevent shoulder takeover."
+			}
+		},
+		{
+			"name": "Incline Dumbbell Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["8BAB2735"]
+		},
+		{
+			"name": "Lying Dumbbell Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": []
+		},
+		{
+			"name": "Cable Curl (Standard)",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["ADA8623C", "B33B526E"]
+		},
+		{
+			"name": "Face-Away Behind-the-Back Cable Curl Variation",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["2DBCA395"]
+		},
+		{
+			"name": "Modified 21s (Short -> Full -> Long)",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["3BC06AD3"],
+			"variation": true,
+			"cues": {
+				"execution": "Perform in reverse order of traditional 21s to match the anabolic stimulus (Short -> Full -> Long): start with 7 reps in the shortened top-half (e.g. seated), 7 full-range-of-motion reps, and finish with 7+ lengthened bottom-half partial reps to failure."
+			}
+		},
+		{
+			"name": "Cheat Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": []
+		},
+		{
+			"name": "Strict Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": []
+		},
+		{
+			"name": "Dumbbell Hammer Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["7E3BC8B6"]
+		},
+		{
+			"name": "Inverse Zottman Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["123EE239"],
+			"variation": true,
+			"cues": {
+				"setup": "Stand tall holding dumbbells.",
+				"execution": "Curl the weight up using a neutral hammer grip (stronger position engaging brachialis), then rotate your palms fully upward (supinated) at the top and lower the weight under control during the eccentric phase."
+			}
+		},
+		{
+			"name": "Barbell Curl",
+			"tier": "B",
+			"muscles": ["Biceps"],
+			"hevyIds": ["A5AC6449"]
+		},
+		{
+			"name": "Flat Bench Stretch-Focused Curl",
+			"tier": "B",
+			"muscles": ["Biceps"],
+			"hevyIds": []
+		},
+		{
+			"name": "Chin-Ups",
+			"tier": "B",
+			"muscles": ["Biceps"],
+			"hevyIds": ["29083183", "023943F1", "D23C609B"]
+		},
+		{
+			"name": "Scott Curl (Vertical Preacher)",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["FAB6EB2F", "4F942934"],
+			"variation": true
+		},
+		{
+			"name": "Drag Curl",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["D950429E"]
+		},
+		{
+			"name": "Spider Curl",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["2348AB72", "90427D4A"]
+		},
+		{
+			"name": "Old-School 21s",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["3BC06AD3"]
+		},
+		{
+			"name": "Waiter Curl",
+			"tier": "F",
+			"muscles": ["Biceps"],
+			"hevyIds": ["72297E8C"],
+			"note": "F-Tier Hell / Worst of the Worst"
+		},
+		{
+			"name": "Cable Lateral Raise",
+			"tier": "S+",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["BE289E45", "DE68C825"],
+			"note": "Side Delt #1 Choice",
+			"cues": {
+				"setup": "Set cable pulley at around hand height to achieve maximum tension (90-degree angle between cable and forearm) when the side delt is in its most stretched position. Optionally use wrist cuffs (or hold a lacrosse ball inside the cuff) to take forearm/grip fatigue out of the equation.",
+				"execution": "Raise the cable out and away from your body under control. Provides smooth, even tension across the entire range of motion."
+			}
+		},
+		{
+			"name": "Cable Y-Raise",
+			"tier": "S",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["28927A36"]
+		},
+		{
+			"name": "Behind-the-Back Cuffed Cable Lateral Raise",
+			"tier": "S",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["BE289E45"],
+			"variation": true,
+			"cues": {
+				"setup": "Hook wrists into cuffs on a dual cable stack, step over one cable, turn around, cross cables behind your back, step forward, and perform raises.",
+				"execution": "Raises both arms simultaneously for double the time efficiency while maintaining optimal stretched tension on side delts."
+			}
+		},
+		{
+			"name": "Reverse Pec Deck",
+			"tier": "S",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["D8281C62"],
+			"note": "Sideways - Rear Delt #1 Choice",
+			"cues": {
+				"setup": "Sit sideways on a reverse pec deck machine to allow one arm at a time to cross further across your chest.",
+				"execution": "Sweeping one arm across your chest achieves a much deeper stretch on the rear delts than facing forward. Drive back through the elbow while keeping chest firmly braced."
+			}
+		},
+		{
+			"name": "Reverse Cable Crossover",
+			"tier": "S",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["C315DC2A", "9264ADA1"],
+			"cues": {
+				"setup": "Set pulleys high, cross your arms in front of your chest holding the cables directly (without handles). Alternate which arm crosses on top from set to set.",
+				"execution": "Focus on sweeping the cables out and back rather than yanking them. Provides an enormous range of motion with deep stretch and smooth tension across the rear delts."
+			}
+		},
+		{
+			"name": "Machine Shoulder Press",
+			"tier": "A",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["9237BAD1", "059E835D"],
+			"note": "Front Delt #1 Choice",
+			"cues": {
+				"setup": "Choose a machine with comfortable neutral or semi-slanted handles that allows a deep overhead stretch at the bottom.",
+				"execution": "Offers high stability compared to barbell OHP, allowing you to drive front delts straight to complete failure safely."
+			}
+		},
+		{
+			"name": "Seated Dumbbell Shoulder Press",
+			"tier": "A",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["9930DF71", "878CD1D0"]
+		},
+		{
+			"name": "Standing/Seated Dumbbell Overhead Press",
+			"tier": "A",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["6AC96645"]
+		},
+		{
+			"name": "Lean-In Dumbbell Lateral Raise",
+			"tier": "A",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["422B08F1"],
+			"variation": true,
+			"cues": {
+				"setup": "Hold a dumbbell in one hand while leaning your torso into a bench, rack, or pole with the non-working arm.",
+				"execution": "Leaning in shifts the resistance curve, placing significantly higher tension on the side delt at the bottom stretched position compared to standard standing raises."
+			}
+		},
+		{
+			"name": "Arnold-Style Side-Lying Dumbbell Raise",
+			"tier": "A",
+			"muscles": ["Side Delts"],
+			"hevyIds": [],
+			"cues": {
+				"setup": "Lie sideways on an incline bench holding a light dumbbell.",
+				"execution": "Raises the dumbbell across your body with high stretch-position tension and deep range of motion, providing a massive side-delt pump."
+			}
+		},
+		{
+			"name": "Atlantis Standing Machine Lateral Raise",
+			"tier": "A",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["D5D0354D"],
+			"variation": true
+		},
+		{
+			"name": "Rope Face Pull (Rear Delt Focus)",
+			"tier": "A",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["BE640BA0"]
+		},
+		{
+			"name": "Standing Dumbbell Lateral Raise",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["422B08F1"]
+		},
+		{
+			"name": "Lean-Away Dumbbell Lateral Raise",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["422B08F1"],
+			"variation": true
+		},
+		{
+			"name": "Super ROM Lateral Raise",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["422B08F1"],
+			"variation": true
+		},
+		{
+			"name": "Barbell Overhead Press (Standing & Seated)",
+			"tier": "B",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["7B8D84E8", "91AF29E0", "073032BB"]
+		},
+		{
+			"name": "Seated Machine Lateral Raise",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["D5D0354D"]
+		},
+		{
+			"name": "Upright Row (Cable/Rope)",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["286C1D0B"]
+		},
+		{
+			"name": "Bent-Over Reverse Dumbbell Fly",
+			"tier": "B",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["E5988A0A"]
+		},
+		{
+			"name": "Banded Lateral Raise",
+			"tier": "C",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["DF200976"]
+		},
+		{
+			"name": "Dumbbell/Cable/Machine Front Raises",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["8293E554", "DBB91A3C", "BD86EFD5", "47B036EF", "DBF9273A"],
+			"note": "Worst of the Worst / Redundant"
+		},
+		{
+			"name": "Overhead Cable Triceps Extension (Bar)",
+			"tier": "S+",
+			"muscles": ["Triceps"],
+			"hevyIds": ["B5EFBF9C"],
+			"cues": {
+				"setup": "Set cable stack to high or mid height, turn away from the cable, and extend arms overhead.",
+				"execution": "Moving the arms overhead puts the long head of the triceps into a deep stretch under high cable tension. Keep elbows tucked near ears and extend through the forearms under control. Shown in studies to produce ~40% more triceps growth compared to standard pushdowns."
+			}
+		},
+		{
+			"name": "Skullcrushers (EZ-Bar)",
+			"tier": "S",
+			"muscles": ["Triceps"],
+			"hevyIds": ["875F585F"],
+			"cues": {
+				"setup": "Lie flat on a bench using an EZ-bar to reduce wrist strain. Start the range of motion with your arms angled slightly back behind your head rather than straight up vertical to maintain constant tension at the top.",
+				"execution": "Arc the bar back behind your head on the eccentric phase to get a deep stretch at the bottom rather than stopping literally at your forehead. Drive forearms back up smoothly."
+			}
+		},
+		{
+			"name": "Cable Triceps Press Down (Bar)",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["93A552C6", "CDC472B1"],
+			"cues": {
+				"setup": "Attach a straight or EZ-bar to a high pulley. Stand tall and pin elbows to sides.",
+				"execution": "Provides higher rigid stability and overload potential than a rope. Drive the bar down to full elbow extension to maximize stimulus on the medial and lateral heads."
+			}
+		},
+		{
+			"name": "Overhead Cable Triceps Extension (Rope)",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["B5EFBF9C"],
+			"variation": true
+		},
+		{
+			"name": "Katana Triceps Extension",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": [],
+			"cues": {
+				"setup": "Set dual cable pulleys around waist height. Cross arms overhead, grabbing the opposite cable, and step forward into the scapular plane (arms angled 30–40° forward).",
+				"execution": "Extends each arm individually in a very natural, comfortable line of pull while hitting the long head in a deep stretch."
+			}
+		},
+		{
+			"name": "One-Arm Dumbbell Overhead Extension",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["8347DFD1"]
+		},
+		{
+			"name": "Dumbbell Skullcrushers",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["68F8A292"]
+		},
+		{
+			"name": "Smith Machine JM Press",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["74103F24"],
+			"variation": true
+		},
+		{
+			"name": "Cable Triceps Kickbacks",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["EC3B69A3"],
+			"cues": {
+				"setup": "Set cable pulley at chest or waist height. Hold cable directly or with a handle and step back.",
+				"execution": "Drives the arm back behind the torso, allowing the long head to reach its fully contracted/shortened peak squeeze position. Maintain smooth cable tension throughout."
+			}
+		},
+		{
+			"name": "Close Grip Bench Press",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["35B51B87"],
+			"cues": {
+				"setup": "Lie on a flat bench using a shoulder-width grip on the barbell.",
+				"execution": "Excellent compound movement for massive progressive overload. Keep elbows tucked closer to your ribcage to heavily bias the lateral and medial heads."
+			}
+		},
+		{
+			"name": "Cable Triceps Press Down (Rope)",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["94B7239B"]
+		},
+		{
+			"name": "Dumbbell French Press",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["3765684D"]
+		},
+		{
+			"name": "JM Press (Barbell)",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["74103F24"]
+		},
+		{
+			"name": "Close Grip Dips",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["28BB4A95", "10347BAC", "4B4BF8C2"]
+		},
+		{
+			"name": "Machine Dips",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["5122E7D9"]
+		},
+		{
+			"name": "Diamond Push-Ups",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["6575F52D"]
+		},
+		{
+			"name": "Reverse Grip Cable Press Down",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["8B5BED30"]
+		},
+		{
+			"name": "Dumbbell Triceps Kickbacks",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["6127A3AD"]
+		},
+		{
+			"name": "Bench Dips",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["CD6DC8E5"]
+		},
+		{
+			"name": "Close Grip Push-Ups",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["947DAC23"]
+		},
+		{
+			"name": "Hack Squat",
+			"tier": "S+",
+			"muscles": ["Quads"],
+			"hevyIds": ["1E42FD5F"],
+			"cues": {
+				"setup": "Set feet lower on the platform to maximize knee flexion and knee forward displacement. If the machine bottoms out early, place yoga blocks or pads behind your shoulders/upper back to achieve a full, deep stretch.",
+				"execution": "Lower under control as deep as hip and knee mobility allow. Keep back flat against the pad and drive up through the entire foot. Eliminates balance limitations to direct maximal tension straight to the quads."
+			}
+		},
+		{
+			"name": "Barbell High Bar Back Squat",
+			"tier": "S",
+			"muscles": ["Quads"],
+			"hevyIds": ["D04AC939"],
+			"cues": {
+				"setup": "Place bar high on the upper traps. Set stance slightly wider than hip-width with toes turned slightly outward.",
+				"execution": "Keep chest upright and bend knees deeply to allow the knees to track forward over toes, breaking parallel for maximum quad stretch. Drive straight up through the mid-foot."
+			}
+		},
+		{
+			"name": "Pendulum Squat",
+			"tier": "S",
+			"muscles": ["Quads"],
+			"hevyIds": ["30E293E3"]
+		},
+		{
+			"name": "Smith Machine Squat",
+			"tier": "S",
+			"muscles": ["Quads"],
+			"hevyIds": ["DDCC3821"],
+			"cues": {
+				"setup": "Set feet slightly forward of the bar path to maintain an upright torso throughout the descent.",
+				"execution": "Provides high stability so you can safely push sets directly to absolute muscular failure without fear of losing balance or needing a spotter."
+			}
+		},
+		{
+			"name": "Bulgarian Split Squat",
+			"tier": "S",
+			"muscles": ["Quads"],
+			"hevyIds": ["B5D3A742", "0F24286A"],
+			"cues": {
+				"setup": "Place rear foot on a bench and take a slightly shorter stance than you would for glute bias to force greater knee extension.",
+				"execution": "Lower single leg deep into knee flexion until calf meets thigh. Drives intense quad tension and fixes side-to-side muscle imbalances."
+			}
+		},
+		{
+			"name": "Barbell Front Squat",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["5046D0A9"]
+		},
+		{
+			"name": "Barbell Low Bar Back Squat",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["D04AC939"],
+			"variation": true
+		},
+		{
+			"name": "45-Degree Leg Press",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["C7973E0E"]
+		},
+		{
+			"name": "Seated Leg Extension (Lean-Back)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["75A4F6C4", "629AE73D"],
+			"variation": true,
+			"cues": {
+				"setup": "Set the backrest reclined back rather than completely upright.",
+				"execution": "Reclining the seat back places the long rectus femoris head into a deeper stretch at the hip, maximizing growth across all 4 quad heads. Pause briefly at full lockout and control the negative."
+			}
+		},
+		{
+			"name": "Reverse Nordics",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": [],
+			"cues": {
+				"setup": "Kneel on a padded mat with feet unflattened or flat on the floor.",
+				"execution": "Maintain a straight line from knees through hips to shoulders. Lean backward smoothly by hinging purely at the knees to place an extreme lengthened stretch on the quads before driving back up."
+			}
+		},
+		{
+			"name": "Lunges (Quad-Focused Short Steps)",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["5E1A7777", "B537D09F", "6E6EE645"]
+		},
+		{
+			"name": "Goblet Squat",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["3D0C7C75", "A127DA73"]
+		},
+		{
+			"name": "Sissy Squat",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["F5DEF1EB"]
+		},
+		{
+			"name": "Horizontal Leg Press",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["0EB695C9"]
+		},
+		{
+			"name": "Conventional/Sumo Deadlifts",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["C6272009", "D20D7BBE"]
+		},
+		{
+			"name": "Step-Ups",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["128A2381", "BF6ECE89"]
+		},
+		{
+			"name": "Pistol Squats",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["3FF6A22E", "5BFF35BA"]
+		},
+		{
+			"name": "Bosu Ball Squats",
+			"tier": "F",
+			"muscles": ["Quads"],
+			"hevyIds": [],
+			"note": "Worst of the Worst"
+		},
+		{
+			"name": "Combo Exercises (Squat + Press / Lunge + Curl)",
+			"tier": "F",
+			"muscles": ["Quads"],
+			"hevyIds": ["A8814C06", "983274DD", "90E506D5", "10313AFD"]
+		},
+		{
+			"name": "Jump Squats",
+			"tier": "F",
+			"muscles": ["Quads"],
+			"hevyIds": ["70D4EBBF"]
+		}
+	]
+}

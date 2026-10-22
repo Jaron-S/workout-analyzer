@@ -1,6 +1,6 @@
 import { SETTINGS, type ClaudeDraft, type ClaudeUndo } from "../claude-sync";
 import { DEFAULT_TRAINING_DEFAULTS } from "../training-defaults";
-import type { MuscleOverrides, PriorityTier, Routine, TrainingDefaults } from "../types";
+import type { ExercisePreferences, MuscleOverrides, PriorityTier, Routine, TrainingDefaults } from "../types";
 import { Firestore, type Session } from "./firebase-rest";
 
 // The signed-in user's Setsmith data, read and written through Firestore's
@@ -75,6 +75,12 @@ export class UserStore {
 	async muscleOverrides(): Promise<MuscleOverrides> {
 		return (await this.setting<MuscleOverrides>("muscleOverrides")) ?? {};
 	}
+
+	async exercisePreferences(): Promise<ExercisePreferences> {
+		return (await this.setting<ExercisePreferences>("exercisePreferences")) ?? {};
+	}
+
+	saveExercisePreferences = (preferences: ExercisePreferences) => this.saveSetting("exercisePreferences", preferences);
 
 	draft = () => this.setting<ClaudeDraft>(SETTINGS.draft);
 	saveDraft = (draft: ClaudeDraft) => this.saveSetting(SETTINGS.draft, draft);

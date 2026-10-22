@@ -1,13 +1,14 @@
 "use client"
 
 import { migrateRoutine } from "./exercise-catalog"
-import type { Routine, PriorityTier, MuscleOverrides, TrainingDefaults } from "./types"
+import type { ExercisePreferences, Routine, PriorityTier, MuscleOverrides, TrainingDefaults } from "./types"
 import type { HevyExerciseTemplate } from "./hevy/client"
 
 const ROUTINE_KEY = "workout-analyzer-routine"
 const PRIORITIES_KEY = "workout-analyzer-priorities"
 const MUSCLE_OVERRIDES_KEY = "workout-analyzer-muscle-overrides"
 const TRAINING_DEFAULTS_KEY = "workout-analyzer-training-defaults"
+const EXERCISE_PREFERENCES_KEY = "workout-analyzer-exercise-preferences"
 // The Hevy key stays on this device: it is never synced to the account.
 const HEVY_API_KEY_KEY = "workout-analyzer-hevy-api-key"
 const HEVY_CUSTOM_EXERCISES_KEY = "workout-analyzer-hevy-custom-exercises"
@@ -97,6 +98,11 @@ function loadJson<T>(key: string, label: string): T | null {
   }
 }
 
+export const saveExercisePreferences = (preferences: ExercisePreferences) =>
+  saveJson(EXERCISE_PREFERENCES_KEY, preferences, "exercise preferences")
+export const loadExercisePreferences = () =>
+  loadJson<ExercisePreferences>(EXERCISE_PREFERENCES_KEY, "exercise preferences")
+
 export const saveTrainingDefaults = (defaults: TrainingDefaults) =>
   saveJson(TRAINING_DEFAULTS_KEY, defaults, "training defaults")
 export const loadTrainingDefaults = () => loadJson<TrainingDefaults>(TRAINING_DEFAULTS_KEY, "training defaults")
@@ -168,6 +174,7 @@ export function clearAllData(): void {
     localStorage.removeItem(PRIORITIES_KEY)
     localStorage.removeItem(MUSCLE_OVERRIDES_KEY)
     localStorage.removeItem(TRAINING_DEFAULTS_KEY)
+    localStorage.removeItem(EXERCISE_PREFERENCES_KEY)
     localStorage.removeItem(HEVY_API_KEY_KEY)
     localStorage.removeItem(HEVY_CUSTOM_EXERCISES_KEY)
     localStorage.removeItem(CLAUDE_API_KEY_KEY)

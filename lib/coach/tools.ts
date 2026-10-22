@@ -6,11 +6,13 @@
 import { z } from "zod/v4";
 import volumeLandmarks from "@/data/volume-landmarks.json";
 import { ALL_MUSCLES, MAX_MUSCLE_SETS_PER_SESSION, MAX_SETS_PER_SESSION } from "../constants";
+import { browseOrder, rankingsFor, type RankingEntry } from "../exercise-rankings";
 import { HEVY_EQUIPMENT } from "../hevy/exercises";
 import { searchExercises } from "../search";
 import { formatReps, formatRest, resolveTargets } from "../training-defaults";
 import type {
 	Exercise,
+	ExercisePreferences,
 	PriorityTier,
 	Routine,
 	RoutineExercise,
@@ -25,6 +27,8 @@ export interface CoachContext {
 	getExercise: (id: string) => Exercise | undefined;
 	defaults: TrainingDefaults;
 	priorities: Partial<Record<PriorityTier, string[]>>;
+	/** The user's favourites and exercises to avoid. */
+	preferences?: ExercisePreferences;
 }
 
 export interface ToolOutcome {
@@ -33,6 +37,8 @@ export interface ToolOutcome {
 	/** A one-line description of the edit, for the review list. Absent for read-only tools. */
 	change?: string;
 	isError?: boolean;
+	/** The user's exercise preferences, when the tool changed them (saved straight away, not drafted). */
+	preferences?: ExercisePreferences;
 }
 
 interface CoachTool<S extends z.ZodType> {
@@ -83,6 +89,38 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
 
 const nameOf = (ctx: CoachContext, id: string) => ctx.getExercise(id)?.name ?? id;
 
+/** "user's favourite" or "user avoids: <why>", or "" when the user hasn't said. */
+function preferenceTag(ctx: CoachContext, id: string): string {
+	const p = ctx.preferences?.[id];
+	if (!p) return "";
+	return p.pref === "favourite" ? "user's favourite" : `user avoids${p.note ? ` (${p.note})` : ""}`;
+}
+
+/** The user's favourites and exercises to avoid, for the context block. */
+export function describePreferences(ctx: CoachContext): string {
+	const entries = Object.entries(ctx.preferences ?? {});
+	const list = (pref: "favourite" | "avoid") =>
+		entries
+			.filter(([, p]) => p.pref === pref)
+			.map(([id, p]) => `${nameOf(ctx, id)} [${id}]${p.note ? ` (${p.note})` : ""}`);
+	const favourites = list("favourite");
+	const avoids = list("avoid");
+	if (!favourites.length && !avoids.length) return "Exercise preferences: none set.";
+	return [
+		favourites.length ? `Favourite exercises: ${favourites.join("; ")}.` : "",
+		avoids.length ? `Exercises the user avoids: ${avoids.join("; ")}.` : "",
+	]
+		.filter(Boolean)
+		.join("\n");
+}
+
+const tierTag = (ctx: CoachContext, id: string) =>
+	rankingsFor(ctx.exercises)
+		.forExercise(id)
+		.slice(0, 2)
+		.map((r) => `${r.tier} for ${r.muscle}`)
+		.join(", ");
+
 /** Drops keys set to undefined (Firestore rejects them). */
 const compact = <T extends object>(value: T): T =>
 	Object.fromEntries(Object.entries(value).filter(([, v]) => v !== undefined)) as T;
@@ -95,6 +133,7 @@ function describeExercise(ex: RoutineExercise, index: number, ctx: CoachContext)
 	const flags = [
 		exercise?.legacy ? "not linked to Hevy" : "",
 		own ? "custom targets" : "default targets",
+		preferenceTag(ctx, ex.exerciseId),
 	].filter(Boolean);
 	return `  ${index}. ${nameOf(ctx, ex.exerciseId)} [${ex.exerciseId}]: ${ex.sets} × ${work}, ${formatRest(
 		targets.restSeconds
@@ -214,7 +253,7 @@ export const COACH_TOOLS = [
 	defineTool({
 		name: "search_exercises",
 		description:
-			"Search the exercise library (Hevy's exercises plus the user's own custom ones). Returns ids to use with add_exercise and update_exercise, with each exercise's muscle weightings. Search by name words, main muscle, equipment, or a combination.",
+			"Search the exercise library (Hevy's exercises plus the user's own custom ones). Returns ids to use with add_exercise and update_exercise, with each exercise's tier, the user's preference and muscle weightings. Search by name words, main muscle, equipment, or a combination; with only a muscle, results come best pick first.",
 		schema: z.object({
 			query: z.string().optional().describe('Words in the name, e.g. "incline press" or "curl".'),
 			muscle: z.enum(ALL_MUSCLES).optional().describe("Only exercises whose main muscle is this."),
@@ -222,12 +261,18 @@ export const COACH_TOOLS = [
 			limit: z.number().int().min(1).max(40).optional().describe("Default 15."),
 		}),
 		run: (input, routine, ctx) => {
-			const matches = searchExercises(ctx.exercises, input.query ?? "").filter(
+			let matches = searchExercises(ctx.exercises, input.query ?? "").filter(
 				(e) =>
 					!e.legacy &&
 					(!input.muscle || e.muscle_weightings[0]?.muscle === input.muscle) &&
 					(!input.equipment || e.equipment === input.equipment)
 			);
+			if (input.muscle && !input.query) {
+				// Best pick first, as Setsmith's suggestions order them; avoided last.
+				const rankings = rankingsFor(ctx.exercises);
+				const order = (e: Exercise) => browseOrder(e, input.muscle!, rankings, ctx.preferences);
+				matches = [...matches].sort((a, b) => order(a) - order(b));
+			}
 			const shown = matches.slice(0, input.limit ?? 15);
 			const lines = shown.map((e) => {
 				const muscles = e.muscle_weightings
@@ -238,6 +283,8 @@ export const COACH_TOOLS = [
 					e.compound ? "compound" : "isolation",
 					e.type && e.type !== "weight_reps" ? e.type : "",
 					e.hevyCustom ? "user's custom" : "",
+					tierTag(ctx, e.id) ? `tier ${tierTag(ctx, e.id)}` : "",
+					preferenceTag(ctx, e.id),
 				].filter(Boolean);
 				return `${e.id} | ${e.name} | ${tags.join(", ")} | ${muscles || "no muscle volume"}`;
 			});
@@ -261,6 +308,119 @@ export const COACH_TOOLS = [
 			"The app's analysis of the current draft: weekly volume per muscle against its landmarks (MV, MEV, MAV, MRV) and the user's priority tier, plus per-session fatigue. Check it after making changes.",
 		schema: z.object({}),
 		run: (_input, routine, ctx) => ({ routine, result: analyzeRoutine(routine, ctx) }),
+	}),
+	defineTool({
+		name: "exercise_rankings",
+		description:
+			"The tier list for a muscle (Jeff Nippard's, S+ best to F), mapped to exercise ids, with the user's favourites and exercises to avoid. Use it when choosing exercises.",
+		schema: z.object({ muscle: z.enum(ALL_MUSCLES) }),
+		run: (input, routine, ctx) => {
+			const rankings = rankingsFor(ctx.exercises);
+			const entries = rankings.entriesFor(input.muscle);
+			const favourites = Object.entries(ctx.preferences ?? {})
+				.filter(([id, p]) => p.pref === "favourite" && ctx.getExercise(id)?.muscle_weightings.some((w) => w.muscle === input.muscle && w.weighting >= 0.5))
+				.map(([id]) => `${nameOf(ctx, id)} [${id}]`);
+			if (entries.length === 0) {
+				return {
+					routine,
+					result: [
+						`No tier list for ${input.muscle} yet. search_exercises with muscle "${input.muscle}" lists exercises in Setsmith's suggested order.`,
+						favourites.length ? `User's favourites that train it: ${favourites.join("; ")}.` : "",
+					]
+						.filter(Boolean)
+						.join("\n"),
+				};
+			}
+			const lines = entries.map(({ entry, ids }) => {
+				const where = ids.length
+					? ids
+							.map((id) => {
+								const tag = preferenceTag(ctx, id);
+								return `${nameOf(ctx, id)} [${id}]${tag ? ` (${tag})` : ""}`;
+							})
+							.join("; ")
+					: "not in Hevy (the user could add it as a custom exercise in Hevy)";
+				const extras = [
+					entry.note,
+					entry.variation ? "this tier only when done as named" : "",
+					entry.cues ? "form cues in exercise_details" : "",
+				].filter(Boolean);
+				return `${entry.tier.padEnd(2)} ${entry.name}: ${where}${extras.length ? ` [${extras.join("; ")}]` : ""}`;
+			});
+			return {
+				routine,
+				result: [
+					`Tier list for ${input.muscle}, best first. Prefer S+ to A; D and F are poor choices.`,
+					...lines,
+					favourites.length ? `User's favourites that train it: ${favourites.join("; ")}.` : "",
+				]
+					.filter(Boolean)
+					.join("\n"),
+			};
+		},
+	}),
+	defineTool({
+		name: "exercise_details",
+		description:
+			"One exercise's tiers per muscle, better-ranked ways to do it, form cues (setup and execution) and the user's preference.",
+		schema: z.object({ exercise_id: z.string() }),
+		run: (input, routine, ctx) => {
+			const exercise = requireExercise(ctx, input.exercise_id);
+			const ranks = rankingsFor(ctx.exercises).forExercise(exercise.id);
+			const cueLines = (entry: RankingEntry) =>
+				entry.cues
+					? [
+							`Form cues (${entry.name}):`,
+							entry.cues.setup ? `  Setup: ${entry.cues.setup}` : "",
+							entry.cues.execution ? `  Execution: ${entry.cues.execution}` : "",
+						]
+					: [];
+			const withCues = [...new Set(ranks.flatMap((r) => r.entries))].filter((e) => e.cues);
+			return {
+				routine,
+				result: [
+					`${exercise.name} [${exercise.id}]: ${exercise.muscle_weightings.map((w) => `${w.muscle} ${Math.round(w.weighting * 100)}%`).join(", ") || "no muscle volume"}.`,
+					preferenceTag(ctx, exercise.id) ? `The ${preferenceTag(ctx, exercise.id)}.` : "",
+					...(ranks.length
+						? ranks.map(
+								(r) =>
+									`${r.tier} for ${r.muscle} (as "${r.entry.name}"${r.entry.note ? `, ${r.entry.note}` : ""})${
+										r.better.length ? `; better: ${r.better.map((b) => `${b.name} ${b.tier}`).join(", ")}` : ""
+									}`
+							)
+						: ["Not on any tier list."]),
+					...withCues.flatMap(cueLines),
+				]
+					.filter(Boolean)
+					.join("\n"),
+			};
+		},
+	}),
+	defineTool({
+		name: "set_exercise_preference",
+		description:
+			"Save how the user feels about an exercise when they say so: a favourite (picked first) or one to avoid (never suggested), with their reason. Saved straight away, not part of the draft. Use \"none\" to clear.",
+		schema: z.object({
+			exercise_id: z.string(),
+			preference: z.enum(["favourite", "avoid", "none"]),
+			note: z.string().max(200).optional().describe('The reason in the user\'s words, e.g. "hard on my lower back".'),
+		}),
+		run: (input, routine, ctx) => {
+			const exercise = requireExercise(ctx, input.exercise_id);
+			const preferences = { ...(ctx.preferences ?? {}) };
+			if (input.preference === "none") delete preferences[exercise.id];
+			else preferences[exercise.id] = compact({ pref: input.preference, note: input.note?.trim() || undefined });
+			return {
+				routine,
+				preferences,
+				result:
+					input.preference === "none"
+						? `Cleared the user's preference for ${exercise.name}.`
+						: input.preference === "favourite"
+							? `Saved ${exercise.name} as a favourite. Setsmith suggests it first.`
+							: `Saved: the user avoids ${exercise.name}. Setsmith won't suggest it.`,
+			};
+		},
 	}),
 	defineTool({
 		name: "set_routine_name",
@@ -346,9 +506,10 @@ export const COACH_TOOLS = [
 			const exercises = [...day.exercises];
 			exercises.splice(clamp(input.position ?? exercises.length, 0, exercises.length), 0, added);
 			const next = withDay(routine, day.id, (d) => ({ ...d, exercises }));
+			const avoided = ctx.preferences?.[exercise.id]?.pref === "avoid";
 			return {
 				routine: next,
-				result: describeDay(findDay(next, day.id), ctx),
+				result: `${avoided ? `Note: the user avoids ${exercise.name}${ctx.preferences![exercise.id].note ? ` (${ctx.preferences![exercise.id].note})` : ""}. Keep it only if they asked for it.\n` : ""}${describeDay(findDay(next, day.id), ctx)}`,
 				change: `Added ${exercise.name} (${input.sets} sets) to ${day.name}`,
 			};
 		},

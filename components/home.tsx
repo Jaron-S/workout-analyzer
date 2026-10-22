@@ -5,6 +5,7 @@ import { AuthModal } from "@/components/auth-modal";
 import { Wordmark } from "@/components/brand";
 import { CoachPanel } from "@/components/coach-panel";
 import { CommandMenu } from "@/components/command-menu";
+import { ExerciseRankingsDialog } from "@/components/exercise-rankings-dialog";
 import { HevyPushDialog } from "@/components/hevy-push-dialog";
 import { PrioritySettings } from "@/components/priority-settings";
 import { ImportDialog } from "@/components/import-dialog";
@@ -56,6 +57,7 @@ import {
 	Command,
 	Dumbbell,
 	FolderOpen,
+	ListOrdered,
 	Loader2,
 	LogOut,
 	Settings,
@@ -86,7 +88,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 	const { user, signOut, isConfigured } = useAuth();
 	const { client: hevyClient } = useHevy();
 	const { claudeApiKey } = useSettings();
-	const { exercises, getExercise } = useExercises();
+	const { exercises, getExercise, preferences } = useExercises();
 	const router = useRouter();
 
 	const [view, setView] = useState<View>("builder");
@@ -94,6 +96,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 	const [showSavedRoutines, setShowSavedRoutines] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const [showPriorities, setShowPriorities] = useState(false);
+	const [showRankings, setShowRankings] = useState(false);
 	const [showPush, setShowPush] = useState(false);
 	const [showCoach, setShowCoach] = useState(false);
 	const [showShare, setShowShare] = useState(false);
@@ -137,8 +140,8 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 
 	const suggestions = useMemo(() => {
 		const volumes = calculateMuscleVolumes(shownRoutine, exercises);
-		return buildSuggestions(analyzePriorities(volumes, priorities), shownRoutine, exercises, getExercise);
-	}, [shownRoutine, exercises, getExercise, priorities]);
+		return buildSuggestions(analyzePriorities(volumes, priorities), shownRoutine, exercises, getExercise, preferences);
+	}, [shownRoutine, exercises, getExercise, priorities, preferences]);
 
 	// Opened from a shared routine link: offer to import it.
 	useEffect(() => {
@@ -266,6 +269,10 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 												<SlidersHorizontal className="h-4 w-4" />
 												Muscle priorities
 											</DropdownMenuItem>
+											<DropdownMenuItem onSelect={() => setShowRankings(true)}>
+												<ListOrdered className="h-4 w-4" />
+												Exercise rankings
+											</DropdownMenuItem>
 											<DropdownMenuSeparator />
 											<DropdownMenuItem onSelect={handleSignOut}>
 												<LogOut className="h-4 w-4" />
@@ -277,6 +284,10 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 											<DropdownMenuItem onSelect={() => setShowPriorities(true)}>
 												<SlidersHorizontal className="h-4 w-4" />
 												Muscle priorities
+											</DropdownMenuItem>
+											<DropdownMenuItem onSelect={() => setShowRankings(true)}>
+												<ListOrdered className="h-4 w-4" />
+												Exercise rankings
 											</DropdownMenuItem>
 											<DropdownMenuSeparator />
 											<DropdownMenuItem onSelect={() => setShowAuth(true)}>
@@ -355,6 +366,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 
 			<AuthModal open={showAuth} onOpenChange={setShowAuth} />
 			<SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
+			<ExerciseRankingsDialog open={showRankings} onOpenChange={setShowRankings} />
 			<PrioritySettings
 				open={showPriorities}
 				onOpenChange={setShowPriorities}
@@ -387,6 +399,7 @@ export function Home({ sharedCode }: { sharedCode?: string }) {
 					importRoutine: () => setShowImport(true),
 					openSettings: () => setShowSettings(true),
 					editPriorities: () => setShowPriorities(true),
+					exerciseRankings: () => setShowRankings(true),
 					showView: setView,
 					addExercise: (dayId, exerciseId) => addExercise(dayId, exerciseId),
 				}}

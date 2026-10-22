@@ -3,7 +3,7 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { beforeAll, describe, expect, it } from "vitest";
 import type { ClaudeDraft, ClaudeUndo } from "../claude-sync";
 import { DEFAULT_TRAINING_DEFAULTS } from "../training-defaults";
-import type { Routine } from "../types";
+import type { ExercisePreferences, Routine } from "../types";
 import { createSetsmithServer, type ConnectorStore } from "./mcp-server";
 import { pkceChallenge, seal, unseal } from "./seal";
 
@@ -20,6 +20,7 @@ function memoryStore(initial: Routine | null = routine()) {
 		routines: new Map<string, Routine>(initial ? [[initial.id, initial]] : []),
 		draft: null as ClaudeDraft | null,
 		undo: null as ClaudeUndo | null,
+		preferences: {} as ExercisePreferences,
 	};
 	const store: ConnectorStore = {
 		currentRoutine: async () => (state.current ? state.routines.get(state.current) ?? null : null),
@@ -30,6 +31,8 @@ function memoryStore(initial: Routine | null = routine()) {
 		priorities: async () => ({ S: ["Side Delts"] }),
 		trainingDefaults: async () => DEFAULT_TRAINING_DEFAULTS,
 		muscleOverrides: async () => ({}),
+		exercisePreferences: async () => state.preferences,
+		saveExercisePreferences: async (p) => void (state.preferences = structuredClone(p)),
 		draft: async () => state.draft,
 		saveDraft: async (d) => void (state.draft = structuredClone(d)),
 		clearDraft: async () => void (state.draft = null),
@@ -58,12 +61,37 @@ describe("Setsmith MCP server", () => {
 		const names = (await client.listTools()).tools.map((t) => t.name).sort();
 		expect(names).toEqual(
 			[
-				"add_day", "add_exercise", "analyze_routine", "apply_changes", "create_routine", "discard_changes", "get_routine",
+				"add_day", "add_exercise", "analyze_routine", "apply_changes", "create_routine", "discard_changes", "exercise_details",
+				"exercise_rankings", "get_routine", "set_exercise_preference",
 				"list_routines", "move_exercise", "remove_day", "remove_exercise", "search_exercises", "set_routine_name",
 				"switch_routine", "undo_last_change", "update_day", "update_exercise",
 			].sort()
 		);
 		expect(client.getInstructions()).toMatch(/apply_changes only after they clearly agree/);
+	});
+
+	it("saves exercise preferences straight away and shows them with rankings", async () => {
+		const { store, state } = memoryStore();
+		const { call } = await connect(store);
+
+		const saved = await call("set_exercise_preference", { exercise_id: "D04AC939", preference: "avoid", note: "hard on my back" });
+		expect(saved.text).toMatch(/avoids Squat \(Barbell\)/);
+		expect(state.preferences).toEqual({ D04AC939: { pref: "avoid", note: "hard on my back" } });
+		// Not a routine edit, so nothing is drafted.
+		expect(state.draft).toBeNull();
+
+		expect((await call("get_routine")).text).toMatch(/avoids: Squat \(Barbell\) \[D04AC939\] \(hard on my back\)/);
+		const quads = (await call("exercise_rankings", { muscle: "Quads" })).text;
+		expect(quads).toMatch(/^S\+ Hack Squat: Hack Squat \(Machine\) \[1E42FD5F\]/m);
+		expect(quads).toMatch(/Squat \(Barbell\) \[D04AC939\] \(user avoids \(hard on my back\)\)/);
+		expect(quads).toMatch(/Reverse Nordics: not in Hevy/);
+
+		const details = (await call("exercise_details", { exercise_id: "1E42FD5F" })).text;
+		expect(details).toMatch(/S\+ for Quads/);
+		expect(details).toMatch(/Setup: Set feet lower on the platform/);
+
+		// Adding an avoided exercise still works, with a warning for Claude.
+		expect((await call("add_exercise", { day_id: "d1", exercise_id: "D04AC939", sets: 3 })).text).toMatch(/^Note: the user avoids Squat/);
 	});
 
 	it("drafts edits, applies them on request, and undoes", async () => {
