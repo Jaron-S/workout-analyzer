@@ -1,0 +1,519 @@
+{
+	"_about": "How data/exercise-rankings.source.md maps to Hevy. Keys are '<list> / <exercise as written>', the list named as in the doc's heading (\"Glute Exercises\" is Glute). hevyIds [] means Hevy has no such exercise; variation means the tier only holds done as named; muscles overrides the list's muscles (lists without them need it on every entry); tier overrides the doc; skip leaves an entry out. cues names the entries each numbered cue in the doc belongs to; estimates rank exercises no list covers. Run npm run build:rankings after editing either file.",
+	"lists": {
+		"Chest": {
+			"muscles": ["Chest"]
+		},
+		"Back": {},
+		"Glute": {
+			"muscles": ["Glutes"]
+		},
+		"Biceps": {
+			"muscles": ["Biceps"]
+		},
+		"Shoulder": {},
+		"Triceps": {
+			"muscles": ["Triceps"]
+		},
+		"Quad": {
+			"muscles": ["Quads"]
+		},
+		"Forearm": {
+			"muscles": ["Forearms"]
+		},
+		"Ab": {
+			"muscles": ["Abs"],
+			"source": "Jeremy Ethier"
+		},
+		"Rear Delts": {
+			"muscles": ["Rear Delts"]
+		}
+	},
+	"entries": {
+		"Chest / Machine Chest Press": { "hevyIds": ["7EB3F7C3", "24706DCD"] },
+		"Chest / Seated Cable PEC Fly": { "hevyIds": ["6B4C797E"] },
+		"Chest / Incline Bench Press": { "hevyIds": ["50DFDFAB"] },
+		"Chest / Flat Bench Press": { "hevyIds": ["79D0BB3A"] },
+		"Chest / Incline Dumbbell Press": { "hevyIds": ["07B38369"] },
+		"Chest / Flat Dumbbell Press": { "hevyIds": ["3601968B"] },
+		"Chest / Smith Machine Press": { "hevyIds": ["0FBF7195"] },
+		"Chest / Incline Smith Machine Press": { "hevyIds": ["3A6FA3D1"] },
+		"Chest / Dips": { "hevyIds": ["6FCD7755", "29472BE1", "E9E4089F"] },
+		"Chest / Deficit Push-Ups": { "hevyIds": ["392887AA"], "variation": true },
+		"Chest / Cable Crossovers": { "hevyIds": ["651F844C", "293483AD", "8372BBCC"] },
+		"Chest / Pec Deck Machine": { "hevyIds": ["9DCE2D64", "78683336"] },
+		"Chest / Dumbbell Flyes (Lengthened Partials)": { "hevyIds": ["12017185"], "variation": true },
+		"Chest / Cable Press-Around": { "hevyIds": [] },
+		"Chest / Dumbbell Guillotine Press": { "hevyIds": [] },
+		"Chest / Decline Bench Press": { "hevyIds": ["DA0F0470"] },
+		"Chest / Decline Dumbbell Press": { "hevyIds": ["18487FA7"] },
+		"Chest / Banded Push-Ups": { "hevyIds": ["392887AA"], "variation": true },
+		"Chest / Floor Press": { "hevyIds": ["D53F2886", "756EE329"] },
+		"Chest / Bodyweight Push-Ups": { "hevyIds": ["392887AA"] },
+		"Chest / Dumbbell Pullover": { "hevyIds": ["67280085"] },
+		"Chest / Plyometric Push-Ups": { "hevyIds": ["10D76E8F"] },
+		"Chest / Hex Press": { "hevyIds": ["BE89C631"] },
+		"Chest / Plate Press (F-Tier Hell)": { "hevyIds": ["982734D4", "9373FSD1"] },
+		"Chest / One-Arm Dumbbell Press": { "hevyIds": [] },
+		"Chest / Cross-Body Standing Dumbbell Fly": { "hevyIds": [] },
+		"Chest / Barbell Guillotine Press (Safety Hazard)": { "hevyIds": [] },
+		"Back / Chest-Supported Row": {
+			"hevyIds": ["914F3A96", "6A8D3193", "AA1EB7D8", "91FAFBA3", "1DF4A847", "DF3BDB9C", "7E93E23F"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Wide-Grip Lat Pulldown": {
+			"hevyIds": ["6A6C31A5", "473CF5B8"],
+			"muscles": ["Lats"]
+		},
+		"Back / Neutral-Grip Lat Pulldown": {
+			"hevyIds": ["4E5257DE"],
+			"muscles": ["Lats"]
+		},
+		"Back / Half-Neeling One-Arm Lat Pulldown": {
+			"hevyIds": ["2EE45F81"],
+			"muscles": ["Lats"]
+		},
+		"Back / Meadows Row": {
+			"hevyIds": ["C732C341"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Cable Row (Close-Grip & Wide-Grip)": {
+			"hevyIds": ["0393F233", "F1D60854", "C3BCABB3", "D0C4A899"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Wide-Grip Pull-Up": {
+			"hevyIds": ["1B2B1E7C", "7C50F118", "729237D1", "2C37EC5E"],
+			"muscles": ["Lats"]
+		},
+		"Back / Neutral-Grip Pull-Up": {
+			"hevyIds": ["1B2B1E7C", "729237D1", "2C37EC5E"],
+			"muscles": ["Lats"]
+		},
+		"Back / Cross-Body Lat Pull-Around": {
+			"hevyIds": [],
+			"muscles": ["Lats"]
+		},
+		"Back / Deficit Pendlay Row": {
+			"hevyIds": ["018ADC12"],
+			"muscles": ["Middle Back", "Lats"],
+			"variation": true
+		},
+		"Back / One-Arm Dumbbell Row": {
+			"hevyIds": ["F1E57334"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Kroc Row": {
+			"hevyIds": ["F1E57334"],
+			"muscles": ["Middle Back", "Lats"],
+			"variation": true
+		},
+		"Back / Seated/Floor Cable Face Pulls": {
+			"hevyIds": ["BE640BA0"],
+			"muscles": ["Middle Back"],
+			"variation": true
+		},
+		"Back / Cable Lat Pullover (Lat Prayer)": {
+			"hevyIds": ["D2387AB1", "9273BA17"],
+			"muscles": ["Lats"]
+		},
+		"Back / Dumbbell Lat Pullover (Lengthened Partials)": {
+			"hevyIds": ["67280085"],
+			"muscles": ["Lats"],
+			"variation": true
+		},
+		"Back / Chin-Up": {
+			"hevyIds": ["29083183", "023943F1", "D23C609B"],
+			"muscles": ["Lats"]
+		},
+		"Back / Barbell Row": {
+			"hevyIds": ["55E6546F"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Pendlay Row": {
+			"hevyIds": ["018ADC12"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / T-Bar Row (Freestanding)": {
+			"hevyIds": ["08A2974E", "D7D7FCCE"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Standard Rope Face Pull": {
+			"hevyIds": ["BE640BA0"],
+			"muscles": ["Middle Back"]
+		},
+		"Back / Deadlift": {
+			"hevyIds": ["C6272009"],
+			"muscles": ["Lower Back"]
+		},
+		"Back / Yates Row": {
+			"hevyIds": [],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Inverted Row": {
+			"hevyIds": ["425805F4"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Rack Pull (Standard)": {
+			"hevyIds": ["FE389074"],
+			"muscles": ["Traps", "Lower Back"]
+		},
+		"Back / Renegade Rows (F-Tier Hell)": {
+			"hevyIds": ["1B89CA1B"],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Combo Rows (Row + Curl / Press / Kickback)": {
+			"hevyIds": [],
+			"muscles": ["Middle Back", "Lats"]
+		},
+		"Back / Above-the-Knee Rack Pull (Equipment Hazard / Ego Lifting)": {
+			"hevyIds": ["FE389074"],
+			"muscles": ["Traps", "Lower Back"],
+			"variation": true
+		},
+		"Glute / Walking Lunge": { "hevyIds": ["32HKJ34K", "A733CC5B"] },
+		"Glute / Machine Hip Abduction (Upper Glute #1 Choice)": {
+			"hevyIds": ["F4B4C6EE"],
+			"muscles": ["Glutes", "Abductors"]
+		},
+		"Glute / Deficit/Front-Foot-Elevated Lunge": { "hevyIds": ["C284D923", "FFDA283B", "818BA121"], "variation": true },
+		"Glute / 45-Degree Back Extension": { "hevyIds": ["4F5866F8", "091737FA"] },
+		"Glute / Machine Hip Thrust / Glute Drive (Mid Glute #1 Choice)": { "hevyIds": ["68CE0B9B"] },
+		"Glute / Single-Leg Dumbbell Hip Thrust": { "hevyIds": ["D1CD146F", "487B3755"] },
+		"Glute / Romanian Deadlift (Lower Glute #1 Choice)": { "hevyIds": ["2B4B7310", "72CFFAD5", "0B9B92BA"] },
+		"Glute / Barbell Squat": { "hevyIds": ["D04AC939"] },
+		"Glute / Smith Machine Squat": { "hevyIds": ["DDCC3821"] },
+		"Glute / Bulgarian Split Squat": { "hevyIds": ["B5D3A742", "0F24286A"] },
+		"Glute / Smith Machine Lunge": { "hevyIds": [] },
+		"Glute / Cable Glute Kickbacks": { "hevyIds": ["ACB2751D"] },
+		"Glute / Step-Ups": { "hevyIds": ["128A2381", "BF6ECE89"] },
+		"Glute / Barbell Hip Thrust": { "hevyIds": ["D57C2EC7", "92B8C7E1", "DA5430FC", "291ABA92"] },
+		"Glute / Glute Bridge": { "hevyIds": ["CDA23948", "49C922A1"] },
+		"Glute / Cable Hip Abduction": {
+			"hevyIds": ["C469EA70"],
+			"muscles": ["Glutes", "Abductors"]
+		},
+		"Glute / Curtsy Lunge": { "hevyIds": ["D39EC9EB"] },
+		"Glute / Conventional Deadlift": { "hevyIds": ["C6272009"] },
+		"Glute / Sumo Deadlift": { "hevyIds": ["D20D7BBE"] },
+		"Glute / Cable Pull-Through": { "hevyIds": ["8C331CD8"] },
+		"Glute / Frog Pumps": { "hevyIds": ["F6948F17"] },
+		"Glute / Lateral Banded Walk": {
+			"hevyIds": ["EC02979E"],
+			"muscles": ["Glutes", "Abductors"]
+		},
+		"Glute / Donkey Kicks (F-Tier Hell / Worst of the Worst)": { "hevyIds": ["987234AB"], "tier": "F" },
+		"Glute / Fire Hydrants": {
+			"hevyIds": ["2AF8B552"],
+			"muscles": ["Glutes", "Abductors"]
+		},
+		"Glute / Kettlebell Swings": { "hevyIds": ["F8A0FCCA"] },
+		"Biceps / Face-Away Bayesian Cable Curl": { "hevyIds": ["2DBCA395"] },
+		"Biceps / 45-Degree Preacher Curl (Dumbbell or EZ-Bar)": { "hevyIds": ["FAB6EB2F", "4F942934"] },
+		"Biceps / Machine Preacher Curl": { "hevyIds": ["1E9A6B8E"] },
+		"Biceps / Hammer Grip Preacher Curl": { "hevyIds": [] },
+		"Biceps / EZ-Bar Curl": { "hevyIds": ["01A35BF9"] },
+		"Biceps / Standing Dumbbell Curl (Simultaneous)": { "hevyIds": ["37FCC2BB"] },
+		"Biceps / Incline Dumbbell Curl": { "hevyIds": ["8BAB2735"] },
+		"Biceps / Lying Dumbbell Curl": { "hevyIds": [] },
+		"Biceps / Cable Curl (Standard)": { "hevyIds": ["ADA8623C", "B33B526E"] },
+		"Biceps / Face-Away Behind-the-Back Cable Curl Variation": { "hevyIds": ["2DBCA395"] },
+		"Biceps / Modified 21s (Short -> Full -> Long)": { "hevyIds": ["3BC06AD3"], "variation": true },
+		"Biceps / Cheat Curl": { "hevyIds": [] },
+		"Biceps / Strict Curl": { "hevyIds": [] },
+		"Biceps / Dumbbell Hammer Curl": { "hevyIds": ["7E3BC8B6"] },
+		"Biceps / Inverse Zottman Curl": { "hevyIds": ["123EE239"], "variation": true },
+		"Biceps / Barbell Curl": { "hevyIds": ["A5AC6449"] },
+		"Biceps / Flat Bench Stretch-Focused Curl": { "hevyIds": [] },
+		"Biceps / Chin-Ups": { "hevyIds": ["29083183", "023943F1", "D23C609B"] },
+		"Biceps / Scott Curl (Vertical Preacher)": { "hevyIds": ["FAB6EB2F", "4F942934"], "variation": true },
+		"Biceps / Drag Curl": { "hevyIds": ["D950429E"] },
+		"Biceps / Spider Curl": { "hevyIds": ["2348AB72", "90427D4A"] },
+		"Biceps / Old-School 21s": { "hevyIds": ["3BC06AD3"] },
+		"Biceps / Waiter Curl (F-Tier Hell / Worst of the Worst)": { "hevyIds": ["72297E8C"] },
+		"Shoulder / Cable Lateral Raise (Side Delt #1 Choice)": {
+			"hevyIds": ["BE289E45", "DE68C825"],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Cable Y-Raise": {
+			"hevyIds": ["28927A36"],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Behind-the-Back Cuffed Cable Lateral Raise": {
+			"hevyIds": ["BE289E45"],
+			"muscles": ["Side Delts"],
+			"variation": true
+		},
+		"Shoulder / Reverse Pec Deck (Sideways - Rear Delt #1 Choice)": {
+			"skip": "Replaced by the dedicated rear delt list"
+		},
+		"Shoulder / Reverse Cable Crossover": {
+			"skip": "Replaced by the dedicated rear delt list"
+		},
+		"Shoulder / Machine Shoulder Press (Front Delt #1 Choice)": {
+			"hevyIds": ["9237BAD1", "059E835D"],
+			"muscles": ["Front Delts"]
+		},
+		"Shoulder / Seated Dumbbell Shoulder Press": {
+			"hevyIds": ["9930DF71", "878CD1D0"],
+			"muscles": ["Front Delts"]
+		},
+		"Shoulder / Standing/Seated Dumbbell Overhead Press": {
+			"hevyIds": ["6AC96645"],
+			"muscles": ["Front Delts"]
+		},
+		"Shoulder / Lean-In Dumbbell Lateral Raise": {
+			"hevyIds": ["422B08F1"],
+			"muscles": ["Side Delts"],
+			"variation": true
+		},
+		"Shoulder / Arnold-Style Side-Lying Dumbbell Raise": {
+			"hevyIds": [],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Atlantis Standing Machine Lateral Raise": {
+			"hevyIds": ["D5D0354D"],
+			"muscles": ["Side Delts"],
+			"variation": true
+		},
+		"Shoulder / Rope Face Pull (Rear Delt Focus)": {
+			"skip": "Replaced by the dedicated rear delt list"
+		},
+		"Shoulder / Standing Dumbbell Lateral Raise": {
+			"hevyIds": ["422B08F1"],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Lean-Away Dumbbell Lateral Raise": {
+			"hevyIds": ["422B08F1"],
+			"muscles": ["Side Delts"],
+			"variation": true
+		},
+		"Shoulder / Super ROM Lateral Raise": {
+			"hevyIds": ["422B08F1"],
+			"muscles": ["Side Delts"],
+			"variation": true
+		},
+		"Shoulder / Barbell Overhead Press (Standing & Seated)": {
+			"hevyIds": ["7B8D84E8", "91AF29E0", "073032BB"],
+			"muscles": ["Front Delts"]
+		},
+		"Shoulder / Seated Machine Lateral Raise": {
+			"hevyIds": ["D5D0354D"],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Upright Row (Cable/Rope)": {
+			"hevyIds": ["286C1D0B"],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Bent-Over Reverse Dumbbell Fly": {
+			"skip": "Replaced by the dedicated rear delt list"
+		},
+		"Shoulder / Banded Lateral Raise": {
+			"hevyIds": ["DF200976"],
+			"muscles": ["Side Delts"]
+		},
+		"Shoulder / Dumbbell/Cable/Machine Front Raises (Worst of the Worst / Redundant)": {
+			"hevyIds": ["8293E554", "DBB91A3C", "BD86EFD5", "47B036EF", "DBF9273A"],
+			"muscles": ["Front Delts"]
+		},
+		"Rear Delts / Reverse Pec Deck (Sideways Setup)": { "hevyIds": ["D8281C62"], "variation": true },
+		"Rear Delts / Lying Dumbbell Reverse Fly": { "hevyIds": ["B582299E"] },
+		"Rear Delts / Reverse Cable Crossover": { "hevyIds": ["C315DC2A", "9264ADA1"] },
+		"Rear Delts / Rope Face Pulls (Underhand Grip)": { "hevyIds": ["BE640BA0"], "variation": true },
+		"Rear Delts / Wide-Grip Rows": { "hevyIds": ["C3BCABB3"] },
+		"Rear Delts / Reverse Pec Deck (Standard Facing Forward)": { "hevyIds": ["D8281C62"] },
+		"Rear Delts / Standing Dumbbell Reverse Fly": { "hevyIds": ["E5988A0A"] },
+		"Triceps / Overhead Cable Triceps Extension (Bar)": { "hevyIds": ["B5EFBF9C"] },
+		"Triceps / SkullCrushers (EZ-Bar)": { "hevyIds": ["875F585F"] },
+		"Triceps / Cable Triceps Press Down (Bar)": { "hevyIds": ["93A552C6", "CDC472B1"] },
+		"Triceps / Overhead Cable Triceps Extension (Rope)": { "hevyIds": ["B5EFBF9C"], "variation": true },
+		"Triceps / Katana Triceps Extension": { "hevyIds": [] },
+		"Triceps / One-Arm Dumbbell Overhead Extension": { "hevyIds": ["8347DFD1"] },
+		"Triceps / Dumbbell SkullCrushers": { "hevyIds": ["68F8A292"] },
+		"Triceps / Smith Machine JM Press": { "hevyIds": ["74103F24"], "variation": true },
+		"Triceps / Cable Triceps Kickbacks": { "hevyIds": ["EC3B69A3"] },
+		"Triceps / Close Grip Bench Press": { "hevyIds": ["35B51B87"] },
+		"Triceps / Cable Triceps Press Down (Rope)": { "hevyIds": ["94B7239B"] },
+		"Triceps / Dumbbell French Press": { "hevyIds": ["3765684D"] },
+		"Triceps / JM Press (Barbell)": { "hevyIds": ["74103F24"] },
+		"Triceps / Close Grip Dips": { "hevyIds": ["28BB4A95", "10347BAC", "4B4BF8C2"] },
+		"Triceps / Machine Dips": { "hevyIds": ["5122E7D9"] },
+		"Triceps / Diamond Push-Ups": { "hevyIds": ["6575F52D"] },
+		"Triceps / Reverse Grip Cable Press Down": { "hevyIds": ["8B5BED30"] },
+		"Triceps / Dumbbell Triceps Kickbacks": { "hevyIds": ["6127A3AD"] },
+		"Triceps / Bench Dips": { "hevyIds": ["CD6DC8E5"] },
+		"Triceps / Close Grip Push-Ups": { "hevyIds": ["947DAC23"] },
+		"Quad / Hack Squat": { "hevyIds": ["1E42FD5F"] },
+		"Quad / Barbell High Bar Back Squat": { "hevyIds": ["D04AC939"] },
+		"Quad / Pendulum Squat": { "hevyIds": ["30E293E3"] },
+		"Quad / Smith Machine Squat": { "hevyIds": ["DDCC3821"] },
+		"Quad / Bulgarian Split Squat": { "hevyIds": ["B5D3A742", "0F24286A"] },
+		"Quad / Barbell Front Squat": { "hevyIds": ["5046D0A9"] },
+		"Quad / Barbell Low Bar Back Squat": { "hevyIds": ["D04AC939"], "variation": true },
+		"Quad / 45-Degree Leg Press": { "hevyIds": ["C7973E0E"] },
+		"Quad / Seated Leg Extension (Lean-Back)": { "hevyIds": ["75A4F6C4", "629AE73D"], "variation": true },
+		"Quad / Reverse Nordics": { "hevyIds": [] },
+		"Quad / Lunges (Quad-Focused Short Steps)": { "hevyIds": ["5E1A7777", "B537D09F", "6E6EE645"] },
+		"Quad / Goblet Squat": { "hevyIds": ["3D0C7C75", "A127DA73"] },
+		"Quad / Sissy Squat": { "hevyIds": ["F5DEF1EB"] },
+		"Quad / Horizontal Leg Press": { "hevyIds": ["0EB695C9"] },
+		"Quad / Conventional/Sumo Deadlifts": { "hevyIds": ["C6272009", "D20D7BBE"] },
+		"Quad / Step-Ups": { "hevyIds": ["128A2381", "BF6ECE89"] },
+		"Quad / Pistol Squats": { "hevyIds": ["3FF6A22E", "5BFF35BA"] },
+		"Quad / Bosu Ball Squats (Worst of the Worst)": { "hevyIds": [] },
+		"Quad / Combo Exercises (Squat + Press / Lunge + Curl)": { "hevyIds": ["A8814C06", "983274DD", "90E506D5", "10313AFD"] },
+		"Quad / Jump Squats": { "hevyIds": ["70D4EBBF"] },
+		"Forearm / Dumbbell Wrist Curls (Anterior Forearm #1 Choice)": { "hevyIds": ["1006DF48", "95F2E076"] },
+		"Forearm / Dumbbell Wrist Extensions (Posterior Forearm #1 Choice)": { "hevyIds": ["D8460FA6", "9202CC23"] },
+		"Forearm / Preacher Hammer Curls (Brachio-Radialis #1 Choice)": { "hevyIds": [] },
+		"Forearm / Reverse Grip Curls": { "hevyIds": ["112FC6B7", "9F48F858", "B567DD46"] },
+		"Forearm / Standard Hammer Curls": { "hevyIds": ["7E3BC8B6", "36E8F14E"] },
+		"Forearm / Plate Pinches": { "hevyIds": [] },
+		"Forearm / Farmer's Carries": { "hevyIds": ["50C613D0"] },
+		"Forearm / Barbell Isometric Holds": { "hevyIds": [] },
+		"Forearm / Hand Grippers": { "hevyIds": [] },
+		"Ab / Assisted Lat Pulldown Crunch": { "hevyIds": [] },
+		"Ab / Face-Away Kneeling/Standing Cable Crunch": { "hevyIds": ["23A48484"], "variation": true },
+		"Ab / Face-Away Lat Pulldown Cable Crunch": { "hevyIds": ["23A48484"], "variation": true },
+		"Ab / Garhammer Raise": { "hevyIds": [] },
+		"Ab / Reverse Crunch (with AbMat)": { "hevyIds": ["7952B5CD"], "variation": true },
+		"Ab / Towel / AbMat Crunch": { "hevyIds": ["DCF3B31B", "D928C232"], "variation": true },
+		"Ab / Facing-Machine Lat Pulldown Cable Crunch": { "hevyIds": ["23A48484"] },
+		"Ab / Hanging Leg Raise (with Slings / Straps)": { "hevyIds": ["F8356514"], "variation": true },
+		"Ab / Captain's Chair Leg Raise": { "hevyIds": ["0482DA98", "98237BA2"] },
+		"Ab / Garhammer Hold": { "hevyIds": [] },
+		"Ab / Reverse Crunch (Flat Bench)": { "hevyIds": ["7952B5CD"] },
+		"Ab / Hanging Leg Raise with C-Shape Curl": { "hevyIds": ["F8356514"], "variation": true },
+		"Ab / Dragon Flag": { "hevyIds": ["AFC29472"] },
+		"Ab / Front Lever Raise": { "hevyIds": ["30F03BF0"] },
+		"Ab / Floor Crunch": { "hevyIds": ["DCF3B31B", "D928C232"] },
+		"Ab / RKC Plank": { "hevyIds": ["C6C9B8A0"], "variation": true },
+		"Ab / Ab Roller": { "hevyIds": ["99D5F10E"] },
+		"Ab / Deadbugs": { "hevyIds": ["D8911FC4"] },
+		"Ab / Sit-Ups": { "hevyIds": ["022DF610", "9237BA12"] },
+		"Ab / Lying Leg Raise": { "hevyIds": ["09C9F635"] },
+		"Ab / Hanging Straight Leg / Bent Knee Raise": { "hevyIds": ["F8356514", "08590920"] },
+		"Ab / Bicycle Crunches": { "hevyIds": ["A41C7261", "594450D2"] },
+		"Ab / V-Ups": { "hevyIds": ["6BE68B62"] },
+		"Ab / Unassisted Lat Pulldown Crunch": { "hevyIds": [] },
+		"Ab / Standard Plank": { "hevyIds": ["C6C9B8A0"] },
+		"Ab / Butterfly Kicks": { "hevyIds": [] },
+		"Ab / Mountain Climbers": { "hevyIds": ["F49E31D6"] },
+		"Ab / Bosu Ball / Jump Squat style variations": { "hevyIds": [] }
+	},
+	"cues": {
+		"1": ["Chest / Machine Chest Press"],
+		"2": ["Chest / Seated Cable PEC Fly"],
+		"3": ["Chest / Flat Dumbbell Press", "Chest / Incline Dumbbell Press"],
+		"4": ["Chest / Dips"],
+		"5": ["Chest / Deficit Push-Ups"],
+		"6": ["Chest / Dumbbell Flyes (Lengthened Partials)"],
+		"7": ["Chest / Dumbbell Guillotine Press"],
+		"8": ["Back / Chest-Supported Row"],
+		"9": ["Back / Wide-Grip Lat Pulldown", "Back / Neutral-Grip Lat Pulldown"],
+		"10": ["Back / Half-Neeling One-Arm Lat Pulldown"],
+		"11": ["Back / Meadows Row"],
+		"12": ["Back / Cable Row (Close-Grip & Wide-Grip)"],
+		"13": ["Back / Deficit Pendlay Row"],
+		"14": ["Back / Cable Lat Pullover (Lat Prayer)"],
+		"15": ["Glute / Walking Lunge"],
+		"16": ["Glute / Machine Hip Abduction (Upper Glute #1 Choice)"],
+		"17": ["Glute / Deficit/Front-Foot-Elevated Lunge"],
+		"18": ["Glute / 45-Degree Back Extension"],
+		"19": ["Glute / Machine Hip Thrust / Glute Drive (Mid Glute #1 Choice)"],
+		"20": ["Glute / Romanian Deadlift (Lower Glute #1 Choice)"],
+		"21": ["Glute / Bulgarian Split Squat", "Glute / Step-Ups"],
+		"22": ["Biceps / Face-Away Bayesian Cable Curl"],
+		"23": ["Biceps / 45-Degree Preacher Curl (Dumbbell or EZ-Bar)", "Biceps / Machine Preacher Curl"],
+		"24": ["Biceps / Hammer Grip Preacher Curl"],
+		"25": ["Biceps / EZ-Bar Curl", "Biceps / Standing Dumbbell Curl (Simultaneous)"],
+		"26": ["Biceps / Inverse Zottman Curl"],
+		"27": ["Biceps / Modified 21s (Short -> Full -> Long)"],
+		"28": [],
+		"29": ["Rear Delts / Lying Dumbbell Reverse Fly"],
+		"30": [],
+		"31": ["Rear Delts / Rope Face Pulls (Underhand Grip)"],
+		"32": ["Rear Delts / Wide-Grip Rows"],
+		"33": ["Rear Delts / Standing Dumbbell Reverse Fly"],
+		"34": ["Shoulder / Cable Lateral Raise (Side Delt #1 Choice)"],
+		"35": ["Shoulder / Behind-the-Back Cuffed Cable Lateral Raise"],
+		"36": ["Rear Delts / Reverse Pec Deck (Sideways Setup)"],
+		"37": ["Rear Delts / Reverse Cable Crossover"],
+		"38": ["Shoulder / Machine Shoulder Press (Front Delt #1 Choice)"],
+		"39": ["Shoulder / Lean-In Dumbbell Lateral Raise"],
+		"40": ["Shoulder / Arnold-Style Side-Lying Dumbbell Raise"],
+		"41": ["Triceps / Overhead Cable Triceps Extension (Bar)"],
+		"42": ["Triceps / SkullCrushers (EZ-Bar)"],
+		"43": ["Triceps / Cable Triceps Press Down (Bar)"],
+		"44": ["Triceps / Katana Triceps Extension"],
+		"45": ["Triceps / Cable Triceps Kickbacks"],
+		"46": ["Triceps / Close Grip Bench Press"],
+		"47": ["Quad / Hack Squat"],
+		"48": ["Quad / Barbell High Bar Back Squat"],
+		"49": ["Quad / Smith Machine Squat"],
+		"50": ["Quad / Bulgarian Split Squat"],
+		"51": ["Quad / Seated Leg Extension (Lean-Back)"],
+		"52": ["Quad / Reverse Nordics"],
+		"53": ["Forearm / Dumbbell Wrist Curls (Anterior Forearm #1 Choice)"],
+		"54": ["Forearm / Dumbbell Wrist Extensions (Posterior Forearm #1 Choice)"],
+		"55": ["Forearm / Preacher Hammer Curls (Brachio-Radialis #1 Choice)"],
+		"56": ["Forearm / Reverse Grip Curls"],
+		"57": ["Forearm / Plate Pinches"],
+		"58": ["Ab / Reverse Crunch (with AbMat)"],
+		"59": ["Ab / Garhammer Raise"],
+		"60": ["Ab / Face-Away Kneeling/Standing Cable Crunch", "Ab / Face-Away Lat Pulldown Cable Crunch"],
+		"61": ["Ab / Assisted Lat Pulldown Crunch"],
+		"62": ["Ab / Garhammer Hold"],
+		"63": ["Ab / Captain's Chair Leg Raise", "Ab / Hanging Leg Raise with C-Shape Curl"]
+	},
+	"estimates": [
+		{
+			"name": "Incline Chest Press (Machine)",
+			"tier": "S+",
+			"muscles": ["Chest"],
+			"hevyIds": ["FBF92739"],
+			"note": "Like the S+ machine chest press; the lists rank incline and flat alike"
+		},
+		{
+			"name": "Triceps Extension (Machine)",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["3092FADD"],
+			"note": "Like pushdowns and skullcrushers (A), without the overhead stretch of the S+ cable version"
+		},
+		{
+			"name": "Belt Squat (Machine)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["3D1CDC75"],
+			"note": "A stable machine squat: below hack and pendulum squats, level with the leg press"
+		},
+		{
+			"name": "Crunch (Machine)",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["EB43ADD4"],
+			"note": "A loaded, stable crunch, just under the S-tier cable crunches"
+		},
+		{
+			"name": "Decline Crunch (Weighted)",
+			"tier": "B",
+			"muscles": ["Abs"],
+			"hevyIds": ["B2398CD1"],
+			"note": "Load and range beat floor crunches (C), short of the stretch-focused A and S options"
+		},
+		{
+			"name": "Seated Leg Curl (Machine)",
+			"tier": "S",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["11A123F3"],
+			"note": "Trains the hamstrings long; beats lying curls in research"
+		},
+		{
+			"name": "Standing Calf Raise (Machine)",
+			"tier": "S",
+			"muscles": ["Calves"],
+			"hevyIds": ["E05C2C38"],
+			"note": "Trains both calf muscles with a deep stretch; pause at the bottom"
+		}
+	]
+}

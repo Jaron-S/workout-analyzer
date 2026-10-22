@@ -167,27 +167,46 @@ This document tracks exercise tier lists, rankings, and key form cues for top-ti
 
 ---
 
+## **Rear Delts Tier List (Shorts Edition)**
+
+**Rankings:**
+
+* **S Tier:** Reverse Pec Deck (Sideways Setup)  
+* **High A Tier:** Lying Dumbbell Reverse Fly, Reverse Cable Crossover  
+* **A Tier:** Rope Face Pulls (Underhand Grip)  
+* **Low B Tier:** Wide-Grip Rows, Reverse Pec Deck (Standard Facing Forward)  
+* **C Tier:** Standing Dumbbell Reverse Fly
+
+**Key Execution Cues:**
+
+28. **Reverse Pec Deck (Sideways Setup \- S Tier):** Sit sideways on the machine so your arm sweeps across your chest. This doubles the range of motion compared to facing forward and provides a deep rear delt stretch under even tension.  
+29. **Lying Dumbbell Reverse Fly (High A Tier):** Perform lying down on a bench to maintain tension on the rear delt at the bottom stretch position (unlike standing dumbbell reverse flies).  
+30. **Reverse Cable Crossover (High A Tier):** Cross arms in front of body; when arms cross over at the top, it provides a deep stretch with high cable tension.  
+31. **Rope Face Pulls \- Underhand Grip (A Tier):** Use an underhand grip to bias the rear delts over the upper traps.  
+32. **Wide-Grip Rows (Low B Tier):** Solid for overloading rear delts with heavier weights, though mid-traps will partially take over.  
+33. **Standing Dumbbell Reverse Fly (C Tier):** Suffers from zero tension at the bottom and a lack of stretch in the starting position.
+
 ## **Form & Cue Notes for Top Tier Exercises (S+, S, and Key A-Tier Alternatives)**
 
-28. **Cable Lateral Raise (S+ Tier \- Side Delt \#1 Choice & Overall Best Shoulder Exercise)**  
+34. **Cable Lateral Raise (S+ Tier \- Side Delt \#1 Choice & Overall Best Shoulder Exercise)**  
     * **Form & Setup:** Set cable pulley at around hand height to achieve maximum tension (90-degree angle between cable and forearm) when the side delt is in its most stretched position. Optionally use wrist cuffs (or hold a lacrosse ball inside the cuff) to take forearm/grip fatigue out of the equation.  
     * **Execution & Cues:** Raise the cable out and away from your body under control. Provides smooth, even tension across the entire range of motion.  
-29. **Behind-the-Back Cuffed Cable Lateral Raise (S Tier)**  
+35. **Behind-the-Back Cuffed Cable Lateral Raise (S Tier)**  
     * **Form & Setup:** Hook wrists into cuffs on a dual cable stack, step over one cable, turn around, cross cables behind your back, step forward, and perform raises.  
     * **Execution & Cues:** Raises both arms simultaneously for double the time efficiency while maintaining optimal stretched tension on side delts.  
-30. **Reverse Pec Deck \- Sideways Setup (S Tier \- Rear Delt \#1 Choice)**  
+36. **Reverse Pec Deck \- Sideways Setup (S Tier \- Rear Delt \#1 Choice)**  
     * **Form & Setup:** Sit sideways on a reverse pec deck machine to allow one arm at a time to cross further across your chest.  
     * **Execution & Cues:** Sweeping one arm across your chest achieves a much deeper stretch on the rear delts than facing forward. Drive back through the elbow while keeping chest firmly braced.  
-31. **Reverse Cable Crossover (S Tier)**  
+37. **Reverse Cable Crossover (S Tier)**  
     * **Form & Setup:** Set pulleys high, cross your arms in front of your chest holding the cables directly (without handles). Alternate which arm crosses on top from set to set.  
     * **Execution & Cues:** Focus on sweeping the cables out and back rather than yanking them. Provides an enormous range of motion with deep stretch and smooth tension across the rear delts.  
-32. **Machine Shoulder Press (A Tier \- Front Delt \#1 Choice)**  
+38. **Machine Shoulder Press (A Tier \- Front Delt \#1 Choice)**  
     * **Form & Setup:** Choose a machine with comfortable neutral or semi-slanted handles that allows a deep overhead stretch at the bottom.  
     * **Execution & Cues:** Offers high stability compared to barbell OHP, allowing you to drive front delts straight to complete failure safely.  
-33. **Lean-In Dumbbell Lateral Raise (A Tier)**  
+39. **Lean-In Dumbbell Lateral Raise (A Tier)**  
     * **Form & Setup:** Hold a dumbbell in one hand while leaning your torso into a bench, rack, or pole with the non-working arm.  
     * **Execution & Cues:** Leaning in shifts the resistance curve, placing significantly higher tension on the side delt at the bottom stretched position compared to standard standing raises.  
-34. **Arnold-Style Side-Lying Dumbbell Raise (A Tier)**  
+40. **Arnold-Style Side-Lying Dumbbell Raise (A Tier)**  
     * **Form & Setup:** Lie sideways on an incline bench holding a light dumbbell.  
     * **Execution & Cues:** Raises the dumbbell across your body with high stretch-position tension and deep range of motion, providing a massive side-delt pump.
 
@@ -209,22 +228,22 @@ This document tracks exercise tier lists, rankings, and key form cues for top-ti
 
 ## **Form & Cue Notes for Top Tier Exercises (S+, S, and Key A-Tier Alternatives)**
 
-35. **Overhead Cable Triceps Extension \- Bar (S+ Tier \- Overall Best Triceps Exercise)**  
+41. **Overhead Cable Triceps Extension \- Bar (S+ Tier \- Overall Best Triceps Exercise)**  
     * **Form & Setup:** Set cable stack to high or mid height, turn away from the cable, and extend arms overhead.  
     * **Execution & Cues:** Moving the arms overhead puts the long head of the triceps into a deep stretch under high cable tension. Keep elbows tucked near ears and extend through the forearms under control. Shown in studies to produce \~40% more triceps growth compared to standard pushdowns.  
-36. **EZ-Bar SkullCrushers (S Tier)**  
+42. **EZ-Bar SkullCrushers (S Tier)**  
     * **Form & Setup:** Lie flat on a bench using an EZ-bar to reduce wrist strain. Start the range of motion with your arms angled slightly back behind your head rather than straight up vertical to maintain constant tension at the top.  
     * **Execution & Cues:** Arc the bar back behind your head on the eccentric phase to get a deep stretch at the bottom rather than stopping literally at your forehead. Drive forearms back up smoothly.  
-37. **Cable Triceps Press Down \- Straight/EZ-Bar (A Tier)**  
+43. **Cable Triceps Press Down \- Straight/EZ-Bar (A Tier)**  
     * **Form & Setup:** Attach a straight or EZ-bar to a high pulley. Stand tall and pin elbows to sides.  
     * **Execution & Cues:** Provides higher rigid stability and overload potential than a rope. Drive the bar down to full elbow extension to maximize stimulus on the medial and lateral heads.  
-38. **Katana Triceps Extension (A Tier)**  
+44. **Katana Triceps Extension (A Tier)**  
     * **Form & Setup:** Set dual cable pulleys around waist height. Cross arms overhead, grabbing the opposite cable, and step forward into the scapular plane (arms angled 30–40° forward).  
     * **Execution & Cues:** Extends each arm individually in a very natural, comfortable line of pull while hitting the long head in a deep stretch.  
-39. **Cable Triceps Kickbacks (A Tier)**  
+45. **Cable Triceps Kickbacks (A Tier)**  
     * **Form & Setup:** Set cable pulley at chest or waist height. Hold cable directly or with a handle and step back.  
     * **Execution & Cues:** Drives the arm back behind the torso, allowing the long head to reach its fully contracted/shortened peak squeeze position. Maintain smooth cable tension throughout.  
-40. **Close Grip Bench Press (A Tier)**  
+46. **Close Grip Bench Press (A Tier)**  
     * **Form & Setup:** Lie on a flat bench using a shoulder-width grip on the barbell.  
     * **Execution & Cues:** Excellent compound movement for massive progressive overload. Keep elbows tucked closer to your ribcage to heavily bias the lateral and medial heads.
 
@@ -244,21 +263,93 @@ This document tracks exercise tier lists, rankings, and key form cues for top-ti
 
 ## **Form & Cue Notes for Top Tier Exercises (S+, S, and Key A-Tier Alternatives)**
 
-41. **Hack Squat (S+ Tier \- Overall Best Quad Exercise)**  
+47. **Hack Squat (S+ Tier \- Overall Best Quad Exercise)**  
     * **Form & Setup:** Set feet lower on the platform to maximize knee flexion and knee forward displacement. If the machine bottoms out early, place yoga blocks or pads behind your shoulders/upper back to achieve a full, deep stretch.  
     * **Execution & Cues:** Lower under control as deep as hip and knee mobility allow. Keep back flat against the pad and drive up through the entire foot. Eliminates balance limitations to direct maximal tension straight to the quads.  
-42. **Barbell High Bar Back Squat (S Tier)**  
+48. **Barbell High Bar Back Squat (S Tier)**  
     * **Form & Setup:** Place bar high on the upper traps. Set stance slightly wider than hip-width with toes turned slightly outward.  
     * **Execution & Cues:** Keep chest upright and bend knees deeply to allow the knees to track forward over toes, breaking parallel for maximum quad stretch. Drive straight up through the mid-foot.  
-43. **Smith Machine Squat (S Tier)**  
+49. **Smith Machine Squat (S Tier)**  
     * **Form & Setup:** Set feet slightly forward of the bar path to maintain an upright torso throughout the descent.  
     * **Execution & Cues:** Provides high stability so you can safely push sets directly to absolute muscular failure without fear of losing balance or needing a spotter.  
-44. **Bulgarian Split Squat (S Tier)**  
+50. **Bulgarian Split Squat (S Tier)**  
     * **Form & Setup:** Place rear foot on a bench and take a slightly shorter stance than you would for glute bias to force greater knee extension.  
     * **Execution & Cues:** Lower single leg deep into knee flexion until calf meets thigh. Drives intense quad tension and fixes side-to-side muscle imbalances.  
-45. **Seated Leg Extension \- Lean-Back Setup (A Tier \- Essential for Rectus Femoris)**  
+51. **Seated Leg Extension \- Lean-Back Setup (A Tier \- Essential for Rectus Femoris)**  
     * **Form & Setup:** Set the backrest reclined back rather than completely upright.  
     * **Execution & Cues:** Reclining the seat back places the long rectus femoris head into a deeper stretch at the hip, maximizing growth across all 4 quad heads. Pause briefly at full lockout and control the negative.  
-46. **Reverse Nordics (A Tier)**  
+52. **Reverse Nordics (A Tier)**  
     * **Form & Setup:** Kneel on a padded mat with feet unflattened or flat on the floor.  
     * **Execution & Cues:** Maintain a straight line from knees through hips to shoulders. Lean backward smoothly by hinging purely at the knees to place an extreme lengthened stretch on the quads before driving back up.
+
+---
+
+# **Forearm Exercises (Jeff Nippard)**
+
+## **Exercise Rankings**
+
+* **S Tier:** Dumbbell Wrist Curls (Anterior Forearm \#1 Choice), Dumbbell Wrist Extensions (Posterior Forearm \#1 Choice), Preacher Hammer Curls (Brachio-Radialis \#1 Choice)  
+* **High A Tier:** Reverse Grip Curls, Standard Hammer Curls  
+* **Low A Tier:** Plate Pinches  
+* **High B Tier:** Farmer's Carries  
+* **High C Tier:** Barbell Isometric Holds  
+* **C Tier:** Hand Grippers  
+* **D Tier:** None  
+* **F Tier:** None
+
+---
+
+## **Form & Cue Notes for Top Tier Exercises (S and Key A-Tier Alternatives)**
+
+53. **Dumbbell Wrist Curls (S Tier \- Anterior Forearm \#1 Choice)**  
+    * **Execution & Cues:** Simple, basic, and tried-and-true muscle builder for isolated anterior forearm growth. Curl wrists upward with forearms supported.  
+54. **Dumbbell Wrist Extensions (S Tier \- Posterior Forearm \#1 Choice)**  
+    * **Execution & Cues:** Simple and highly effective for building the back (extensors) of the forearm. Extend wrists upward while keeping forearms braced on a bench or knees.  
+55. **Preacher Hammer Curls (S Tier \- Brachioradialis \#1 Choice)**  
+    * **Form & Setup:** Perform hammer curls using a neutral grip on a preacher bench.  
+    * **Execution & Cues:** Increases torso and upper arm stability while placing higher mechanical tension directly onto the brachioradialis compared to standard standing hammer curls.  
+56. **Reverse Grip Curls (High A Tier)**  
+    * **Execution & Cues:** Awesome option for building up the back of the forearms. Maintain an overhand (pronated) grip throughout the curl. Note that biceps and brachialis still assist to an extent.  
+57. **Plate Pinches (Low A Tier)**  
+    * **Execution & Cues:** Pinch smooth weight plates between your fingers and thumb to target pinch grip strength and forearms. Easy to progressively overload by extending hold time weekly.
+
+---
+
+# **Ab Exercises (Jeremy Ethier)**
+
+## **Exercise Rankings**
+
+* **S Tier (Best of the Best):**  
+  * **Upper Abs / Overall:** Assisted Lat Pulldown Crunch, Face-Away Kneeling/Standing Cable Crunch, Face-Away Lat Pulldown Cable Crunch  
+  * **Lower Abs Focus:** Garhammer Raise, Reverse Crunch (with AbMat)  
+* **A Tier:**  
+  * **Upper Abs Focus:** Towel / AbMat Crunch, Facing-Machine Lat Pulldown Cable Crunch  
+  * **Lower Abs Focus:** Hanging Leg Raise (with Slings / Straps), Captain's Chair Leg Raise, Garhammer Hold, Reverse Crunch (Flat Bench)  
+* **B Tier:** Hanging Leg Raise with C-Shape Curl, Dragon Flag, Front Lever Raise  
+* **C Tier:** Floor Crunch, RKC Plank, Ab Roller, Deadbugs  
+* **D Tier:** Sit-Ups, Lying Leg Raise, Hanging Straight Leg / Bent Knee Raise, Bicycle Crunches, V-Ups  
+* **E Tier:** Unassisted Lat Pulldown Crunch  
+* **F Tier:** Standard Plank, Butterfly Kicks, Mountain Climbers, Bosu Ball / Jump Squat style variations
+
+---
+
+## **Form & Cue Notes for Top Tier Exercises (S and Key A-Tier Alternatives)**
+
+58. **Reverse Crunch with AbMat (S Tier \- Top Lower Abs Choice for Beginners & Advanced)**  
+    * **Form & Setup:** Lie on a flat bench placing an AbMat or rolled towel under your lower back to allow your spine to extend fully for a deep stretch at the bottom.  
+    * **Execution & Cues:** Keep knees bent at 90 degrees. Focus on pushing your tailbone up and curling your pelvis inward toward your ribcage (forming a C-shape) rather than just pulling knees to chest. Control the eccentric on the way down. Extend legs outward to increase difficulty.  
+59. **Garhammer Raise (S Tier \- Top Lower Abs Choice for Advanced)**  
+    * **Form & Setup:** Lie on a flat bench with your hips positioned right off the end edge.  
+    * **Execution & Cues:** Tuck knees in and lower legs as far down as possible without letting feet touch the floor to achieve a deep stretch under tension. Curl your pelvis upward smoothly without using momentum or swaying your legs.  
+60. **Face-Away Lat Pulldown / Cable Crunch (S Tier \- Top Upper Abs Choice)**  
+    * **Form & Setup:** Position yourself facing AWAY from the cable stack on a kneeling, standing, or seated lat pulldown station. Adjust the backrest/pad to lock your hips firmly in place.  
+    * **Execution & Cues:** Facing away creates maximum tension at the top stretch position. Focus on flexing your spine by bringing your ribcage down toward your pelvis into a tight C-shape rather than hinging at the hips.  
+61. **Assisted Lat Pulldown Crunch (S Tier)**  
+    * **Form & Setup:** Sit on a lat pulldown machine (or assisted pull-up setup) where the cable provides a light upward pull.  
+    * **Execution & Cues:** The upward assistance allows you to control the full eccentric stretch at the top and execute a full spinal crunch without form breakdown. Excellent for beginners to master deep-stretch crunches safely.  
+62. **Garhammer Hold (A Tier)**  
+    * **Form & Setup:** Hang hips off the end of a bench and tuck knees into chest.  
+    * **Execution & Cues:** Lower your legs to the point of maximum stretched tension and hold isometrically. High lower-abs activation in the stretched position.  
+63. **Captain's Chair & Hanging Leg Raise with C-Shape Curl (A/B Tier)**  
+    * **Form & Setup:** Support upper body on forearm pads (Captain's Chair) or hang from straps/bar.  
+    * **Execution & Cues:** Do not simply lift your legs with your hip flexors. Focus on actively curling your pelvis upward to round the lower spine into a C-shape so the lower abs initiate the pull.

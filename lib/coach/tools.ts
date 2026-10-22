@@ -312,7 +312,7 @@ export const COACH_TOOLS = [
 	defineTool({
 		name: "exercise_rankings",
 		description:
-			"The tier list for a muscle (Jeff Nippard's, S+ best to F), mapped to exercise ids, with the user's favourites and exercises to avoid. Use it when choosing exercises.",
+			"The tier list for a muscle (S+ best to F; Jeff Nippard's, Jeremy Ethier's for abs, and Setsmith estimates for a few exercises no list covers), mapped to exercise ids, with the user's favourites and exercises to avoid. Use it when choosing exercises.",
 		schema: z.object({ muscle: z.enum(ALL_MUSCLES) }),
 		run: (input, routine, ctx) => {
 			const rankings = rankingsFor(ctx.exercises);
@@ -341,6 +341,8 @@ export const COACH_TOOLS = [
 							.join("; ")
 					: "not in Hevy (the user could add it as a custom exercise in Hevy)";
 				const extras = [
+					entry.source ? (entry.source === "Setsmith estimate" ? "Setsmith estimate" : `${entry.source}'s list`) : "",
+					entry.listedAs ? `listed as ${entry.listedAs}` : "",
 					entry.note,
 					entry.variation ? "this tier only when done as named" : "",
 					entry.cues ? "form cues in exercise_details" : "",

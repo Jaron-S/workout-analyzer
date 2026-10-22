@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useExercises } from "@/lib/exercise-context";
-import { namedDifferently, type RankingEntry } from "@/lib/exercise-rankings";
+import { namedDifferently, sourceOf, type RankingEntry } from "@/lib/exercise-rankings";
 import type { Exercise } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Ban, Check, Heart, NotebookPen } from "lucide-react";
@@ -131,7 +131,11 @@ export function ExerciseInfoDialog({ exercise, open, onOpenChange, onAddCue }: E
 												<span className="text-muted-foreground"> · ranked as {r.entry.name}</span>
 											)}
 										</p>
-										{r.entry.note && <p className="text-xs text-muted-foreground">{r.entry.note}</p>}
+										<p className="text-xs text-muted-foreground">
+											{[sourceOf(r.entry), r.entry.listedAs && `listed as ${r.entry.listedAs}`, r.entry.note]
+												.filter(Boolean)
+												.join(" · ")}
+										</p>
 										{r.better.length > 0 && (
 											<p className="text-xs text-muted-foreground">
 												Better: {r.better.map((b) => `${b.name} (${b.tier})`).join(", ")}

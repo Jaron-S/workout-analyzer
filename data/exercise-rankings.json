@@ -1,5 +1,5 @@
 {
-	"source": "Jeff Nippard's exercise tier lists (YouTube), mapped to Hevy's exercises. See data/exercise-rankings.source.md.",
+	"source": "Tier lists from Jeff Nippard (and Jeremy Ethier for abs) on YouTube, plus a few Setsmith estimates, mapped to Hevy's exercises. Built from data/exercise-rankings.source.md and data/exercise-rankings.mapping.json by npm run build:rankings.",
 	"rankings": [
 		{
 			"name": "Machine Chest Press",
@@ -788,27 +788,6 @@
 			}
 		},
 		{
-			"name": "Reverse Pec Deck",
-			"tier": "S",
-			"muscles": ["Rear Delts"],
-			"hevyIds": ["D8281C62"],
-			"note": "Sideways - Rear Delt #1 Choice",
-			"cues": {
-				"setup": "Sit sideways on a reverse pec deck machine to allow one arm at a time to cross further across your chest.",
-				"execution": "Sweeping one arm across your chest achieves a much deeper stretch on the rear delts than facing forward. Drive back through the elbow while keeping chest firmly braced."
-			}
-		},
-		{
-			"name": "Reverse Cable Crossover",
-			"tier": "S",
-			"muscles": ["Rear Delts"],
-			"hevyIds": ["C315DC2A", "9264ADA1"],
-			"cues": {
-				"setup": "Set pulleys high, cross your arms in front of your chest holding the cables directly (without handles). Alternate which arm crosses on top from set to set.",
-				"execution": "Focus on sweeping the cables out and back rather than yanking them. Provides an enormous range of motion with deep stretch and smooth tension across the rear delts."
-			}
-		},
-		{
 			"name": "Machine Shoulder Press",
 			"tier": "A",
 			"muscles": ["Front Delts"],
@@ -860,12 +839,6 @@
 			"variation": true
 		},
 		{
-			"name": "Rope Face Pull (Rear Delt Focus)",
-			"tier": "A",
-			"muscles": ["Rear Delts"],
-			"hevyIds": ["BE640BA0"]
-		},
-		{
 			"name": "Standing Dumbbell Lateral Raise",
 			"tier": "B",
 			"muscles": ["Side Delts"],
@@ -904,12 +877,6 @@
 			"hevyIds": ["286C1D0B"]
 		},
 		{
-			"name": "Bent-Over Reverse Dumbbell Fly",
-			"tier": "B",
-			"muscles": ["Rear Delts"],
-			"hevyIds": ["E5988A0A"]
-		},
-		{
 			"name": "Banded Lateral Raise",
 			"tier": "C",
 			"muscles": ["Side Delts"],
@@ -921,6 +888,74 @@
 			"muscles": ["Front Delts"],
 			"hevyIds": ["8293E554", "DBB91A3C", "BD86EFD5", "47B036EF", "DBF9273A"],
 			"note": "Worst of the Worst / Redundant"
+		},
+		{
+			"name": "Reverse Pec Deck (Sideways Setup)",
+			"tier": "S",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["D8281C62"],
+			"variation": true,
+			"cues": {
+				"setup": "Sit sideways on a reverse pec deck machine to allow one arm at a time to cross further across your chest.",
+				"execution": "Sweeping one arm across your chest achieves a much deeper stretch on the rear delts than facing forward. Drive back through the elbow while keeping chest firmly braced."
+			}
+		},
+		{
+			"name": "Lying Dumbbell Reverse Fly",
+			"tier": "A",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["B582299E"],
+			"listedAs": "High A",
+			"cues": {
+				"execution": "Perform lying down on a bench to maintain tension on the rear delt at the bottom stretch position (unlike standing dumbbell reverse flies)."
+			}
+		},
+		{
+			"name": "Reverse Cable Crossover",
+			"tier": "A",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["C315DC2A", "9264ADA1"],
+			"listedAs": "High A",
+			"cues": {
+				"setup": "Set pulleys high, cross your arms in front of your chest holding the cables directly (without handles). Alternate which arm crosses on top from set to set.",
+				"execution": "Focus on sweeping the cables out and back rather than yanking them. Provides an enormous range of motion with deep stretch and smooth tension across the rear delts."
+			}
+		},
+		{
+			"name": "Rope Face Pulls (Underhand Grip)",
+			"tier": "A",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["BE640BA0"],
+			"variation": true,
+			"cues": {
+				"execution": "Use an underhand grip to bias the rear delts over the upper traps."
+			}
+		},
+		{
+			"name": "Wide-Grip Rows",
+			"tier": "B",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["C3BCABB3"],
+			"listedAs": "Low B",
+			"cues": {
+				"execution": "Solid for overloading rear delts with heavier weights, though mid-traps will partially take over."
+			}
+		},
+		{
+			"name": "Reverse Pec Deck (Standard Facing Forward)",
+			"tier": "B",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["D8281C62"],
+			"listedAs": "Low B"
+		},
+		{
+			"name": "Standing Dumbbell Reverse Fly",
+			"tier": "C",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["E5988A0A"],
+			"cues": {
+				"execution": "Suffers from zero tension at the bottom and a lack of stretch in the starting position."
+			}
 		},
 		{
 			"name": "Overhead Cable Triceps Extension (Bar)",
@@ -1214,6 +1249,387 @@
 			"tier": "F",
 			"muscles": ["Quads"],
 			"hevyIds": ["70D4EBBF"]
+		},
+		{
+			"name": "Dumbbell Wrist Curls",
+			"tier": "S",
+			"muscles": ["Forearms"],
+			"hevyIds": ["1006DF48", "95F2E076"],
+			"note": "Anterior Forearm #1 Choice",
+			"cues": {
+				"execution": "Simple, basic, and tried-and-true muscle builder for isolated anterior forearm growth. Curl wrists upward with forearms supported."
+			}
+		},
+		{
+			"name": "Dumbbell Wrist Extensions",
+			"tier": "S",
+			"muscles": ["Forearms"],
+			"hevyIds": ["D8460FA6", "9202CC23"],
+			"note": "Posterior Forearm #1 Choice",
+			"cues": {
+				"execution": "Simple and highly effective for building the back (extensors) of the forearm. Extend wrists upward while keeping forearms braced on a bench or knees."
+			}
+		},
+		{
+			"name": "Preacher Hammer Curls",
+			"tier": "S",
+			"muscles": ["Forearms"],
+			"hevyIds": [],
+			"note": "Brachioradialis #1 Choice",
+			"cues": {
+				"setup": "Perform hammer curls using a neutral grip on a preacher bench.",
+				"execution": "Increases torso and upper arm stability while placing higher mechanical tension directly onto the brachioradialis compared to standard standing hammer curls."
+			}
+		},
+		{
+			"name": "Reverse Grip Curls",
+			"tier": "A",
+			"muscles": ["Forearms"],
+			"hevyIds": ["112FC6B7", "9F48F858", "B567DD46"],
+			"listedAs": "High A",
+			"cues": {
+				"execution": "Awesome option for building up the back of the forearms. Maintain an overhand (pronated) grip throughout the curl. Note that biceps and brachialis still assist to an extent."
+			}
+		},
+		{
+			"name": "Standard Hammer Curls",
+			"tier": "A",
+			"muscles": ["Forearms"],
+			"hevyIds": ["7E3BC8B6", "36E8F14E"],
+			"listedAs": "High A"
+		},
+		{
+			"name": "Plate Pinches",
+			"tier": "A",
+			"muscles": ["Forearms"],
+			"hevyIds": [],
+			"listedAs": "Low A",
+			"cues": {
+				"execution": "Pinch smooth weight plates between your fingers and thumb to target pinch grip strength and forearms. Easy to progressively overload by extending hold time weekly."
+			}
+		},
+		{
+			"name": "Farmer's Carries",
+			"tier": "B",
+			"muscles": ["Forearms"],
+			"hevyIds": ["50C613D0"],
+			"listedAs": "High B"
+		},
+		{
+			"name": "Barbell Isometric Holds",
+			"tier": "C",
+			"muscles": ["Forearms"],
+			"hevyIds": [],
+			"listedAs": "High C"
+		},
+		{
+			"name": "Hand Grippers",
+			"tier": "C",
+			"muscles": ["Forearms"],
+			"hevyIds": []
+		},
+		{
+			"name": "Assisted Lat Pulldown Crunch",
+			"tier": "S",
+			"muscles": ["Abs"],
+			"hevyIds": [],
+			"note": "Upper Abs / Overall",
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Sit on a lat pulldown machine (or assisted pull-up setup) where the cable provides a light upward pull.",
+				"execution": "The upward assistance allows you to control the full eccentric stretch at the top and execute a full spinal crunch without form breakdown. Excellent for beginners to master deep-stretch crunches safely."
+			}
+		},
+		{
+			"name": "Face-Away Kneeling/Standing Cable Crunch",
+			"tier": "S",
+			"muscles": ["Abs"],
+			"hevyIds": ["23A48484"],
+			"note": "Upper Abs / Overall",
+			"variation": true,
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Position yourself facing AWAY from the cable stack on a kneeling, standing, or seated lat pulldown station. Adjust the backrest/pad to lock your hips firmly in place.",
+				"execution": "Facing away creates maximum tension at the top stretch position. Focus on flexing your spine by bringing your ribcage down toward your pelvis into a tight C-shape rather than hinging at the hips."
+			}
+		},
+		{
+			"name": "Face-Away Lat Pulldown Cable Crunch",
+			"tier": "S",
+			"muscles": ["Abs"],
+			"hevyIds": ["23A48484"],
+			"note": "Upper Abs / Overall",
+			"variation": true,
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Position yourself facing AWAY from the cable stack on a kneeling, standing, or seated lat pulldown station. Adjust the backrest/pad to lock your hips firmly in place.",
+				"execution": "Facing away creates maximum tension at the top stretch position. Focus on flexing your spine by bringing your ribcage down toward your pelvis into a tight C-shape rather than hinging at the hips."
+			}
+		},
+		{
+			"name": "Garhammer Raise",
+			"tier": "S",
+			"muscles": ["Abs"],
+			"hevyIds": [],
+			"note": "Lower Abs Focus",
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Lie on a flat bench with your hips positioned right off the end edge.",
+				"execution": "Tuck knees in and lower legs as far down as possible without letting feet touch the floor to achieve a deep stretch under tension. Curl your pelvis upward smoothly without using momentum or swaying your legs."
+			}
+		},
+		{
+			"name": "Reverse Crunch (with AbMat)",
+			"tier": "S",
+			"muscles": ["Abs"],
+			"hevyIds": ["7952B5CD"],
+			"note": "Lower Abs Focus",
+			"variation": true,
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Lie on a flat bench placing an AbMat or rolled towel under your lower back to allow your spine to extend fully for a deep stretch at the bottom.",
+				"execution": "Keep knees bent at 90 degrees. Focus on pushing your tailbone up and curling your pelvis inward toward your ribcage (forming a C-shape) rather than just pulling knees to chest. Control the eccentric on the way down. Extend legs outward to increase difficulty."
+			}
+		},
+		{
+			"name": "Towel / AbMat Crunch",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["DCF3B31B", "D928C232"],
+			"note": "Upper Abs Focus",
+			"variation": true,
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Facing-Machine Lat Pulldown Cable Crunch",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["23A48484"],
+			"note": "Upper Abs Focus",
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Hanging Leg Raise (with Slings / Straps)",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["F8356514"],
+			"note": "Lower Abs Focus",
+			"variation": true,
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Captain's Chair Leg Raise",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["0482DA98", "98237BA2"],
+			"note": "Lower Abs Focus",
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Support upper body on forearm pads (Captain's Chair) or hang from straps/bar.",
+				"execution": "Do not simply lift your legs with your hip flexors. Focus on actively curling your pelvis upward to round the lower spine into a C-shape so the lower abs initiate the pull."
+			}
+		},
+		{
+			"name": "Garhammer Hold",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": [],
+			"note": "Lower Abs Focus",
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Hang hips off the end of a bench and tuck knees into chest.",
+				"execution": "Lower your legs to the point of maximum stretched tension and hold isometrically. High lower-abs activation in the stretched position."
+			}
+		},
+		{
+			"name": "Reverse Crunch (Flat Bench)",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["7952B5CD"],
+			"note": "Lower Abs Focus",
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Hanging Leg Raise with C-Shape Curl",
+			"tier": "B",
+			"muscles": ["Abs"],
+			"hevyIds": ["F8356514"],
+			"variation": true,
+			"source": "Jeremy Ethier",
+			"cues": {
+				"setup": "Support upper body on forearm pads (Captain's Chair) or hang from straps/bar.",
+				"execution": "Do not simply lift your legs with your hip flexors. Focus on actively curling your pelvis upward to round the lower spine into a C-shape so the lower abs initiate the pull."
+			}
+		},
+		{
+			"name": "Dragon Flag",
+			"tier": "B",
+			"muscles": ["Abs"],
+			"hevyIds": ["AFC29472"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Front Lever Raise",
+			"tier": "B",
+			"muscles": ["Abs"],
+			"hevyIds": ["30F03BF0"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Floor Crunch",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["DCF3B31B", "D928C232"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "RKC Plank",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["C6C9B8A0"],
+			"variation": true,
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Ab Roller",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["99D5F10E"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Deadbugs",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["D8911FC4"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Sit-Ups",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["022DF610", "9237BA12"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Lying Leg Raise",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["09C9F635"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Hanging Straight Leg / Bent Knee Raise",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["F8356514", "08590920"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Bicycle Crunches",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["A41C7261", "594450D2"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "V-Ups",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["6BE68B62"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Unassisted Lat Pulldown Crunch",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": [],
+			"listedAs": "E",
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Standard Plank",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["C6C9B8A0"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Butterfly Kicks",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": [],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Mountain Climbers",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["F49E31D6"],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Bosu Ball / Jump Squat style variations",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": [],
+			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Incline Chest Press (Machine)",
+			"tier": "S+",
+			"muscles": ["Chest"],
+			"hevyIds": ["FBF92739"],
+			"note": "Like the S+ machine chest press; the lists rank incline and flat alike",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Triceps Extension (Machine)",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["3092FADD"],
+			"note": "Like pushdowns and skullcrushers (A), without the overhead stretch of the S+ cable version",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Belt Squat (Machine)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["3D1CDC75"],
+			"note": "A stable machine squat: below hack and pendulum squats, level with the leg press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Crunch (Machine)",
+			"tier": "A",
+			"muscles": ["Abs"],
+			"hevyIds": ["EB43ADD4"],
+			"note": "A loaded, stable crunch, just under the S-tier cable crunches",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Decline Crunch (Weighted)",
+			"tier": "B",
+			"muscles": ["Abs"],
+			"hevyIds": ["B2398CD1"],
+			"note": "Load and range beat floor crunches (C), short of the stretch-focused A and S options",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Seated Leg Curl (Machine)",
+			"tier": "S",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["11A123F3"],
+			"note": "Trains the hamstrings long; beats lying curls in research",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Calf Raise (Machine)",
+			"tier": "S",
+			"muscles": ["Calves"],
+			"hevyIds": ["E05C2C38"],
+			"note": "Trains both calf muscles with a deep stretch; pause at the bottom",
+			"source": "Setsmith estimate"
 		}
 	]
 }

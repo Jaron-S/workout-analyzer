@@ -37,6 +37,19 @@ describe("rankings", () => {
 		expect(rankings.forMuscle("67280085", "Chest")?.tier).toBe("D");
 	});
 
+	it("lets the dedicated rear delt list replace the shoulder list's", () => {
+		const machine = rankings.forMuscle("D8281C62", "Rear Delts")!;
+		expect(machine.tier).toBe("B");
+		expect(machine.entry.listedAs).toBe("Low B");
+		expect(machine.better.map((b) => `${b.name} ${b.tier}`)).toEqual(["Reverse Pec Deck (Sideways Setup) S"]);
+	});
+
+	it("records whose list a tier is from", () => {
+		expect(rankings.forMuscle("23A48484", "Abs")?.entry.source).toBe("Jeremy Ethier");
+		expect(rankings.forMuscle("E05C2C38", "Calves")?.entry.source).toBe("Setsmith estimate");
+		expect(rankings.forMuscle("1E42FD5F", "Quads")?.entry.source).toBeUndefined();
+	});
+
 	it("matches entries Hevy lacks to the user's custom exercises by name", () => {
 		const katana: Exercise = { id: "custom-1", name: "Katana Triceps Extensions (Cable)", hevyCustom: true, muscle_weightings: [{ muscle: "Triceps", weighting: 1 }] };
 		const withCustom = rankingsFor([...exercises, katana]);

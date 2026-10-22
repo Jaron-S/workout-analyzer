@@ -65,8 +65,8 @@ export function ExerciseRankingsDialog({ open, onOpenChange }: ExerciseRankingsD
 					<div>
 						<DialogTitle>Exercise rankings</DialogTitle>
 						<DialogDescription className="text-xs">
-							Jeff Nippard&apos;s tier lists, matched to Hevy. Favourites are suggested first; avoided exercises never
-							are, and Claude steers clear of them.
+							Tier lists from Jeff Nippard (abs from Jeremy Ethier), matched to Hevy. Favourites are suggested first;
+							avoided exercises never are, and Claude steers clear of them.
 						</DialogDescription>
 					</div>
 					<div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:-mx-5 sm:px-5">

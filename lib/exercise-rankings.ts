@@ -1,4 +1,5 @@
-// How good each exercise is for each muscle, from Jeff Nippard's tier lists
+// How good each exercise is for each muscle, from YouTube tier lists (Jeff
+// Nippard's, Jeremy Ethier's for abs) plus a few estimates
 // (data/exercise-rankings.json), and the order exercises are picked in once
 // the user's favourites and exercises to avoid are taken into account.
 
@@ -22,7 +23,13 @@ export interface RankingEntry {
 	/** The tier only holds when done this way (e.g. deficit push-ups), not for every set of the Hevy exercise. */
 	variation?: boolean;
 	cues?: { setup?: string; execution?: string };
+	/** Whose list it's from; Jeff Nippard's when absent. "Setsmith estimate" for ones no list covers. */
+	source?: string;
+	/** The list's own label when finer than the tier, e.g. "High A". */
+	listedAs?: string;
 }
+
+export const sourceOf = (entry: RankingEntry) => entry.source ?? "Jeff Nippard’s list";
 
 export const RANKINGS = rankingsData.rankings as RankingEntry[];
 

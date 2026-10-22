@@ -8,6 +8,7 @@
     "lint": "next lint",
     "start": "next start",
     "sync:hevy": "node --env-file-if-exists=.env.local scripts/sync-hevy-catalog.mjs",
+    "build:rankings": "node scripts/build-exercise-rankings.mjs",
     "check:exercises": "node scripts/check-exercises.mjs",
     "test": "vitest run"
   },
