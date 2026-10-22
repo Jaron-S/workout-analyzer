@@ -7,7 +7,9 @@ import { usePersistedState } from "./use-persisted-state";
 /**
  * State kept in localStorage and, while signed in, in the user's account.
  * On sign-in the account's copy wins; if the account has none yet, the copy
- * made on this device as a guest is uploaded.
+ * made on this device as a guest is uploaded. With `subscribe`, changes made
+ * elsewhere (another device, Claude) arrive live, so a stale copy is never
+ * uploaded over them.
  */
 export function useAccountSyncedState<T>(
 	key: string,
@@ -16,6 +18,7 @@ export function useAccountSyncedState<T>(
 	remote: {
 		save: (userId: string, value: T) => Promise<void>;
 		load: (userId: string) => Promise<T | null>;
+		subscribe?: (userId: string, onValue: (value: T | null) => void, onError: (error: Error) => void) => () => void;
 	}
 ): [T, (value: T | ((prev: T) => T)) => void] {
 	const { user } = useAuth();
@@ -32,31 +35,43 @@ export function useAccountSyncedState<T>(
 	const stateRef = useRef(state);
 	stateRef.current = state;
 	const initialJson = useRef(JSON.stringify(initialValue)).current;
+	const initialValueRef = useRef(initialValue);
 
 	useEffect(() => {
 		syncedRef.current = null;
 		if (!user) return;
 		let cancelled = false;
-		remoteRef.current
-			.load(user.uid)
-			.then((value) => {
-				if (cancelled) return;
-				if (value !== null) {
-					syncedRef.current = JSON.stringify(value);
-					setState(value);
-				} else {
-					const json = JSON.stringify(stateRef.current);
+		const received = (value: T | null) => {
+			if (cancelled) return;
+			// Later updates: take them unless they're what this device last sent.
+			if (syncedRef.current !== null) {
+				const json = JSON.stringify(value ?? initialValueRef.current);
+				if (json !== syncedRef.current) {
 					syncedRef.current = json;
-					if (json !== initialJson) {
-						remoteRef.current
-							.save(user.uid, stateRef.current)
-							.catch((error) => console.error(`Failed to save ${key}:`, error));
-					}
+					setState(value ?? initialValueRef.current);
 				}
-			})
-			.catch((error) => console.error(`Failed to load ${key}:`, error));
+				return;
+			}
+			if (value !== null) {
+				syncedRef.current = JSON.stringify(value);
+				setState(value);
+			} else {
+				const json = JSON.stringify(stateRef.current);
+				syncedRef.current = json;
+				if (json !== initialJson) {
+					remoteRef.current
+						.save(user.uid, stateRef.current)
+						.catch((error) => console.error(`Failed to save ${key}:`, error));
+				}
+			}
+		};
+		const failed = (error: unknown) => console.error(`Failed to load ${key}:`, error);
+		const unsubscribe = remoteRef.current.subscribe
+			? remoteRef.current.subscribe(user.uid, received, failed)
+			: (remoteRef.current.load(user.uid).then(received).catch(failed), undefined);
 		return () => {
 			cancelled = true;
+			unsubscribe?.();
 		};
 	}, [user, key, setState, initialJson]);
 

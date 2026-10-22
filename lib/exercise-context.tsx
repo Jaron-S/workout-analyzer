@@ -3,7 +3,7 @@
 import { useAccountSyncedState } from "@/hooks/use-account-synced-state";
 import { buildCatalog } from "./exercise-catalog";
 import { rankingsFor, type Rankings } from "./exercise-rankings";
-import { getSettingFromFirebase, saveSettingToFirebase } from "./firebase-storage";
+import { getSettingFromFirebase, saveSettingToFirebase, subscribeToSetting } from "./firebase-storage";
 import { customTemplateToExercise } from "./hevy/exercises";
 import { useHevy } from "./hevy-context";
 import { loadExercisePreferences, loadMuscleOverrides, saveExercisePreferences, saveMuscleOverrides } from "./storage";
@@ -49,6 +49,9 @@ const remotePreferences = {
 	save: (userId: string, value: ExercisePreferences) =>
 		saveSettingToFirebase(userId, "exercisePreferences", value),
 	load: (userId: string) => getSettingFromFirebase<ExercisePreferences>(userId, "exercisePreferences"),
+	// Live, because Claude in claude.ai can change them too.
+	subscribe: (userId: string, onValue: (value: ExercisePreferences | null) => void, onError: (error: Error) => void) =>
+		subscribeToSetting(userId, "exercisePreferences", onValue, onError),
 };
 
 export function ExerciseProvider({ children }: { children: React.ReactNode }) {

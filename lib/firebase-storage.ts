@@ -4,6 +4,7 @@ import {
 	doc,
 	getDoc,
 	getDocs,
+	onSnapshot,
 	setDoc,
 } from "firebase/firestore";
 import { db } from "./firebase-config";
@@ -99,6 +100,25 @@ export async function getSettingFromFirebase<T>(
 	const snapshot = await getDoc(settingRef);
 
 	return snapshot.exists() ? (snapshot.data().value as T) : null;
+}
+
+/** Calls back with the setting now and whenever it changes (null when unset). */
+export function subscribeToSetting<T>(
+	userId: string,
+	name: string,
+	onValue: (value: T | null) => void,
+	onError: (error: Error) => void
+): () => void {
+	if (!db) throw new Error("Firebase not configured");
+	return onSnapshot(
+		doc(db, "users", userId, "settings", name),
+		(snapshot) => {
+			// This device's own writes, not yet confirmed: it already has them.
+			if (snapshot.metadata.hasPendingWrites) return;
+			onValue(snapshot.exists() ? (snapshot.data().value as T) : null);
+		},
+		onError
+	);
 }
 
 export async function deleteSettingFromFirebase(userId: string, name: string): Promise<void> {
