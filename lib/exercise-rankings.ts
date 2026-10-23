@@ -1,5 +1,6 @@
 // How good each exercise is for each muscle, from YouTube tier lists (Jeff
-// Nippard's, Jeremy Ethier's for abs) plus a few estimates
+// Nippard's, Jeremy Ethier's for abs, Mike Israetel and Milo Wolf's),
+// averaged where they overlap, plus a few estimates
 // (data/exercise-rankings.json), and the order exercises are picked in once
 // the user's favourites and exercises to avoid are taken into account.
 
@@ -29,16 +30,43 @@ export interface RankingEntry {
 	listedAs?: string;
 }
 
-export const sourceOf = (entry: RankingEntry) => entry.source ?? "Jeff Nippard’s list";
+const DEFAULT_SOURCE = "Jeff Nippard";
+/** Whose rating it is, e.g. "Jeff Nippard" or "Setsmith estimate". */
+export const sourceOf = (entry: RankingEntry) => entry.source ?? DEFAULT_SOURCE;
 
 export const RANKINGS = rankingsData.rankings as RankingEntry[];
+
+/** "Nippard", "Israetel/Wolf", "estimate": short enough for a row. */
+export const shortSource = (source: string) =>
+	source === "Setsmith estimate"
+		? "estimate"
+		: source
+				.split(" / ")
+				.map((name) => name.split(" ").at(-1))
+				.join("/");
+
+/** "Nippard A · Israetel/Wolf C, experts disagree" */
+export const describeOpinions = (rank: ExerciseRank) =>
+	`${rank.opinions.map((o) => `${shortSource(o.source)} ${o.tier}`).join(" · ")}${rank.disagree ? ", experts disagree" : ""}`;
+
+/** One source's rating of an exercise for a muscle. */
+export interface Opinion {
+	source: string;
+	tier: ExerciseTier;
+	entry: RankingEntry;
+}
 
 /** An exercise's standing for one muscle. */
 export interface ExerciseRank {
 	muscle: string;
+	/** The sources' average (see combine). */
 	tier: ExerciseTier;
-	/** The entry that sets the tier. */
+	/** The first source's entry: its name and notes describe the exercise. */
 	entry: RankingEntry;
+	/** Each source's rating, in the order the sources first appear. */
+	opinions: Opinion[];
+	/** The sources are two or more tiers apart. */
+	disagree: boolean;
 	/** Better-ranked ways to do the same exercise, e.g. lean-in lateral raises. */
 	better: RankingEntry[];
 	/** Every entry for this exercise and muscle, best first. */
@@ -71,14 +99,60 @@ export function namedDifferently(entry: RankingEntry, exerciseName: string): boo
 	return [...words(entry.name)].some((w) => !own.has(w));
 }
 
+/** A row of a muscle's tier list. Without an id, the entry matches no exercise (not in Hevy). */
+export interface MuscleRow {
+	tier: ExerciseTier;
+	entry: RankingEntry;
+	id?: string;
+	rank?: ExerciseRank;
+}
+
+// Sources in the order they first appear; on a tie the earliest decides.
+const SOURCE_ORDER = [...new Set(RANKINGS.map(sourceOf))];
+
+/**
+ * Each source's rating. Plain versions are compared with plain versions: a
+ * source's rating is its best plain entry, and variations count only when no
+ * source ranks the plain exercise (deficit push-ups aren't push-ups).
+ */
+function combine(entries: RankingEntry[]): Opinion[] {
+	const plain = entries.filter((e) => !e.variation);
+	const pool = plain.length ? plain : entries;
+	const bySource = new Map<string, RankingEntry>();
+	for (const entry of pool) {
+		const best = bySource.get(sourceOf(entry));
+		if (!best || tierIndex(entry.tier) < tierIndex(best.tier)) bySource.set(sourceOf(entry), entry);
+	}
+	return [...bySource]
+		.map(([source, entry]) => ({ source, tier: entry.tier, entry }))
+		.sort((a, b) => SOURCE_ORDER.indexOf(a.source) - SOURCE_ORDER.indexOf(b.source));
+}
+
+/** One entry per variation name, at the sources' average tier (two lists' "Deficit Push-Ups" are one). */
+function mergeVariations(entries: RankingEntry[]): RankingEntry[] {
+	const byName = new Map<string, RankingEntry[]>();
+	for (const e of entries) byName.set(normalise(e.name), [...(byName.get(normalise(e.name)) ?? []), e]);
+	return [...byName.values()]
+		.map((same) => (same.length === 1 ? same[0] : { ...same[0], tier: averageTier(combine(same)) }))
+		.sort(byTier);
+}
+
+/** The average tier; halfway between two, the first source's side wins. */
+function averageTier(opinions: Opinion[]): ExerciseTier {
+	const mean = opinions.reduce((n, o) => n + tierIndex(o.tier), 0) / opinions.length;
+	const first = tierIndex(opinions[0].tier);
+	const index = mean % 1 === 0.5 ? (first < mean ? Math.floor(mean) : Math.ceil(mean)) : Math.round(mean);
+	return EXERCISE_TIERS[index];
+}
+
 export interface Rankings {
 	/** The exercise's tier for each muscle it's ranked for, best first. */
 	forExercise(id: string): ExerciseRank[];
 	forMuscle(id: string, muscle: string): ExerciseRank | undefined;
 	/** The best tier across muscles, for a compact badge. */
 	best(id: string): ExerciseRank | undefined;
-	/** Ranked entries for a muscle, best first, with the exercises they map to (Hevy's, or the user's custom ones). */
-	entriesFor(muscle: string): { entry: RankingEntry; ids: string[] }[];
+	/** A muscle's tier list, best first: one row per exercise (Hevy's, or the user's custom ones), plus entries no exercise matches. */
+	listFor(muscle: string): MuscleRow[];
 	/** Muscles that have a tier list. */
 	muscles: string[];
 }
@@ -107,11 +181,20 @@ function build(exercises: Exercise[]): Rankings {
 		const list: ExerciseRank[] = [];
 		for (const [muscle, entries] of muscles) {
 			const sorted = [...entries].sort(byTier);
-			// The plain exercise's tier when the list ranks it; a variation's
-			// only when that's the sole way the list mentions it.
-			const entry = sorted.find((e) => !e.variation) ?? sorted[0];
-			const better = sorted.filter((e) => e !== entry && tierIndex(e.tier) < tierIndex(entry.tier));
-			list.push({ muscle, tier: entry.tier, entry, better, entries: sorted });
+			const opinions = combine(sorted);
+			const tier = averageTier(opinions);
+			const rated = new Set(opinions.map((o) => o.entry));
+			const better = mergeVariations(sorted.filter((e) => !rated.has(e))).filter((e) => tierIndex(e.tier) < tierIndex(tier));
+			const spread = opinions.map((o) => tierIndex(o.tier));
+			list.push({
+				muscle,
+				tier,
+				entry: opinions[0].entry,
+				opinions,
+				disagree: Math.max(...spread) - Math.min(...spread) >= 2,
+				better,
+				entries: sorted,
+			});
 		}
 		ranks.set(
 			id,
@@ -120,14 +203,28 @@ function build(exercises: Exercise[]): Rankings {
 	}
 
 	const muscles = [...new Set(RANKINGS.flatMap((e) => e.muscles))];
+	const listFor = (muscle: string) => {
+		const seen = new Set<string>();
+		const rows: MuscleRow[] = [];
+		for (const entry of RANKINGS.filter((e) => e.muscles.includes(muscle))) {
+			const ids = idsOf(entry);
+			if (ids.length === 0) rows.push({ tier: entry.tier, entry });
+			for (const id of ids) {
+				const rank = ranks.get(id)?.find((r) => r.muscle === muscle);
+				if (!rank || seen.has(id)) continue;
+				seen.add(id);
+				rows.push({ tier: rank.tier, entry: rank.entry, id, rank });
+			}
+		}
+		// Stable, so each tier keeps the lists' order.
+		return rows.sort((a, b) => tierIndex(a.tier) - tierIndex(b.tier));
+	};
+
 	return {
 		forExercise: (id) => ranks.get(id) ?? [],
 		forMuscle: (id, muscle) => ranks.get(id)?.find((r) => r.muscle === muscle),
 		best: (id) => ranks.get(id)?.[0],
-		entriesFor: (muscle) =>
-			RANKINGS.filter((e) => e.muscles.includes(muscle))
-				.sort(byTier)
-				.map((entry) => ({ entry, ids: idsOf(entry) })),
+		listFor,
 		muscles,
 	};
 }

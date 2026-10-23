@@ -6,7 +6,15 @@ import { ExerciseTierBadge } from "@/components/status";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ALL_MUSCLES } from "@/lib/constants";
 import { useExercises } from "@/lib/exercise-context";
-import { EXERCISE_TIERS, namedDifferently, type ExerciseTier, type RankingEntry } from "@/lib/exercise-rankings";
+import {
+	describeOpinions,
+	EXERCISE_TIERS,
+	namedDifferently,
+	sourceOf,
+	type ExerciseRank,
+	type ExerciseTier,
+	type RankingEntry,
+} from "@/lib/exercise-rankings";
 import type { Exercise } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Ban, Heart } from "lucide-react";
@@ -19,7 +27,7 @@ interface ExerciseRankingsDialogProps {
 
 const YOURS = "Yours";
 
-type Row = { key: string; tier: ExerciseTier; exercise?: Exercise; entry: RankingEntry; better?: RankingEntry[] };
+type Row = { key: string; tier: ExerciseTier; id?: string; exercise?: Exercise; entry: RankingEntry; rank?: ExerciseRank };
 
 /** The tier lists by muscle, where the user marks favourites and exercises to avoid. */
 export function ExerciseRankingsDialog({ open, onOpenChange }: ExerciseRankingsDialogProps) {
@@ -31,19 +39,10 @@ export function ExerciseRankingsDialog({ open, onOpenChange }: ExerciseRankingsD
 	// One row per exercise at its tier for this muscle, plus entries Hevy lacks.
 	const rows = useMemo(() => {
 		if (muscle === YOURS) return [];
-		const seen = new Set<string>();
-		const list: Row[] = [];
-		for (const { entry, ids } of rankings.entriesFor(muscle)) {
-			if (ids.length === 0) list.push({ key: entry.name, tier: entry.tier, entry });
-			for (const id of ids) {
-				const exercise = getExercise(id);
-				const rank = rankings.forMuscle(id, muscle);
-				if (!exercise || !rank || seen.has(id)) continue;
-				seen.add(id);
-				list.push({ key: id, tier: rank.tier, exercise, entry: rank.entry, better: rank.better });
-			}
-		}
-		return list;
+		return rankings
+			.listFor(muscle)
+			.map((row): Row => ({ ...row, key: row.id ?? `${sourceOf(row.entry)} ${row.entry.name}`, exercise: row.id ? getExercise(row.id) : undefined }))
+			.filter((row) => !row.id || row.exercise);
 	}, [muscle, rankings, getExercise]);
 
 	const yours = useMemo(
@@ -65,8 +64,8 @@ export function ExerciseRankingsDialog({ open, onOpenChange }: ExerciseRankingsD
 					<div>
 						<DialogTitle>Exercise rankings</DialogTitle>
 						<DialogDescription className="text-xs">
-							Tier lists from Jeff Nippard (abs from Jeremy Ethier), matched to Hevy. Favourites are suggested first;
-							avoided exercises never are, and Claude steers clear of them.
+							Tier lists from Jeff Nippard, Jeremy Ethier and Mike Israetel / Milo Wolf, averaged where they overlap and
+							matched to Hevy. Favourites are suggested first; avoided exercises never are, and Claude steers clear of them.
 						</DialogDescription>
 					</div>
 					<div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:-mx-5 sm:px-5">
@@ -129,7 +128,8 @@ export function ExerciseRankingsDialog({ open, onOpenChange }: ExerciseRankingsD
 												key={r.key}
 												exercise={r.exercise}
 												subtitle={[
-													r.better?.length ? `${r.better[0].name} is ${r.better[0].tier}` : "",
+													r.rank && r.rank.opinions.length > 1 ? describeOpinions(r.rank) : "",
+													r.rank?.better.length ? `${r.rank.better[0].name} is ${r.rank.better[0].tier}` : "",
 													namedDifferently(r.entry, r.exercise.name) ? `Ranked as ${r.entry.name}` : "",
 													r.entry.note ?? "",
 												]

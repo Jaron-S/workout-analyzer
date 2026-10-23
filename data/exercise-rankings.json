@@ -1,5 +1,5 @@
 {
-	"source": "Tier lists from Jeff Nippard (and Jeremy Ethier for abs) on YouTube, plus a few Setsmith estimates, mapped to Hevy's exercises. Built from data/exercise-rankings.source.md and data/exercise-rankings.mapping.json by npm run build:rankings.",
+	"source": "Tier lists from YouTube (Jeff Nippard, Jeremy Ethier, Mike Israetel / Milo Wolf), plus a few Setsmith estimates, mapped to Hevy's exercises. Built from data/exercise-rankings.source.md and data/exercise-rankings.mapping.json by npm run build:rankings.",
 	"rankings": [
 		{
 			"name": "Machine Chest Press",
@@ -1574,6 +1574,170 @@
 			"muscles": ["Abs"],
 			"hevyIds": [],
 			"source": "Jeremy Ethier"
+		},
+		{
+			"name": "Deficit Push-Ups",
+			"tier": "S",
+			"muscles": ["Chest"],
+			"hevyIds": ["392887AA"],
+			"variation": true,
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"execution": "Elevate hands on blocks or handles to allow the chest to drop below hand level for a full lengthened stretch. As you press up, body angle becomes more perpendicular to gravity, creating an optimal lengthened resistance curve."
+			}
+		},
+		{
+			"name": "Incline Barbell Bench Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["50DFDFAB"],
+			"note": "Low incline, upper chest focus",
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Barbell Bench Press",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["79D0BB3A"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Cable Crossovers",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["651F844C", "293483AD", "8372BBCC"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Dips",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["6FCD7755", "29472BE1", "E9E4089F"],
+			"note": "For chest",
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Cable Overhead Triceps Extension (Bar Attachment)",
+			"tier": "S",
+			"muscles": ["Triceps"],
+			"hevyIds": ["B5EFBF9C"],
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"setup": "Attach a bar (not a rope) to a cable stack.",
+				"execution": "Avoid using rope attachments, as spreading ropes wastes energy at lockout and forces load reductions at the crucial bottom stretch. Pause 1–2 seconds in the bottom stretched position."
+			}
+		},
+		{
+			"name": "Barbell Biceps Curl",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["A5AC6449"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Dumbbell Triceps Kickbacks",
+			"tier": "D",
+			"muscles": ["Triceps"],
+			"hevyIds": ["6127A3AD"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Machine Rear Delt Fly",
+			"tier": "B",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["D8281C62"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Barbell Front Raises (Prone Grip / Pinkies Up)",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["BD86EFD5"],
+			"variation": true,
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"execution": "Perform with a pronated grip pointing pinkies slightly upward (rather than thumbs up) to engage side delt fibers. Lower slowly through the eccentric phase under control."
+			}
+		},
+		{
+			"name": "Standing Barbell Overhead Press (OHP)",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["7B8D84E8", "073032BB"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Prime Machine Row (Chest Supported)",
+			"tier": "S",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["AA1EB7D8", "1DF4A847", "91FAFBA3"],
+			"note": "God tier",
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"execution": "Use chest support to eliminate lower back fatigue during upper/mid-back rowing. Place weight on the top pin to maximize mechanical tension at full stretch."
+			}
+		},
+		{
+			"name": "Dumbbell Pullover",
+			"tier": "S",
+			"muscles": ["Lats"],
+			"hevyIds": ["67280085", "D2387AB1", "9273BA17"],
+			"note": "Or cable lat prayer / EZ-bar pullover",
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"execution": "Arc the load back over your head to place lats and long head of the triceps under peak stretch tension without fatiguing your forearms/grip."
+			}
+		},
+		{
+			"name": "Pull-Ups",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["1B2B1E7C", "7C50F118", "729237D1", "2C37EC5E"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Barbell Bent-Over Row (Advanced Leverage Style)",
+			"tier": "A",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["55E6546F"],
+			"variation": true,
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"execution": "Start in a deep stretch. As you pull up, leverage your hips up slightly to adjust leverage dynamically, increasing mechanical advantage at lockout while keeping maximum stretch tension at the bottom."
+			}
+		},
+		{
+			"name": "Hip Thrust (Barbell or Machine)",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["D57C2EC7", "92B8C7E1", "DA5430FC", "291ABA92", "68CE0B9B"],
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Seated Leg Extension",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["75A4F6C4", "629AE73D"],
+			"note": "Standard setup; reclined for a full stretch it's A to S",
+			"source": "Mike Israetel / Milo Wolf",
+			"cues": {
+				"execution": "Recline the backrest backward as far as possible (extending hips from 90° to ~40°) to stretch the rectus femoris and dramatically boost quad growth."
+			}
+		},
+		{
+			"name": "Conventional Barbell Deadlift",
+			"tier": "D",
+			"muscles": ["Glutes", "Hamstrings"],
+			"hevyIds": ["C6272009"],
+			"note": "For targeted hypertrophy",
+			"source": "Mike Israetel / Milo Wolf"
+		},
+		{
+			"name": "Seated Calf Raise",
+			"tier": "D",
+			"muscles": ["Calves"],
+			"hevyIds": ["062AB91A"],
+			"source": "Mike Israetel / Milo Wolf"
 		},
 		{
 			"name": "Incline Chest Press (Machine)",

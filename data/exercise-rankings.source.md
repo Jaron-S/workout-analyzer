@@ -353,3 +353,55 @@ This document tracks exercise tier lists, rankings, and key form cues for top-ti
 63. **Captain's Chair & Hanging Leg Raise with C-Shape Curl (A/B Tier)**  
     * **Form & Setup:** Support upper body on forearm pads (Captain's Chair) or hang from straps/bar.  
     * **Execution & Cues:** Do not simply lift your legs with your hip flexors. Focus on actively curling your pelvis upward to round the lower spine into a C-shape so the lower abs initiate the pull.
+
+# **Full Body Hypertrophy Exercises (Dr. Mike Israetel / Milo Wolf)**
+
+## **Exercise Rankings by Muscle Group**
+
+### **Chest Exercises**
+
+* **S Tier:** Deficit Push-Ups  
+* **A Tier:** Incline Barbell Bench Press (Low Incline / Upper Chest Focus), Barbell Bench Press  
+* **C Tier:** Cable Crossovers, Dips (for chest)
+
+### **Biceps & Triceps**
+
+* **S Tier:** Cable Overhead Triceps Extension (Bar Attachment)  
+* **C Tier:** Barbell Biceps Curl  
+* **D Tier:** Dumbbell Triceps Kickbacks
+
+### **Shoulder Exercises**
+
+* **B Tier:** Machine Rear Delt Fly, Barbell Front Raises (Prone Grip / Pinkies Up)  
+* **D Tier:** Standing Barbell Overhead Press (OHP)
+
+### **Back Exercises**
+
+* **S Tier / God Tier:** Prime Machine Row (Chest Supported), Dumbbell Pullover (or Cable Lat Prayer / EZ-Bar Pullover)  
+* **A Tier:** Pull-Ups, Barbell Bent-Over Row (Advanced Leverage Style)
+
+### **Leg Exercises**
+
+* **B Tier:** Barbell / Machine Hip Thrust  
+* **C Tier (Context-Dependent):** Seated Leg Extension (C-Tier standard; moves up to A/S-Tier when reclining back seat & setup for maximum stretch)  
+* **D Tier / Z Tier:** Conventional Barbell Deadlift (for pure targeted hypertrophy), Seated Calf Raise
+
+---
+
+## **Form & Execution Cues for Highlighted Movements**
+
+64. **Deficit Push-Ups (S Tier \- Chest)**  
+    * **Execution & Cues:** Elevate hands on blocks or handles to allow the chest to drop below hand level for a full lengthened stretch. As you press up, body angle becomes more perpendicular to gravity, creating an optimal lengthened resistance curve.  
+65. **Cable Overhead Triceps Extension with Bar (S Tier \- Triceps)**  
+    * **Form & Setup:** Attach a bar (not a rope) to a cable stack.  
+    * **Execution & Cues:** Avoid using rope attachments, as spreading ropes wastes energy at lockout and forces load reductions at the crucial bottom stretch. Pause 1–2 seconds in the bottom stretched position.  
+66. **Prime Machine Row (God Tier \- Back)**  
+    * **Execution & Cues:** Use chest support to eliminate lower back fatigue during upper/mid-back rowing. Place weight on the top pin to maximize mechanical tension at full stretch.  
+67. **Dumbbell / Cable Pullover (S Tier \- Lats & Triceps Long Head)**  
+    * **Execution & Cues:** Arc the load back over your head to place lats and long head of the triceps under peak stretch tension without fatiguing your forearms/grip.  
+68. **Advanced Barbell Bent-Over Row (A Tier \- Whole Back)**  
+    * **Execution & Cues:** Start in a deep stretch. As you pull up, leverage your hips up slightly to adjust leverage dynamically, increasing mechanical advantage at lockout while keeping maximum stretch tension at the bottom.  
+69. **Barbell Front Raises \- Pinkies Up (B Tier \- Side Delt Bias)**  
+    * **Execution & Cues:** Perform with a pronated grip pointing pinkies slightly upward (rather than thumbs up) to engage side delt fibers. Lower slowly through the eccentric phase under control.  
+70. **Seated Leg Extension Adjustment (C to S Tier \- Quads)**  
+    * **Execution & Cues:** Recline the backrest backward as far as possible (extending hips from 90° to \~40°) to stretch the rectus femoris and dramatically boost quad growth.

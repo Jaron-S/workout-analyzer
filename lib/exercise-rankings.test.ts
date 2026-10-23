@@ -33,8 +33,25 @@ describe("rankings", () => {
 	it("ranks one exercise differently per muscle", () => {
 		expect(rankings.forMuscle("BE640BA0", "Rear Delts")?.tier).toBe("A");
 		expect(rankings.forMuscle("BE640BA0", "Middle Back")?.tier).toBe("B");
-		expect(rankings.forMuscle("67280085", "Lats")?.tier).toBe("A");
+		expect(rankings.forMuscle("67280085", "Lats")?.tier).toBe("S");
 		expect(rankings.forMuscle("67280085", "Chest")?.tier).toBe("D");
+	});
+
+	it("averages sources, leaning to the first on a tie, and flags big splits", () => {
+		const dips = rankings.forMuscle("6FCD7755", "Chest")!;
+		expect(dips.opinions.map((o) => `${o.source} ${o.tier}`)).toEqual(["Jeff Nippard A", "Mike Israetel / Milo Wolf C"]);
+		expect(dips.tier).toBe("B");
+		expect(dips.disagree).toBe(true);
+		// Nippard S+, Israetel/Wolf S: halfway, so Nippard's side.
+		expect(rankings.forMuscle("B5EFBF9C", "Triceps")?.tier).toBe("S+");
+		expect(rankings.forMuscle("B5EFBF9C", "Triceps")?.disagree).toBe(false);
+	});
+
+	it("compares variations with variations", () => {
+		// Plain push-ups are only Nippard's C; both lists' deficit push-ups (A, S) merge.
+		const pushUp = rankings.forMuscle("392887AA", "Chest")!;
+		expect(pushUp.opinions.map((o) => o.source)).toEqual(["Jeff Nippard"]);
+		expect(pushUp.better.filter((b) => b.name === "Deficit Push-Ups").map((b) => b.tier)).toEqual(["A"]);
 	});
 
 	it("lets the dedicated rear delt list replace the shoulder list's", () => {

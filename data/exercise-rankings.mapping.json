@@ -1,5 +1,5 @@
 {
-	"_about": "How data/exercise-rankings.source.md maps to Hevy. Keys are '<list> / <exercise as written>', the list named as in the doc's heading (\"Glute Exercises\" is Glute). hevyIds [] means Hevy has no such exercise; variation means the tier only holds done as named; muscles overrides the list's muscles (lists without them need it on every entry); tier overrides the doc; skip leaves an entry out. cues names the entries each numbered cue in the doc belongs to; estimates rank exercises no list covers. Run npm run build:rankings after editing either file.",
+	"_about": "How data/exercise-rankings.source.md maps to Hevy. Keys are '<list> / <exercise as written>', the list named as in the doc's heading (\"Glute Exercises\" is Glute). hevyIds [] means Hevy has no such exercise; variation means the tier only holds done as named; muscles overrides the list's muscles (lists without them need it on every entry); tier, name and note override the doc's; skip leaves an entry out. cues names the entries each numbered cue in the doc belongs to; estimates rank exercises no list covers. Run npm run build:rankings after editing either file.",
 	"lists": {
 		"Chest": {
 			"muscles": ["Chest"]
@@ -22,12 +22,18 @@
 			"muscles": ["Forearms"]
 		},
 		"Ab": {
-			"muscles": ["Abs"],
-			"source": "Jeremy Ethier"
+			"muscles": ["Abs"]
 		},
 		"Rear Delts": {
 			"muscles": ["Rear Delts"]
-		}
+		},
+		"Full Body Hypertrophy / Chest": {
+			"muscles": ["Chest"]
+		},
+		"Full Body Hypertrophy / Biceps & Triceps": {},
+		"Full Body Hypertrophy / Shoulder": {},
+		"Full Body Hypertrophy / Back": {},
+		"Full Body Hypertrophy / Leg": {}
 	},
 	"entries": {
 		"Chest / Machine Chest Press": { "hevyIds": ["7EB3F7C3", "24706DCD"] },
@@ -398,7 +404,86 @@
 		"Ab / Standard Plank": { "hevyIds": ["C6C9B8A0"] },
 		"Ab / Butterfly Kicks": { "hevyIds": [] },
 		"Ab / Mountain Climbers": { "hevyIds": ["F49E31D6"] },
-		"Ab / Bosu Ball / Jump Squat style variations": { "hevyIds": [] }
+		"Ab / Bosu Ball / Jump Squat style variations": { "hevyIds": [] },
+		"Full Body Hypertrophy / Chest / Deficit Push-Ups": { "hevyIds": ["392887AA"], "variation": true },
+		"Full Body Hypertrophy / Chest / Incline Barbell Bench Press (Low Incline / Upper Chest Focus)": {
+			"hevyIds": ["50DFDFAB"],
+			"name": "Incline Barbell Bench Press",
+			"note": "Low incline, upper chest focus"
+		},
+		"Full Body Hypertrophy / Chest / Barbell Bench Press": { "hevyIds": ["79D0BB3A"] },
+		"Full Body Hypertrophy / Chest / Cable Crossovers": { "hevyIds": ["651F844C", "293483AD", "8372BBCC"] },
+		"Full Body Hypertrophy / Chest / Dips (for chest)": {
+			"hevyIds": ["6FCD7755", "29472BE1", "E9E4089F"],
+			"name": "Dips",
+			"note": "For chest"
+		},
+		"Full Body Hypertrophy / Biceps & Triceps / Cable Overhead Triceps Extension (Bar Attachment)": {
+			"hevyIds": ["B5EFBF9C"],
+			"muscles": ["Triceps"]
+		},
+		"Full Body Hypertrophy / Biceps & Triceps / Barbell Biceps Curl": {
+			"hevyIds": ["A5AC6449"],
+			"muscles": ["Biceps"]
+		},
+		"Full Body Hypertrophy / Biceps & Triceps / Dumbbell Triceps Kickbacks": {
+			"hevyIds": ["6127A3AD"],
+			"muscles": ["Triceps"]
+		},
+		"Full Body Hypertrophy / Shoulder / Machine Rear Delt Fly": {
+			"hevyIds": ["D8281C62"],
+			"muscles": ["Rear Delts"]
+		},
+		"Full Body Hypertrophy / Shoulder / Barbell Front Raises (Prone Grip / Pinkies Up)": {
+			"hevyIds": ["BD86EFD5"],
+			"muscles": ["Side Delts"],
+			"variation": true
+		},
+		"Full Body Hypertrophy / Shoulder / Standing Barbell Overhead Press (OHP)": {
+			"hevyIds": ["7B8D84E8", "073032BB"],
+			"muscles": ["Front Delts"]
+		},
+		"Full Body Hypertrophy / Back / Prime Machine Row (Chest Supported)": {
+			"hevyIds": ["AA1EB7D8", "1DF4A847", "91FAFBA3"],
+			"muscles": ["Middle Back", "Lats"],
+			"note": "God tier"
+		},
+		"Full Body Hypertrophy / Back / Dumbbell Pullover (or Cable Lat Prayer / EZ-Bar Pullover)": {
+			"hevyIds": ["67280085", "D2387AB1", "9273BA17"],
+			"muscles": ["Lats"],
+			"name": "Dumbbell Pullover",
+			"note": "Or cable lat prayer / EZ-bar pullover"
+		},
+		"Full Body Hypertrophy / Back / Pull-Ups": {
+			"hevyIds": ["1B2B1E7C", "7C50F118", "729237D1", "2C37EC5E"],
+			"muscles": ["Lats"]
+		},
+		"Full Body Hypertrophy / Back / Barbell Bent-Over Row (Advanced Leverage Style)": {
+			"hevyIds": ["55E6546F"],
+			"muscles": ["Middle Back", "Lats"],
+			"variation": true
+		},
+		"Full Body Hypertrophy / Leg / Barbell / Machine Hip Thrust": {
+			"hevyIds": ["D57C2EC7", "92B8C7E1", "DA5430FC", "291ABA92", "68CE0B9B"],
+			"muscles": ["Glutes"],
+			"name": "Hip Thrust (Barbell or Machine)"
+		},
+		"Full Body Hypertrophy / Leg / Seated Leg Extension (C-Tier standard; moves up to A/S-Tier when reclining back seat & setup for maximum stretch)": {
+			"hevyIds": ["75A4F6C4", "629AE73D"],
+			"muscles": ["Quads"],
+			"name": "Seated Leg Extension",
+			"note": "Standard setup; reclined for a full stretch it's A to S"
+		},
+		"Full Body Hypertrophy / Leg / Conventional Barbell Deadlift (for pure targeted hypertrophy)": {
+			"hevyIds": ["C6272009"],
+			"muscles": ["Glutes", "Hamstrings"],
+			"name": "Conventional Barbell Deadlift",
+			"note": "For targeted hypertrophy"
+		},
+		"Full Body Hypertrophy / Leg / Seated Calf Raise": {
+			"hevyIds": ["062AB91A"],
+			"muscles": ["Calves"]
+		}
 	},
 	"cues": {
 		"1": ["Chest / Machine Chest Press"],
@@ -463,7 +548,14 @@
 		"60": ["Ab / Face-Away Kneeling/Standing Cable Crunch", "Ab / Face-Away Lat Pulldown Cable Crunch"],
 		"61": ["Ab / Assisted Lat Pulldown Crunch"],
 		"62": ["Ab / Garhammer Hold"],
-		"63": ["Ab / Captain's Chair Leg Raise", "Ab / Hanging Leg Raise with C-Shape Curl"]
+		"63": ["Ab / Captain's Chair Leg Raise", "Ab / Hanging Leg Raise with C-Shape Curl"],
+		"64": ["Full Body Hypertrophy / Chest / Deficit Push-Ups"],
+		"65": ["Full Body Hypertrophy / Biceps & Triceps / Cable Overhead Triceps Extension (Bar Attachment)"],
+		"66": ["Full Body Hypertrophy / Back / Prime Machine Row (Chest Supported)"],
+		"67": ["Full Body Hypertrophy / Back / Dumbbell Pullover (or Cable Lat Prayer / EZ-Bar Pullover)"],
+		"68": ["Full Body Hypertrophy / Back / Barbell Bent-Over Row (Advanced Leverage Style)"],
+		"69": ["Full Body Hypertrophy / Shoulder / Barbell Front Raises (Prone Grip / Pinkies Up)"],
+		"70": ["Full Body Hypertrophy / Leg / Seated Leg Extension (C-Tier standard; moves up to A/S-Tier when reclining back seat & setup for maximum stretch)"]
 	},
 	"estimates": [
 		{

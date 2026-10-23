@@ -6,7 +6,15 @@
 import { z } from "zod/v4";
 import volumeLandmarks from "@/data/volume-landmarks.json";
 import { ALL_MUSCLES, MAX_MUSCLE_SETS_PER_SESSION, MAX_SETS_PER_SESSION } from "../constants";
-import { browseOrder, rankingsFor, type RankingEntry } from "../exercise-rankings";
+import {
+	browseOrder,
+	describeOpinions,
+	namedDifferently,
+	rankingsFor,
+	shortSource,
+	sourceOf,
+	type RankingEntry,
+} from "../exercise-rankings";
 import { HEVY_EQUIPMENT } from "../hevy/exercises";
 import { searchExercises } from "../search";
 import { formatReps, formatRest, resolveTargets } from "../training-defaults";
@@ -316,11 +324,11 @@ export const COACH_TOOLS = [
 		schema: z.object({ muscle: z.enum(ALL_MUSCLES) }),
 		run: (input, routine, ctx) => {
 			const rankings = rankingsFor(ctx.exercises);
-			const entries = rankings.entriesFor(input.muscle);
+			const rows = rankings.listFor(input.muscle);
 			const favourites = Object.entries(ctx.preferences ?? {})
 				.filter(([id, p]) => p.pref === "favourite" && ctx.getExercise(id)?.muscle_weightings.some((w) => w.muscle === input.muscle && w.weighting >= 0.5))
 				.map(([id]) => `${nameOf(ctx, id)} [${id}]`);
-			if (entries.length === 0) {
+			if (rows.length === 0) {
 				return {
 					routine,
 					result: [
@@ -331,28 +339,27 @@ export const COACH_TOOLS = [
 						.join("\n"),
 				};
 			}
-			const lines = entries.map(({ entry, ids }) => {
-				const where = ids.length
-					? ids
-							.map((id) => {
-								const tag = preferenceTag(ctx, id);
-								return `${nameOf(ctx, id)} [${id}]${tag ? ` (${tag})` : ""}`;
-							})
-							.join("; ")
-					: "not in Hevy (the user could add it as a custom exercise in Hevy)";
+			const lines = rows.map(({ tier, entry, id, rank }) => {
+				if (!id) {
+					return `${tier.padEnd(2)} ${entry.name}: not in Hevy (the user could add it as a custom exercise in Hevy) [${shortSource(sourceOf(entry))}${entry.note ? `; ${entry.note}` : ""}]`;
+				}
+				const name = nameOf(ctx, id);
 				const extras = [
-					entry.source ? (entry.source === "Setsmith estimate" ? "Setsmith estimate" : `${entry.source}'s list`) : "",
+					preferenceTag(ctx, id),
+					namedDifferently(entry, name) ? `ranked as ${entry.name}` : "",
+					rank && rank.opinions.length > 1 ? describeOpinions(rank) : shortSource(sourceOf(entry)),
 					entry.listedAs ? `listed as ${entry.listedAs}` : "",
 					entry.note,
-					entry.variation ? "this tier only when done as named" : "",
-					entry.cues ? "form cues in exercise_details" : "",
+					rank?.opinions.every((o) => o.entry.variation) ? "this tier only when done as named" : "",
+					rank?.better.length ? `better: ${rank.better.map((b) => `${b.name} ${b.tier}`).join(", ")}` : "",
+					rank?.entries.some((e) => e.cues) ? "form cues in exercise_details" : "",
 				].filter(Boolean);
-				return `${entry.tier.padEnd(2)} ${entry.name}: ${where}${extras.length ? ` [${extras.join("; ")}]` : ""}`;
+				return `${tier.padEnd(2)} ${name} [${id}]: ${extras.join("; ")}`;
 			});
 			return {
 				routine,
 				result: [
-					`Tier list for ${input.muscle}, best first. Prefer S+ to A; D and F are poor choices.`,
+					`Tier list for ${input.muscle}, best first: each exercise's tier is the average of the sources that rank it. Prefer S+ to A; D and F are poor choices. Mention it when experts disagree.`,
 					...lines,
 					favourites.length ? `User's favourites that train it: ${favourites.join("; ")}.` : "",
 				]
@@ -386,9 +393,9 @@ export const COACH_TOOLS = [
 					...(ranks.length
 						? ranks.map(
 								(r) =>
-									`${r.tier} for ${r.muscle} (as "${r.entry.name}"${r.entry.note ? `, ${r.entry.note}` : ""})${
-										r.better.length ? `; better: ${r.better.map((b) => `${b.name} ${b.tier}`).join(", ")}` : ""
-									}`
+									`${r.tier} for ${r.muscle} (as "${r.entry.name}"${r.entry.note ? `, ${r.entry.note}` : ""}; ${
+										r.opinions.length > 1 ? `average of ${describeOpinions(r)}` : sourceOf(r.entry)
+									})${r.better.length ? `; better: ${r.better.map((b) => `${b.name} ${b.tier}`).join(", ")}` : ""}`
 							)
 						: ["Not on any tier list."]),
 					...withCues.flatMap(cueLines),

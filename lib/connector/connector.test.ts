@@ -82,8 +82,8 @@ describe("Setsmith MCP server", () => {
 
 		expect((await call("get_routine")).text).toMatch(/avoids: Squat \(Barbell\) \[D04AC939\] \(hard on my back\)/);
 		const quads = (await call("exercise_rankings", { muscle: "Quads" })).text;
-		expect(quads).toMatch(/^S\+ Hack Squat: Hack Squat \(Machine\) \[1E42FD5F\]/m);
-		expect(quads).toMatch(/Squat \(Barbell\) \[D04AC939\] \(user avoids \(hard on my back\)\)/);
+		expect(quads).toMatch(/^S\+ Hack Squat \(Machine\) \[1E42FD5F\]/m);
+		expect(quads).toMatch(/Squat \(Barbell\) \[D04AC939\]: user avoids \(hard on my back\)/);
 		expect(quads).toMatch(/Reverse Nordics: not in Hevy/);
 
 		const details = (await call("exercise_details", { exercise_id: "1E42FD5F" })).text;

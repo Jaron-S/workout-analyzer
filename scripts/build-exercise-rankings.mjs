@@ -28,16 +28,27 @@ function splitItems(items) {
 	return parts.map((p) => p.trim()).filter(Boolean);
 }
 
-// Tier lines ("* **High A Tier:** a, b"), or a tier line followed by
-// labelled sub-lists ("  * **Lower Abs Focus:** a, b").
+// Sections are "# **Chest Exercises (Jeff Nippard)**", some split into lists
+// ("### **Chest Exercises**"). Tier lines ("* **High A Tier:** a, b"), or a
+// tier line followed by labelled sub-lists ("  * **Lower Abs Focus:** a, b").
 const entries = [];
+let section = null;
+let source = null;
 let list = null;
 let tier = null;
 let subLists = false;
 for (const line of doc.split("\n")) {
-	const heading = line.match(/^# \*\*(\w+) Exercises/) ?? line.match(/^## \*\*(Rear Delts) Tier List/);
-	if (heading) {
-		list = heading[1];
+	const top = line.match(/^# \*\*(.+?)(?: Exercises)?(?: \((.+?)\))?\*\*/);
+	if (top) {
+		section = top[1];
+		source = top[2]?.replace(/^Dr\. /, "") ?? null;
+		list = section;
+		tier = null;
+		continue;
+	}
+	const sub = line.match(/^### \*\*(.+?)(?: Exercises)?\*\*/) ?? line.match(/^## \*\*(Rear Delts) Tier List/);
+	if (sub) {
+		list = line.startsWith("###") ? `${section} / ${sub[1]}` : sub[1];
 		tier = null;
 		continue;
 	}
@@ -46,12 +57,12 @@ for (const line of doc.split("\n")) {
 		tier = tierLine[1];
 		const items = tierLine[2].trim();
 		subLists = items === "";
-		if (items && !/^none/i.test(items)) for (const name of splitItems(items)) entries.push({ list, tier, name });
+		if (items && !/^none/i.test(items)) for (const name of splitItems(items)) entries.push({ list, source, tier, name });
 		continue;
 	}
-	const sub = line.match(/^\s+\* \*\*(.+?):\*\*\s*(.*)/);
-	if (sub && subLists && !/^(Form|Execution)/.test(sub[1])) {
-		for (const name of splitItems(sub[2])) entries.push({ list, tier, name, focus: sub[1] });
+	const focus = line.match(/^\s+\* \*\*(.+?):\*\*\s*(.*)/);
+	if (focus && subLists && !/^(Form|Execution)/.test(focus[1])) {
+		for (const name of splitItems(focus[2])) entries.push({ list, source, tier, name, focus: focus[1] });
 	}
 }
 
@@ -108,16 +119,18 @@ for (const e of entries) {
 	const muscles = m.muscles ?? listInfo.muscles;
 	if (!muscles) problems.push(`${key}: the ${e.list} list has no muscles, so give the entry some`);
 	const tier = m.tier ?? tierOf(e.tier);
-	const note = [e.focus, noteOf(e.name)].filter(Boolean).join("; ");
+	const note = m.note ?? [e.focus, noteOf(e.name)].filter(Boolean).join("; ");
+	// Jeff Nippard's lists are the default, so left unsaid.
+	const entrySource = e.source === "Jeff Nippard" ? null : e.source;
 	rankings.push({
-		name: display(e.name),
+		name: m.name ?? display(e.name),
 		tier,
 		muscles,
 		hevyIds: m.hevyIds,
 		...(e.tier !== tier && !m.tier ? { listedAs: e.tier } : {}),
 		...(note ? { note } : {}),
 		...(m.variation ? { variation: true } : {}),
-		...(listInfo.source ? { source: listInfo.source } : {}),
+		...(entrySource ? { source: entrySource } : {}),
 		...(cueOf.has(key) ? { cues: cueOf.get(key) } : {}),
 	});
 }
@@ -134,7 +147,7 @@ if (problems.length) {
 
 const data = {
 	source:
-		"Tier lists from Jeff Nippard (and Jeremy Ethier for abs) on YouTube, plus a few Setsmith estimates, mapped to Hevy's exercises. Built from data/exercise-rankings.source.md and data/exercise-rankings.mapping.json by npm run build:rankings.",
+		"Tier lists from YouTube (Jeff Nippard, Jeremy Ethier, Mike Israetel / Milo Wolf), plus a few Setsmith estimates, mapped to Hevy's exercises. Built from data/exercise-rankings.source.md and data/exercise-rankings.mapping.json by npm run build:rankings.",
 	rankings,
 };
 // Short string arrays on one line.

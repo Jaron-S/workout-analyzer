@@ -130,9 +130,29 @@ export function ExerciseInfoDialog({ exercise, open, onOpenChange, onAddCue }: E
 											{namedDifferently(r.entry, exercise.name) && (
 												<span className="text-muted-foreground"> · ranked as {r.entry.name}</span>
 											)}
+											{r.disagree && (
+												<span className="ml-1.5 rounded-full bg-primary/15 px-1.5 py-0.5 text-[11px] font-medium text-brand-text">
+													Experts disagree
+												</span>
+											)}
 										</p>
+										{r.opinions.length > 1 && (
+											<p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+												Average of
+												{r.opinions.map((o) => (
+													<span key={o.source} className="inline-flex items-center gap-1">
+														<ExerciseTierBadge tier={o.tier} className="h-4 min-w-4 text-[10px]" />
+														{o.source}
+													</span>
+												))}
+											</p>
+										)}
 										<p className="text-xs text-muted-foreground">
-											{[sourceOf(r.entry), r.entry.listedAs && `listed as ${r.entry.listedAs}`, r.entry.note]
+											{[
+												r.opinions.length > 1 ? "" : sourceOf(r.entry),
+												r.entry.listedAs && `listed as ${r.entry.listedAs}`,
+												r.entry.note,
+											]
 												.filter(Boolean)
 												.join(" · ")}
 										</p>
@@ -147,7 +167,7 @@ export function ExerciseInfoDialog({ exercise, open, onOpenChange, onAddCue }: E
 						</ul>
 					) : (
 						<p className="text-sm text-muted-foreground">
-							Not on the tier lists, which cover chest, back, shoulders, arms, glutes and quads.
+							Not on any tier list yet.
 						</p>
 					)}
 				</section>
