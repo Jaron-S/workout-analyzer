@@ -1794,6 +1794,1694 @@
 			"hevyIds": ["E05C2C38"],
 			"note": "Trains both calf muscles with a deep stretch; pause at the bottom",
 			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Iso-Lateral High Row (Machine)",
+			"tier": "S",
+			"muscles": ["Lats"],
+			"hevyIds": ["BC3492DA"],
+			"note": "Between the S lat pulldown and the S+ chest-supported machine row: a stable, chest-supported pull from overhead",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Iso-Lateral High Row (Machine)",
+			"tier": "A",
+			"muscles": ["Middle Back"],
+			"hevyIds": ["BC3492DA"],
+			"note": "Rows from a high angle, so more lats than upper back",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Vertical Traction (Machine)",
+			"tier": "S",
+			"muscles": ["Lats"],
+			"hevyIds": ["72880C57"],
+			"note": "A machine pulldown, like the S-tier lat pulldown",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Reverse Grip Lat Pulldown (Cable)",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["046E25A2"],
+			"note": "Underhand pulldown: a step below the S wide and neutral grips, more biceps",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Pullover (Machine)",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["B123DD01"],
+			"note": "Machine pullover: like the cable lat prayer (Nippard A, Israetel/Wolf S)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Ring Pull Up",
+			"tier": "A",
+			"muscles": ["Lats"],
+			"hevyIds": ["5F09F0FC"],
+			"note": "Like the A-tier pull-up, on rings",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sternum Pull up (Gironda)",
+			"tier": "B",
+			"muscles": ["Lats"],
+			"hevyIds": ["EE2938D1"],
+			"note": "An advanced pull-up variant, harder to load than a regular pull-up",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Pull Up (Band)",
+			"tier": "B",
+			"muscles": ["Lats"],
+			"hevyIds": ["56808FD2"],
+			"note": "Band-assisted pull-up: the band helps most at the bottom, where the stretch is",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lat Pulldown (Band)",
+			"tier": "C",
+			"muscles": ["Lats"],
+			"hevyIds": ["D2FE7B2E"],
+			"note": "Bands give little tension at the top, where the lats stretch",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kneeling Pulldown (band)",
+			"tier": "C",
+			"muscles": ["Lats"],
+			"hevyIds": ["D82EA543"],
+			"note": "Bands give little tension at the top, where the lats stretch",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Negative Pull Up",
+			"tier": "C",
+			"muscles": ["Lats"],
+			"hevyIds": ["F60BDDF8"],
+			"note": "Lowering only: a stepping stone to full pull-ups",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Front Lever Raise",
+			"tier": "C",
+			"muscles": ["Lats"],
+			"hevyIds": ["30F03BF0"],
+			"note": "A gymnastics skill; ranked B for abs by Israetel/Wolf",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Front Lever Hold",
+			"tier": "D",
+			"muscles": ["Lats"],
+			"hevyIds": ["0E608350"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kipping Pull Up",
+			"tier": "D",
+			"muscles": ["Lats"],
+			"hevyIds": ["A91838C0"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Muscle Up",
+			"tier": "D",
+			"muscles": ["Lats"],
+			"hevyIds": ["9F9C164B"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bent Over Row (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["23E92538"],
+			"note": "Like the B-tier barbell row",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bent Over Row (Smith Machine)",
+			"tier": "B",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["EB813C91"],
+			"note": "Like the B-tier barbell row",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Gorilla Row (Kettlebell)",
+			"tier": "C",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["05487216"],
+			"note": "A bent-over row limited by the hinge; below the B-tier barbell row",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bent Over Row (Band)",
+			"tier": "C",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["EA820646"],
+			"note": "Bands and straps: like the C-tier inverted row",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Low Row (Suspension)",
+			"tier": "C",
+			"muscles": ["Middle Back", "Lats"],
+			"hevyIds": ["8A2E6481"],
+			"note": "Bands and straps: like the C-tier inverted row",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Band Pullaparts",
+			"tier": "C",
+			"muscles": ["Rear Delts"],
+			"hevyIds": ["E8D86EE8"],
+			"note": "Like the C-tier standing reverse fly: little tension at the stretch",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Seated Lateral Raise (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["9372FFAA"],
+			"note": "Like the B-tier standing dumbbell lateral raise",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Upright Row (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["797F0782"],
+			"note": "Like the B-tier cable upright row",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Upright Row (Barbell)",
+			"tier": "C",
+			"muscles": ["Side Delts"],
+			"hevyIds": ["7AB9A362"],
+			"note": "A fixed bar path is harder on the shoulders than the B-tier cable version",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Arnold Press (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["A69FF221"],
+			"note": "A seated dumbbell press (A) with more range",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Overhead Press (Smith Machine)",
+			"tier": "B",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["B09A1304"],
+			"note": "Steadier than the barbell press (C), short of the A-tier machine press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Shoulder Press",
+			"tier": "B",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["6433CD93"],
+			"note": "One-handed pressing: harder to load than the A-tier dumbbell press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Arm Landmine Press (Barbell)",
+			"tier": "B",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["1837BA23"],
+			"note": "One-handed pressing: harder to load than the A-tier dumbbell press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Handstand Push Up",
+			"tier": "C",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["90B04F96"],
+			"note": "Bodyweight pressing: hard to load progressively",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Pike Pushup",
+			"tier": "C",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["0EFE8162"],
+			"note": "Bodyweight pressing: hard to load progressively",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Front Raise (Suspension)",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["796E8E2C"],
+			"note": "Front raises rank D: the front delts get plenty from pressing",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Overhead Plate Raise",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["54E60954"],
+			"note": "Front raises rank D: the front delts get plenty from pressing",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Push Press",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["542F3CD5"],
+			"note": "Leg drive moves the weight; trains power more than the delts",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Split Jerk",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["E764B907"],
+			"note": "Leg drive moves the weight; trains power more than the delts",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Handstand Hold",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["BE3615CF"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Battle Ropes",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["084A67CA"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Around the World",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["55BA475A"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Halo",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["4288G454"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Turkish Get Up",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["5F8903BF"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Press Under",
+			"tier": "D",
+			"muscles": ["Front Delts"],
+			"hevyIds": ["84A77566"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Feet Up Bench Press (Barbell)",
+			"tier": "A",
+			"muscles": ["Chest"],
+			"hevyIds": ["867AC3B6"],
+			"note": "Like the A-tier barbell bench press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bench Press - Wide Grip (Barbell)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["E644F828"],
+			"note": "A wide grip shortens the range compared with the A-tier bench press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bench Press (Cable)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["99C1F2AD"],
+			"note": "Cable pressing: smooth tension, harder to load than the A-tier presses",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Decline Bench Press (Machine)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["FAF31231"],
+			"note": "Like the B-tier decline bench press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Decline Bench Press (Smith Machine)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["FFC106CB"],
+			"note": "Like the B-tier decline bench press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Incline Chest Fly (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["D3E2AB55"],
+			"note": "Dumbbell flyes rank A only as lengthened partials; full range loses tension at the top",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Decline Chest Fly (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["A351AED7"],
+			"note": "Dumbbell flyes rank A only as lengthened partials; full range loses tension at the top",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Push Up (Weighted)",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["19372ABC"],
+			"note": "Push-ups you can load or deepen: between plain (C) and deficit (A) push-ups",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Ring Push Up",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["AEA56BDC"],
+			"note": "Push-ups you can load or deepen: between plain (C) and deficit (A) push-ups",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Ring Dips",
+			"tier": "B",
+			"muscles": ["Chest"],
+			"hevyIds": ["51A0EDAA"],
+			"note": "Like dips (B), less stable on rings",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Decline Push Up",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["C43825EA"],
+			"note": "Like the C-tier push-up",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Chest Fly (Band)",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["DDB7C19F"],
+			"note": "Bands, straps or a squeeze: little tension where the chest stretches",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Chest Press (Band)",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["EAC7D9C5"],
+			"note": "Bands, straps or a squeeze: little tension where the chest stretches",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Chest Fly (Suspension)",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["720B0D70"],
+			"note": "Bands, straps or a squeeze: little tension where the chest stretches",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Dumbbell Squeeze Press",
+			"tier": "C",
+			"muscles": ["Chest"],
+			"hevyIds": ["F72FA239"],
+			"note": "Bands, straps or a squeeze: little tension where the chest stretches",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Incline Push Ups",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["39C99849"],
+			"note": "Easier than a push-up (C); a stepping stone",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kneeling Push Up",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["B74A95BB"],
+			"note": "Easier than a push-up (C); a stepping stone",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "One Arm Push Up",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["B140095E"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Plank Pushup",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["31436F5D"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Around The World",
+			"tier": "D",
+			"muscles": ["Chest"],
+			"hevyIds": ["D4A2FE7E"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bicep Curl (Machine)",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["AF328E3D"],
+			"note": "A machine curl: stable like the S-tier machine preacher curl, without the preacher's stretch",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Rope Cable Curl",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["234897AB"],
+			"note": "Like the A-tier cable curl",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hammer Curl (Cable)",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["36E8F14E"],
+			"note": "Like the A-tier cable curl",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Seated Incline Hammer Curl (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Biceps"],
+			"hevyIds": ["C01F58D1"],
+			"note": "Like the A-tier incline dumbbell curl",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Cross Body Hammer Curl",
+			"tier": "A",
+			"muscles": ["Biceps", "Forearms"],
+			"hevyIds": ["32C4D4A2"],
+			"note": "Like the A-tier dumbbell hammer curl",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Pinwheel Curl (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Biceps", "Forearms"],
+			"hevyIds": ["942BAD12"],
+			"note": "Like the A-tier dumbbell hammer curl",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Concentration Curl",
+			"tier": "B",
+			"muscles": ["Biceps"],
+			"hevyIds": ["724CDE60"],
+			"note": "Little load or stretch at the bottom; below the A-tier curls",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Overhead Curl (Cable)",
+			"tier": "B",
+			"muscles": ["Biceps"],
+			"hevyIds": ["582ADA23"],
+			"note": "Little load or stretch at the bottom; below the A-tier curls",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Curl",
+			"tier": "B",
+			"muscles": ["Biceps"],
+			"hevyIds": ["4E239ED8"],
+			"note": "Little load or stretch at the bottom; below the A-tier curls",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bicep Curl (Suspension)",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["0B4C1902"],
+			"note": "Bands and straps: hard to load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hammer Curl (Band)",
+			"tier": "C",
+			"muscles": ["Biceps"],
+			"hevyIds": ["1D4B3D6B"],
+			"note": "Bands and straps: hard to load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Plate Curl",
+			"tier": "D",
+			"muscles": ["Biceps"],
+			"hevyIds": ["9283ABD5"],
+			"note": "Hard to grip and load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Triceps Extension (Cable)",
+			"tier": "A",
+			"muscles": ["Triceps"],
+			"hevyIds": ["21310F5F"],
+			"note": "Like the A-tier cable triceps exercises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Arm Triceps Pushdown (Cable)",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["552AB030"],
+			"note": "A one-arm pushdown: like the rope pushdown (B)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Triceps Extension (Barbell)",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["2F8D3067"],
+			"note": "Two-handed overhead extensions: like the B-tier dumbbell French press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Seated Triceps Press",
+			"tier": "B",
+			"muscles": ["Triceps"],
+			"hevyIds": ["234BC743"],
+			"note": "Two-handed overhead extensions: like the B-tier dumbbell French press",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Wide-Elbow Triceps Press (Dumbbell)",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["B31EB524"],
+			"note": "Like the C-tier dumbbell kickbacks and bench dips",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Triceps Extension (Suspension)",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["6182EE83"],
+			"note": "Like the C-tier dumbbell kickbacks and bench dips",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Floor Triceps Dip",
+			"tier": "C",
+			"muscles": ["Triceps"],
+			"hevyIds": ["A57D38D5"],
+			"note": "Like the C-tier dumbbell kickbacks and bench dips",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Behind the Back Wrist Curl (Barbell)",
+			"tier": "A",
+			"muscles": ["Forearms"],
+			"hevyIds": ["DDB29047"],
+			"note": "A wrist curl (S) with a shorter range",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Reverse Grip Concentration Curl",
+			"tier": "B",
+			"muscles": ["Forearms"],
+			"hevyIds": ["1FF4097B"],
+			"note": "A reverse curl (A) one arm at a time, lighter",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Wrist Roller",
+			"tier": "B",
+			"muscles": ["Forearms"],
+			"hevyIds": ["0E4523F4"],
+			"note": "Like the B-tier farmer's carry",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Dead Hang",
+			"tier": "C",
+			"muscles": ["Forearms"],
+			"hevyIds": ["B9380898"],
+			"note": "A grip hold, like the C-tier barbell holds",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Squat (Machine)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["CC35A01F"],
+			"note": "A machine squat, like the A-tier belt squat",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Press (Machine)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["3FD83744"],
+			"note": "Like the A-tier leg press, one leg at a time",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Pause Squat (Barbell)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["CE1054CE"],
+			"note": "A barbell squat (S) that limits the load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Full Squat",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["1283BBA6"],
+			"note": "A barbell squat (S) that limits the load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Split Squat (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Quads"],
+			"hevyIds": ["20C1A3CB"],
+			"note": "Like the S-tier Bulgarian split squat without the raised back foot",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Walking Lunge",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["32HKJ34K"],
+			"note": "Like the B-tier quad-focused lunge; S+ for glutes",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Walking Lunge (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["A733CC5B"],
+			"note": "Like the B-tier quad-focused lunge; S+ for glutes",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Zercher Squat",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["40C6A9FC"],
+			"note": "Like the B-tier goblet squat",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Squat (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Quads"],
+			"hevyIds": ["DCFF3E9F"],
+			"note": "Like the B-tier goblet squat",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hack Squat",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["AC5A4C58"],
+			"note": "The barbell behind the legs limits depth and load; the machine hack squat is S+",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sumo Squat",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["3F5F8D40"],
+			"note": "A wide stance shifts work to the adductors and glutes",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sumo Squat (Barbell)",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["6622E5A0"],
+			"note": "A wide stance shifts work to the adductors and glutes",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sumo Squat (Dumbbell)",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["05293BCA"],
+			"note": "A wide stance shifts work to the adductors and glutes",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sumo Squat (Kettlebell)",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["5E10D0E6"],
+			"note": "A wide stance shifts work to the adductors and glutes",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lateral Lunge",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["F2A37357"],
+			"note": "Awkward to load; below the B-tier lunges",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lateral Squat",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["D731CCA8"],
+			"note": "Awkward to load; below the B-tier lunges",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Walking Lunge (Sandbag)",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["F30A4F01"],
+			"note": "Awkward to load; below the B-tier lunges",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sled Push",
+			"tier": "C",
+			"muscles": ["Quads"],
+			"hevyIds": ["7757171F"],
+			"note": "Pushing only, no lowering phase",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Squat (Bodyweight)",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["9694DA61"],
+			"note": "Too light to grow quads for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Squat (Band)",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["F1258206"],
+			"note": "Too light to grow quads for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Squat (Suspension)",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["B82D6418"],
+			"note": "Too light to grow quads for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Overhead Squat",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["2CFED196"],
+			"note": "Limited by the shoulders, not the legs",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Overhead Dumbbell Lunge",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["4C6721B9"],
+			"note": "Limited by the shoulders, not the legs",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Wall Sit",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["C8706C80"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bear Crawl",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["B3B1D947"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Burpee",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["BB792A36"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Burpee Broad Jumps",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["115CC72C"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Burpee Over the Bar",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["86B00DDE"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Wall Ball",
+			"tier": "D",
+			"muscles": ["Quads"],
+			"hevyIds": ["A1F47ACC"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lying Leg Curl (Machine)",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["B8127AD1"],
+			"note": "Trains the hamstrings shorter than the S-tier seated leg curl",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Leg Curls",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["6120CAAB"],
+			"note": "Like the A-tier lying leg curl, one leg at a time",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Romanian Deadlift (Barbell)",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["2B4B7310"],
+			"note": "A hip hinge with a deep hamstring stretch; A for glutes too",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Romanian Deadlift (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["72CFFAD5"],
+			"note": "A hip hinge with a deep hamstring stretch; A for glutes too",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Romanian Deadlift (Smith Machine)",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["0B9B92BA"],
+			"note": "A hip hinge with a deep hamstring stretch; A for glutes too",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Straight Leg Deadlift",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["2A48E443"],
+			"note": "A hip hinge with a deep hamstring stretch; A for glutes too",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Glute Ham Raise",
+			"tier": "A",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["68B83EE0"],
+			"note": "Trains the hamstrings at the knee and hip together",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Romanian Deadlift (Barbell)",
+			"tier": "B",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["93472AC1"],
+			"note": "A Romanian deadlift (A) limited by balance",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Romanian Deadlift (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["937292AB"],
+			"note": "A Romanian deadlift (A) limited by balance",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Nordic Hamstrings Curls",
+			"tier": "B",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["108D7A14"],
+			"note": "Very hard and lowering-focused; hard to scale",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Swing",
+			"tier": "D",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["F8A0FCCA"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Sled Pull",
+			"tier": "D",
+			"muscles": ["Hamstrings"],
+			"hevyIds": ["7D1BD41D"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Glute Kickback (Machine)",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["CBA02382"],
+			"note": "Like the A-tier cable glute kickback",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Rear Kick (Machine)",
+			"tier": "A",
+			"muscles": ["Glutes"],
+			"hevyIds": ["1ADF8723"],
+			"note": "Like the A-tier cable glute kickback",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Box Squat (Barbell)",
+			"tier": "B",
+			"muscles": ["Glutes", "Quads"],
+			"hevyIds": ["38FC1AB9"],
+			"note": "A barbell squat that stops short of full depth",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Reverse Hyperextension",
+			"tier": "B",
+			"muscles": ["Glutes"],
+			"hevyIds": ["7C0028C3"],
+			"note": "Like the B-tier cable pull-through",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Deadlift (Dumbbell)",
+			"tier": "C",
+			"muscles": ["Glutes"],
+			"hevyIds": ["5F4E6DD3"],
+			"note": "Like the conventional deadlift (C)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Deadlift (Smith Machine)",
+			"tier": "C",
+			"muscles": ["Glutes"],
+			"hevyIds": ["20870ED5"],
+			"note": "Like the conventional deadlift (C)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Deadlift (Trap bar)",
+			"tier": "C",
+			"muscles": ["Glutes"],
+			"hevyIds": ["B923B230"],
+			"note": "Like the conventional deadlift (C)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Partial Glute Bridge (Barbell)",
+			"tier": "C",
+			"muscles": ["Glutes"],
+			"hevyIds": ["FBEE8279"],
+			"note": "Like the C-tier frog pumps: work in the shortened range only",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Glute Bridge",
+			"tier": "C",
+			"muscles": ["Glutes"],
+			"hevyIds": ["CBC0D834"],
+			"note": "Like the C-tier frog pumps: work in the shortened range only",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Deadlift (Band)",
+			"tier": "D",
+			"muscles": ["Glutes"],
+			"hevyIds": ["99507114"],
+			"note": "Bands: almost no load at the bottom",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Bird Dog",
+			"tier": "D",
+			"muscles": ["Glutes"],
+			"hevyIds": ["BD0AD077"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Back Extension (Hyperextension)",
+			"tier": "A",
+			"muscles": ["Lower Back"],
+			"hevyIds": ["4F5866F8"],
+			"note": "Back extensions train the spinal erectors directly; S for glutes done with a rounded back",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Back Extension (Weighted Hyperextension)",
+			"tier": "A",
+			"muscles": ["Lower Back"],
+			"hevyIds": ["091737FA"],
+			"note": "Back extensions train the spinal erectors directly; S for glutes done with a rounded back",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Back Extension (Machine)",
+			"tier": "A",
+			"muscles": ["Lower Back"],
+			"hevyIds": ["A05C064D"],
+			"note": "Back extensions train the spinal erectors directly; S for glutes done with a rounded back",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Good Morning (Barbell)",
+			"tier": "B",
+			"muscles": ["Lower Back", "Hamstrings"],
+			"hevyIds": ["4180C405"],
+			"note": "A loaded hinge; harder on the back than a Romanian deadlift (A)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Superman",
+			"tier": "D",
+			"muscles": ["Lower Back"],
+			"hevyIds": ["218DA87C"],
+			"note": "Too light to grow muscle for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Calf Raise (Smith)",
+			"tier": "A",
+			"muscles": ["Calves"],
+			"hevyIds": ["AA52E8D2"],
+			"note": "A loaded calf raise with a full stretch, close to the S-tier standing machine",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Standing Calf Raise (Machine)",
+			"tier": "A",
+			"muscles": ["Calves"],
+			"hevyIds": ["B05C2C29"],
+			"note": "A loaded calf raise with a full stretch, close to the S-tier standing machine",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Calf Press (Machine)",
+			"tier": "A",
+			"muscles": ["Calves"],
+			"hevyIds": ["91237BDD"],
+			"note": "A loaded calf raise with a full stretch, close to the S-tier standing machine",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Calf Extension (Machine)",
+			"tier": "A",
+			"muscles": ["Calves"],
+			"hevyIds": ["47B9DF13"],
+			"note": "A loaded calf raise with a full stretch, close to the S-tier standing machine",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Standing Calf Raise (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Calves"],
+			"hevyIds": ["5DA40761"],
+			"note": "One leg at a time makes a dumbbell heavy enough",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Calf Raise (Barbell)",
+			"tier": "B",
+			"muscles": ["Calves"],
+			"hevyIds": ["E53CCBE5"],
+			"note": "Balance or grip limits the load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Calf Raise (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Calves"],
+			"hevyIds": ["6DA40660"],
+			"note": "Balance or grip limits the load",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Standing Calf Raise (Barbell)",
+			"tier": "C",
+			"muscles": ["Calves"],
+			"hevyIds": ["E51CCBE5"],
+			"note": "Hard to load or balance",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Single Leg Standing Calf Raise",
+			"tier": "C",
+			"muscles": ["Calves"],
+			"hevyIds": ["238BA231"],
+			"note": "Hard to load or balance",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Calf Raise",
+			"tier": "D",
+			"muscles": ["Calves"],
+			"hevyIds": ["06745E58"],
+			"note": "Too light to grow calves for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Dragonfly",
+			"tier": "B",
+			"muscles": ["Abs"],
+			"hevyIds": ["B7192800"],
+			"note": "Like the B-tier dragon flag",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Jack Knife (Suspension)",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["D410F649"],
+			"note": "Like the C-tier ab roller",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Decline Crunch",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["BC10A922"],
+			"note": "Like the C-tier floor crunch; weighted it's B",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Side Bend (Dumbbell)",
+			"tier": "C",
+			"muscles": ["Abs"],
+			"hevyIds": ["026FD047"],
+			"note": "Loads the obliques, with a short range",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Toes to Bar",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["B94E35E1"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Jackknife Sit Up",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["32B0B590"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lying Knee Raise",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["BD5935CF"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hollow Rock",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["970ADF87"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "L-Sit Hold",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["6D54A050"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Oblique Crunch",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["DBE341AA"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Russian Twist (Weighted)",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["2982AA23"],
+			"note": "Like Ethier's D-tier sit-ups, V-ups and hanging raises",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Cable Twist (Down to up)",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["92D858EA"],
+			"note": "Rotation or anti-rotation: more core control than ab growth",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Cable Twist (Up to down)",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["A2D838BD"],
+			"note": "Rotation or anti-rotation: more core control than ab growth",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Torso Rotation",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["FBB62888"],
+			"note": "Rotation or anti-rotation: more core control than ab growth",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Landmine 180",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["923874CA"],
+			"note": "Rotation or anti-rotation: more core control than ab growth",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Cable Core Pallof Press",
+			"tier": "D",
+			"muscles": ["Abs"],
+			"hevyIds": ["CC55119B"],
+			"note": "Rotation or anti-rotation: more core control than ab growth",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Ab Scissors",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["B4F2FF72"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Flutter Kicks",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["2FA77B28"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Heel Taps",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["567FB505"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Elbow to Knee",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["A01BE509"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Toe Touch",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["75BAC5C3"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Shoulder Taps",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["502FCE31"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Spiderman",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["C10A5AC9"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Russian Twist (Bodyweight)",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["BB83BDDE"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Side Bend",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["37F9EDA7"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Side Plank",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["E3EDA509"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Reverse Plank",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["99B49684"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Ball Slams",
+			"tier": "F",
+			"muscles": ["Abs"],
+			"hevyIds": ["F51D9080"],
+			"note": "Like Ethier's F tier (planks, butterfly kicks, mountain climbers)",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hip Adduction (Machine)",
+			"tier": "A",
+			"muscles": ["Adductors"],
+			"hevyIds": ["8BEBFED6"],
+			"note": "Machine isolation with a deep stretch, like the S-tier hip abduction machine",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hip Adduction (Cable)",
+			"tier": "B",
+			"muscles": ["Adductors"],
+			"hevyIds": ["22578A94"],
+			"note": "Like the B-tier cable hip abduction",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lateral Leg Raises",
+			"tier": "D",
+			"muscles": ["Abductors"],
+			"hevyIds": ["DC59D143"],
+			"note": "Too light to grow muscle for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Clamshell",
+			"tier": "D",
+			"muscles": ["Abductors"],
+			"hevyIds": ["CC016611"],
+			"note": "Too light to grow muscle for long",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Shrug (Barbell)",
+			"tier": "A",
+			"muscles": ["Traps"],
+			"hevyIds": ["0B841777"],
+			"note": "A loaded shrug: direct, heavy work for the upper traps",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Shrug (Dumbbell)",
+			"tier": "A",
+			"muscles": ["Traps"],
+			"hevyIds": ["ABEC557F"],
+			"note": "A loaded shrug: direct, heavy work for the upper traps",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Shrug (Machine)",
+			"tier": "A",
+			"muscles": ["Traps"],
+			"hevyIds": ["19A38071"],
+			"note": "A loaded shrug: direct, heavy work for the upper traps",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Shrug (Smith Machine)",
+			"tier": "A",
+			"muscles": ["Traps"],
+			"hevyIds": ["742E5BD5"],
+			"note": "A loaded shrug: direct, heavy work for the upper traps",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Shrug (Cable)",
+			"tier": "A",
+			"muscles": ["Traps"],
+			"hevyIds": ["FFABC123"],
+			"note": "A loaded shrug: direct, heavy work for the upper traps",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Standing Y Raise (Cable)",
+			"tier": "A",
+			"muscles": ["Traps"],
+			"hevyIds": ["28927A36"],
+			"note": "Trains the mid and lower traps; S for side delts",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Chest Supported Y Raise (Dumbbell)",
+			"tier": "B",
+			"muscles": ["Traps"],
+			"hevyIds": ["F21D5693"],
+			"note": "Like the cable Y-raise, lighter at the top",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Farmers Walk",
+			"tier": "C",
+			"muscles": ["Traps"],
+			"hevyIds": ["50C613D0"],
+			"note": "Loads the traps statically; B for forearms",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Suitcase Carry (Dumbbell)",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["7593855D"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Scapular Pull Ups",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["C7AE420A"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Deadlift High Pull",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["FA5D0DE1"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Jump Shrug",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["BA3DE542"],
+			"note": "A conditioning or skill movement, not a hypertrophy tool",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Clean",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["ABB00838"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Clean and Jerk",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["9E09CEC3"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Clean and Press",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["D3095577"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Clean Pull",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["652FEA39"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Dumbbell Snatch",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["F3717B0E"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hang Clean",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["BD4E7E53"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Hang Snatch",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["F4E77594"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Clean",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["F99C211D"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell High Pull",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["9B13BA4B"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Kettlebell Snatch",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["89304423"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Power Clean",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["C628D768"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Power Snatch",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["E22F9358"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Snatch",
+			"tier": "D",
+			"muscles": ["Traps"],
+			"hevyIds": ["FB09C938"],
+			"note": "An Olympic-style power lift: trains speed, not a muscle-building stimulus",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lying Neck Curls (Weighted)",
+			"tier": "B",
+			"muscles": ["Neck"],
+			"hevyIds": ["31B8DA0F"],
+			"note": "Direct, loadable neck work",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lying Neck Extension (Weighted)",
+			"tier": "B",
+			"muscles": ["Neck"],
+			"hevyIds": ["D6A73CF2"],
+			"note": "Direct, loadable neck work",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lying Neck Curls",
+			"tier": "C",
+			"muscles": ["Neck"],
+			"hevyIds": ["22FEDCA4"],
+			"note": "Bodyweight: fine to start, hard to progress",
+			"source": "Setsmith estimate"
+		},
+		{
+			"name": "Lying Neck Extension",
+			"tier": "C",
+			"muscles": ["Neck"],
+			"hevyIds": ["0910BD28"],
+			"note": "Bodyweight: fine to start, hard to progress",
+			"source": "Setsmith estimate"
 		}
 	]
 }

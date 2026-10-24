@@ -137,7 +137,14 @@ for (const e of entries) {
 for (const key of Object.keys(mapping.entries)) {
 	if (!used.has(key)) problems.push(`${key}: not in the doc any more; remove it from "entries"`);
 }
-for (const est of mapping.estimates) rankings.push({ ...est, source: "Setsmith estimate" });
+// Estimates only fill gaps: never averaged with a list's rating.
+const listed = new Set(rankings.flatMap((r) => r.hevyIds.flatMap((id) => r.muscles.map((m) => `${id} ${m}`))));
+for (const est of mapping.estimates) {
+	for (const id of est.hevyIds) {
+		for (const m of est.muscles) if (listed.has(`${id} ${m}`)) problems.push(`estimate ${est.name}: a list already ranks it for ${m}`);
+	}
+	rankings.push({ ...est, source: "Setsmith estimate" });
+}
 
 if (problems.length) {
 	console.error(`${problems.length} problem(s):\n`);
